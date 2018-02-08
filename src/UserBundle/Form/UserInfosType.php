@@ -1,27 +1,31 @@
 <?php
 
-namespace MediaBundle\Form;
+namespace UserBundle\Form;
 
+use MediaBundle\Form\PhotoType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PhotoType extends AbstractType
+class UserInfosType extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('file', FileType::class);
+        $builder->add('firstname')
+            ->add('lastname')
+            ->add('phone')
+            ->add('region')
+            ->add('photo', PhotoType::class);
     }/**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'MediaBundle\Entity\Photo'
+            'data_class' => 'UserBundle\Entity\UserInfos'
         ));
     }
 
@@ -30,7 +34,7 @@ class PhotoType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'mediabundle_photo';
+        return 'userbundle_userinfos';
     }
 
 

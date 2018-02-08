@@ -68,7 +68,7 @@ class AdminController extends Controller
             $em->remove($user);
         }
         $em->flush();
-        $request->getSession()->getFlashBag()->add('notice', "Les utilisateurs sélectionnées on été supprimés avec succes");
+        $request->getSession()->getFlashBag()->add('notice', "Les utilisateurs sélectionnés on été supprimés avec succes");
         return $this->redirectToRoute('users_list');
     }
 

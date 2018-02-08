@@ -1,28 +1,35 @@
 <div class="collapse navbar-collapse navbar-ex1-collapse">
     <ul class="nav navbar-nav navbar-right">
-        <li>
-            <a>
-                <i class="fa fa-home bg-color-1"></i>
-                <span>Acceuil</span>
+        <li class="dropdown singleDrop color-3 ">
+            <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-home bg-color-3" aria-hidden="true"></i>
+                <span>Parentalité</span>
             </a>
+            <ul class="dropdown-menu dropdown-menu-left">
+                <li><a>Articles et conseils</a></li>
+                <li><a>Forum</a></li>
+                <li><a>Adresses utiles</a></li>
+                <li><a>Evénements</a></li>
+            </ul>
         </li>
-        <li>
-            <a>
-                <i class="fa fa-user bg-color-1"></i>
-                <span>Utilisateurs</span>
+        <li class="dropdown singleDrop color-1 active">
+            <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-shopping-cart bg-color-1" aria-hidden="true"></i> <span>Shopping</span>
             </a>
+            <ul class="dropdown-menu dropdown-menu-left">
+                <li class=""><a href="index.html">Vetements</a></li>
+                <li class=""><a href="index-v2.html">Accessoirs</a></li>
+            </ul>
         </li>
-        {#<li class="dropdown singleDrop color-1 active">#}
-            {#<a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">#}
-                {#<i class="fa fa-home bg-color-1" aria-hidden="true"></i> <span class="active">Home</span>#}
-            {#</a>#}
-            {#<ul class="dropdown-menu dropdown-menu-left">#}
-                {#<li class=" active "><a href="index.html">Kidz School</a></li>#}
-                {#<li class=""><a href="index-v2.html">Kidz Store</a></li>#}
-                {#<li class=""><a href="index-v3.html">Kidz Daycare</a></li>#}
-                {#<li class=""><a href="index-v4.html">Kidz Fashion</a></li>#}
-            {#</ul>#}
-        {#</li>#}
+        <li class="dropdown singleDrop color-4 active">
+            <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-child bg-color-4" aria-hidden="true"></i> <span>Espace Enfant</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-left">
+                <li class=" active "><a href="index.html">Suivi</a></li>
+                <li class=""><a href="index-v2.html">Accessoirs</a></li>
+            </ul>
+        </li>
         {#<li class="dropdown singleDrop color-3 ">#}
             {#<a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-list-ul bg-color-3" aria-hidden="true"></i> <span>Pages</span></a>#}
             {#<ul class="dropdown-menu dropdown-menu-left">#}

@@ -1,7 +1,7 @@
 $(function () {
     $('.check').iCheck({
-        checkboxClass: 'icheckbox_flat',
-        radioClass: 'iradio_flat'
+        checkboxClass: 'icheckbox_flat-red',
+        radioClass: 'iradio_flat-red'
     });
 
     $.each($('.flash-msg'), function (i , span) {
@@ -19,5 +19,7 @@ $(function () {
                 break;
         }
         Materialize.toast($(span).text(), 3000, classname);
-    })
+    });
+
+    $('.user-list').menu();
 });

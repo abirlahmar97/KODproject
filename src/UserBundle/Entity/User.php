@@ -13,6 +13,13 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class User extends BaseUser
 {
+
+    /**
+     * @var UserInfos
+     * @ORM\OneToOne(targetEntity="UserBundle\Entity\UserInfos", cascade={"persist"})
+     */
+    private $infos;
+
     /**
      * @var int
      *
@@ -63,5 +70,32 @@ class User extends BaseUser
     {
         return $this->phone;
     }
-}
 
+    /**
+     * Set infos
+     *
+     * @param \UserBundle\Entity\UserInfos $infos
+     *
+     * @return User
+     */
+    public function setInfos(\UserBundle\Entity\UserInfos $infos = null)
+    {
+        $this->infos = $infos;
+
+        return $this;
+    }
+
+    /**
+     * Get infos
+     *
+     * @return \UserBundle\Entity\UserInfos
+     */
+    public function getInfos()
+    {
+        return $this->infos;
+    }
+
+    public function getFullname(){
+        return $this->infos->getFirstname() . ' ' . $this->infos->getLastname();
+    }
+}
