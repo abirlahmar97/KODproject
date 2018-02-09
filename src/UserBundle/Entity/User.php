@@ -17,6 +17,7 @@ class User extends BaseUser
     /**
      * @var UserInfos
      * @ORM\OneToOne(targetEntity="UserBundle\Entity\UserInfos", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
      */
     private $infos;
 

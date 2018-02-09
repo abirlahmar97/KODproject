@@ -1,4 +1,4 @@
-{% extends "UserBundle:Admin:layout.html.twig" %}
+{% extends "back-layout.html.twig" %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -30,8 +30,6 @@
                                 <th>Id</th>
                                 <th>Email</th>
                                 <th>Pseudo</th>
-                                {#<th>Nom</th>#}
-                                {#<th>Preom</th>#}
                                 <th>Etat</th>
                                 <th>Privilèges</th>
                                 <th>Derniére connection</th>
@@ -62,6 +60,7 @@
                     <div class="row" style="margin-bottom: 0">
                         <div class="form-inline col-md-12">
                             <select class="form-control" id="action_blk">
+                                <option selected value="-1">Actions</option>
                                 <option value="0">Supprimer</option>
                                 <option value="1">Désactiver</option>
                             </select>
@@ -128,7 +127,7 @@
                     $('#user_count').text("");
             });
 
-            $('#action_ok').click(function (event) {
+            $('#action_ok').click(function () {
                 $('.users').val(users);
                 if($('#action_blk').val() === '0')
                     $('#del_form').submit();
