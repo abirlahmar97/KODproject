@@ -4,10 +4,10 @@ namespace ChildBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class DefaultController extends Controller
+class ChildController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('ChildBundle:Default:index.html.twig');
+        return $this->render('@Child/Child/index.html.twig');
     }
 }

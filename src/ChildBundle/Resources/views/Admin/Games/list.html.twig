@@ -16,40 +16,43 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading clearfix">
-                    <h4 class="panel-title">Liste des utilisateurs</h4>
+                    <h4 class="panel-title">Liste des jeux</h4>
                     <ul class="panel-tool-options">
-                        <li><a href="{{ path('users_add') }}"><i class="fa fa-user-plus"></i> Ajouter</a></li>
+                        <li><a href="{{ path('games_add') }}"><i class="fa fa-game-plus"></i> Ajouter</a></li>
                     </ul>
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive">
-                        <table class="table table-striped table-bordered table-hover dataTables-example" >
+                        <table class="table table-striped table-bordered table-hover dataTables" >
                             <thead>
                             <tr>
                                 <th></th>
                                 <th>Id</th>
-                                <th>Email</th>
-                                <th>Pseudo</th>
-                                <th>Etat</th>
-                                <th>Privilèges</th>
-                                <th>Derniére connection</th>
+                                <th>Icone</th>
+                                <th>Nom du jeu</th>
+                                <th>url</th>
+                                <th>Age</th>
+                                <th>Appareils</th>
                             </tr>
                             </thead>
                             <tbody>
-                                {% for user in users %}
+                                {% for game in games %}
                                 <tr class="gradeX">
-                                    <td><input type="checkbox" name="{{ user.id }}"></td>
-                                    <td>{{ user.id }}</td>
-                                    <td>{{ user.email }}</td>
-                                    <td>{{ user.username }}</td>
-                                    <td>{{ user.enabled ? "Activé" : "Désactivé" }}</td>
-                                    {% if user.roles[0] == "ROLE_ADMIN" %} <td>Admin</td>
-                                    {% elseif user.roles[0] == "ROLE_SUPER_ADMIN" %} <td>Super admin</td>
-                                    {% elseif user.roles[0] == "ROLE_PARENT" %} <td>Parent</td>
-                                    {% elseif user.roles[0] == "ROLE_PROVIDER" %} <td>Fournisseur</td>
-                                    {% else %} <td>{{  user.roles[0] }}</td>
+                                    <td><input type="checkbox" name="{{ game.id }}"></td>
+                                    <td>{{ game.id }}</td>
+                                    <td><img src="{{ asset( game.icon.webPath ) }}" height="80" alt=""></td>
+                                    <td>{{ game.name }}</td>
+                                    <td>{{ game.url }}</td>
+                                    {% if game.age == 1 %} <td>3 à 5</td>
+                                    {% elseif game.age == 2 %} <td>inférieur à 8</td>
+                                    {% elseif game.age == 3 %} <td>inférieur à 12</td>
                                     {% endif %}
-                                    <td>{{ user.lastLogin | date('j F, Y H:i') }}</td>
+                                    {% set devices = game.device | split(',') %}
+                                    <td>
+                                        {% if devices[0] == 1 %} Mobile<br>{% endif %}
+                                        {% if devices[1] == 2 %} Tablette<br>{% endif %}
+                                        {% if devices[2] == 3 %} Pc<br>{% endif %}
+                                    </td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
@@ -66,19 +69,19 @@
                                 <option value="2">Activer</option>
                             </select>
                             <button class="btn btn-blue" id="action_ok">OK</button>
-                            <label class="control-label" id="user_count" style="padding-left: 10px;"></label>
+                            <label class="control-label" id="game_count" style="padding-left: 10px;"></label>
                         </div>
                     </div>
                 </div>
-                <form action="{{ path('users_blk_delete') }}" id="del_form" method="post">
-                    <input type="hidden" class="users" name="users">
-                </form>
-                <form action="{{ path('users_blk_disable') }}" id="dis_form" method="post">
-                    <input type="hidden" class="users" name="users">
-                </form>
-                <form action="{{ path('users_blk_enable') }}" id="en_form" method="post">
-                    <input type="hidden" class="users" name="users">
-                </form>
+                {#<form action="{{ path('games_blk_delete') }}" id="del_form" method="post">#}
+                    {#<input type="hidden" class="games" name="games">#}
+                {#</form>#}
+                {#<form action="{{ path('games_blk_disable') }}" id="dis_form" method="post">#}
+                    {#<input type="hidden" class="games" name="games">#}
+                {#</form>#}
+                {#<form action="{{ path('games_blk_enable') }}" id="en_form" method="post">#}
+                    {#<input type="hidden" class="games" name="games">#}
+                {#</form>#}
             </div>
         </div>
     </div>
@@ -119,20 +122,20 @@
                     'colvis'
                 ]
             });
-            var users = [];
+            var games = [];
             $(':checkbox').change(function () {
-                users = [];
+                games = [];
                 $(':checkbox:checked').each(function (i) {
-                    users[i] = $(this).attr('name');
+                    games[i] = $(this).attr('name');
                 });
-                if(users.length > 0)
-                    $('#user_count').text(users.length + " élément(s) sélectionné(s)");
+                if(games.length > 0)
+                    $('#game_count').text(games.length + " élément(s) sélectionné(s)");
                 else
-                    $('#user_count').text("");
+                    $('#game_count').text("");
             });
 
             $('#action_ok').click(function () {
-                $('.users').val(users);
+                $('.games').val(games);
                 if($('#action_blk').val() === '0')
                     $('#del_form').submit();
                 else if ($('#action_blk').val() === '1')

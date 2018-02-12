@@ -3,5 +3,5 @@ user_homepage:
     defaults: { _controller: UserBundle:Home:index }
 
 edit_profile:
-    path:     /profile/edit
+    path:     /profile/manage
     defaults: { _controller: UserBundle:Home:editProfile }

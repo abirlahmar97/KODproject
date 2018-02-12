@@ -1,3 +1,43 @@
 child_homepage:
-    path:     /
-    defaults: { _controller: ChildBundle:Default:index }
+    path:     /child
+    defaults: { _controller: ChildBundle:Child:index }
+
+games_list:
+    path:     /admin/games/list
+    defaults: { _controller: ChildBundle:Admin:listGames }
+
+games_add:
+    path:     /admin/games/add
+    defaults: { _controller: ChildBundle:Admin:addGames }
+
+kids_add:
+    path:     /parent/kids/add
+    defaults: { _controller: ChildBundle:Parent:addKid }
+
+kids_list:
+    path:     /parent/kids
+    defaults: { _controller: ChildBundle:Parent:listKids }
+
+#games_del:
+#    path:     /games/del/{id}
+#    defaults: { _controller: UserBundle:Admin:deleteUser }
+#    requirements :
+#        id : /d{1,5}
+#
+#games_disable:
+#    path:     /games/del/{id}
+#    defaults: { _controller: UserBundle:Admin:disableUser }
+#    requirements :
+#        id : /d{1,5}
+#
+#games_blk_delete:
+#    path:     /games/del
+#    defaults: { _controller: UserBundle:Admin:deleteUsersBulk }
+#
+#games_blk_disable:
+#    path:     /games/disable
+#    defaults: { _controller: UserBundle:Admin:disableUsersBulk }
+#
+#games_blk_enable:
+#    path:     /games/enable
+#    defaults: { _controller: UserBundle:Admin:enableUsersBulk }
