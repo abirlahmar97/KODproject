@@ -14,7 +14,7 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
     {
         $qb = $this->createQueryBuilder('u')
             ->select('u')
-            ->where('u.role= :roles')
+            ->where('role like :roles')
             ->orderBy('u.id')
             ->setParameter('roles', $role);
         return $qb->getQuery()->getResult();
