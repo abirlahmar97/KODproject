@@ -25,9 +25,7 @@
     <!-- CUSTOM CSS -->
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/default.css') }}">
-
-    <link href="{{ asset('plugins/menu/menu.min.css')}}" rel="stylesheet">
-    <link href="{{ asset('css/square/red.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
 
     <!-- Icons -->
     <link rel="shortcut icon" href="{{ asset('img/favicon.png') }}">
@@ -65,13 +63,26 @@
                                 <div class="row">
                                     <div class="col-sm-7">
                                         <ul class="list-inline functionList">
-                                            <li class="LanguageList pull-left">
-                                            {% if is_granted("ROLE_PARENT") and user.infos is not null %}
-                                                <a href="javascript:;" class="toggle" id="menu-toggle1">{{ user.fullname }}</a>
-                                                <ul class="user-list menu" data-menu-toggle="#menu-toggle1">
+                                            <li class="pull-left dropdown">
+                                            {% if is_granted("ROLE_PARENT") and app.user.infos is not null %}
+                                                <a class="dropdown-toggle" data-toggle="dropdown" id="menu-toggle1">
+                                                    {{ app.user.fullname }}
+                                                    <span class="caret"></span>
+                                                </a>
+                                                <ul class="dropdown-menu user-menu" aria-labelledby="menu-toggle1">
+                                                    <li class="user-menu-header">
+                                                        <div class="header-row">
+                                                            <div class="img-circle user-img" style="background-image: url('{{ asset(app.user.infos.photo.webPath) }}')">
+                                                            </div>
+                                                            <div style="padding-left: 15px">
+                                                                {{ app.user.fullname }}
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li role="separator" class="divider"></li>
                                                     <li><a href="{{ path('edit_profile') }}">Gestion de profil</a></li>
-                                                    <li>Spanish</li>
-                                                    <li>Hindi</li>
+                                                    <li><a href="{{ path('fos_user_profile_edit') }}">Paramètres du compte</a></li>
+                                                    <li><a href="{{ path('fos_user_change_password') }}">Changer le mot de passe</a></li>
                                                 </ul>
                                             {% elseif is_granted("ROLE_PARENT") %}
                                                 <i class="fa fa-user bg-color-1" aria-hidden="true"></i>
@@ -120,8 +131,8 @@
                                 </div>
 
                                 <!-- Collect the nav links, forms, and other content for toggling -->
-                                {#{% render(controller('AppBundle:Default:menu')) %}#}
                                 {% block header %}
+                                    {{ include('menu.html.twig') }}
                                 {% endblock %}
                             </div>
                         </nav>
@@ -234,7 +245,6 @@
                     <script src="{{ asset('js/custom.js')}}"></script>
                     <script src="{{ asset('js/script.js')}}"></script>
                     {#<script src="{{ asset('options/optionswitcher.js')}}"></script>#}
-                    <script src="{{ asset('plugins/icheck/icheck.min.js') }}"></script>
                     <script src="{{ asset('plugins/menu/menu.min.js') }}"></script>
                 {% endblock %}
         </body>
