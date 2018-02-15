@@ -1,3 +1,11 @@
 media_homepage:
     path:     /
     defaults: { _controller: MediaBundle:Default:index }
+
+video_add:
+    path:     admin/video/add
+    defaults: { _controller: MediaBundle:video:createvideo}
+
+video_read:
+    path:     video/read
+    defaults: { _controller: MediaBundle:video:readvid}

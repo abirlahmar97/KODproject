@@ -1,0 +1,60 @@
+{% extends 'back-layout.html.twig' %}
+
+{% block title %} {% endblock %}
+{% block main %}
+    <div class="panel panel-default">
+        <div class="panel-heading clearfix">
+            <h4 class="panel-title">Ajouter uune video</h4>
+        </div>
+
+        <div class="panel-body">
+            {{ form_start(form) }}
+            {{ form_errors(form) }}
+            <div class="form-group row">
+                <div class="col-sm-2 control-label">
+                    {{ form_label(form.url, 'donner url youtube') }}
+                </div>
+                <div class="col-sm-10">
+                    {{ form_widget(form.url, { 'attr' : { 'class' : 'form-control' } }) }}
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-2 control-label">
+                    {{ form_label(form.type, 'le type de la vidideo') }}
+                </div>
+                <div class="col-sm-10">
+                    {{ form_widget(form.type, { 'attr' : { 'class' : 'form-control' } }) }}
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-2 control-label">
+                    {{ form_label(form.date, 'date de la viideo') }}
+                </div>
+                <div class="col-sm-10">
+                    {{ form_widget(form.date, { 'attr' : { 'class' : 'form-control' } }) }}
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-2 control-label">
+                    {{ form_label(form.views, 'viwes') }}
+                </div>
+                <div class="col-sm-10">
+                    {{ form_widget(form.views, { 'attr' : { 'class' : 'form-control' } }) }}
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-2 control-label">
+                    {{ form_label(form.subject, 'les sujets') }}
+                </div>
+                <div class="col-sm-10">
+                    {{ form_widget(form.subject, { 'attr' : { 'class' : 'form-control' } }) }}
+                </div>
+            </div>
+            <br>
+            <button class="btn btn-success">ajouter prof</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock main %}
