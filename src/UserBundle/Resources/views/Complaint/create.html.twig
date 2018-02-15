@@ -1,0 +1,53 @@
+{% extends "layout.html.twig" %}
+{% block main %}
+    <section class="pageTitleSection">
+        <div class="container">
+            <div class="pageTitleInfo">
+                <h2>Réclamation</h2>
+                <ol class="breadcrumb">
+                    <li><a href="{{ path('user_homepage') }}">Accueil</a></li>
+                    <li class="active">Réclamation</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+    <section class="mainContent full-width clearfix conactSection">
+        <div class="container">
+            <div class="row">
+                {{ form_start(form) }}
+                {{ form_errors(form) }}
+                <h4 class="text-center">Ecrivez votre réclamation</h4>
+                <!-- Starts contact form 1 -->
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3 col-xs-12">
+                        <div class="homeContactContent">
+                            <form action="#" method="POST" role="form">
+                                <div class="form-group">
+                                    <i class="fa fa-user"></i>
+
+                                    {{ form_widget(form.subject, { 'attr' : { 'class' : 'form-control border-color-1', 'placeholder' : 'Sujet' } } )}}
+                                </div>
+                                <div class="form-group">
+                                    <i class="fa fa-envelope" aria-hidden="true"></i>
+
+                                    {{ form_widget(form.category, { 'attr' : { 'class' : 'form-control border-color-4', 'placeholder' : 'Sélectionnez une catégorie' } } )}}
+
+
+
+                                </div>
+                                <div class="form-group">
+                                    <i class="fa fa-comments" aria-hidden="true"></i>
+                                    {{ form_widget(form.description, { 'attr' : { 'class' : 'form-control border-color-6', 'placeholder' : 'Ecrivez votre message' } } )}}
+                                </div>
+                                <center><button type="submit" class="btn btn-primary">Envoyer</button></center>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+{% endblock %}
