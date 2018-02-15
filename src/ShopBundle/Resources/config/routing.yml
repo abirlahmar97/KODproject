@@ -1,3 +1,58 @@
 shop_homepage:
     path:     /
     defaults: { _controller: ShopBundle:Default:index }
+
+create_product:
+    path:     /createProduct
+    defaults: { _controller: ShopBundle:ProductProvider:createProduct }
+
+update_product:
+    path:     /updateProduct/{id}
+    defaults: { _controller: ShopBundle:ProductProvider:updateProduct }
+
+show_product:
+    path:     /showProduct
+    defaults: { _controller: ShopBundle:ProductProvider:showProduct }
+
+delete_product:
+    path:     /deleteProduct/{id}
+    defaults: { _controller: ShopBundle:ProductProvider:deleteProduct }
+
+product_blk_delete:
+    path:     /deleteProduct
+    defaults: { _controller: ShopBundle:ProductProvider:deleteProductBulk }
+
+add_category:
+    path:     /addCategory
+    defaults: { _controller: ShopBundle:Category:addCategory }
+
+show_category:
+    path:     /showCategory
+    defaults: { _controller: ShopBundle:Category:showCategory }
+
+category_blk_delete:
+    path:     /deleteCategory
+    defaults: { _controller: ShopBundle:Category:deletCategoryBulk }
+
+read:
+    path:     /read
+    defaults: { _controller: ShopBundle:CategoryFront:read }
+
+categorieProduits:
+    path:     /category/{category}
+    defaults: { _controller: ShopBundle:Product:categorie }
+
+infoProduits:
+    path:     /produit/{id}
+    defaults: { _controller: ShopBundle:Product:infoProduit }
+
+ajouterpanier:
+    path:     /ajouterpanier/{id}
+    defaults: { _controller: ShopBundle:Panier:ajouterpanier }
+
+panier:
+    path:     /
+    defaults: { _controller: ShopBundle:Panier:panier }
+read_fournisseur:
+    path:     /readFournisseur
+    defaults: { _controller: ShopBundle:Fournisseur:readFournisseur }

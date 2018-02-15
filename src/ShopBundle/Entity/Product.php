@@ -12,6 +12,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Product
 {
+
+    /**
+     * @ORM\OneToOne(targetEntity="MediaBundle\Entity\Photo", cascade={"persist"})
+     */
+    private $img;
     /**
      * @var int
      *
@@ -19,7 +24,7 @@ class Product
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $idProduct;
+    private $id;
 
     /**
      * @var string
@@ -50,19 +55,12 @@ class Product
     private $available;
 
     /**
-     * @var string
-     * @ORM\ManyToOne(targetEntity="ShopBundle\Entity\Category", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
-     * @ORM\Column(name="category", type="string")
+     * @ORM\ManyToOne(targetEntity="ShopBundle\Entity\Category")
+     * @ORM\JoinColumn(name="idCategory",referencedColumnName="id")
+     *
      */
     private $category;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="img", type="string", length=255)
-     */
-    private $img;
 
     /**
      * @var float
@@ -203,30 +201,6 @@ class Product
     }
 
     /**
-     * Set img
-     *
-     * @param string $img
-     *
-     * @return Product
-     */
-    public function setImg($img)
-    {
-        $this->img = $img;
-
-        return $this;
-    }
-
-    /**
-     * Get img
-     *
-     * @return string
-     */
-    public function getImg()
-    {
-        return $this->img;
-    }
-
-    /**
      * Set tva
      *
      * @param float $tva
@@ -249,5 +223,28 @@ class Product
     {
         return $this->tva;
     }
-}
 
+    /**
+     * Set img
+     *
+     * @param \MediaBundle\Entity\Photo $img
+     *
+     * @return Product
+     */
+    public function setImg(\MediaBundle\Entity\Photo $img = null)
+    {
+        $this->img = $img;
+
+        return $this;
+    }
+
+    /**
+     * Get img
+     *
+     * @return \MediaBundle\Entity\Photo
+     */
+    public function getImg()
+    {
+        return $this->img;
+    }
+}

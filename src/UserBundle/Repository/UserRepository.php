@@ -10,4 +10,13 @@ namespace UserBundle\Repository;
  */
 class UserRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function byfournisseur($role)
+    {
+        $qb = $this->createQueryBuilder('u')
+            ->select('u')
+            ->where('u.role= :roles')
+            ->orderBy('u.id')
+            ->setParameter('roles', $role);
+        return $qb->getQuery()->getResult();
+    }
 }

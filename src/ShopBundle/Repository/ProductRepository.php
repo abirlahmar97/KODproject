@@ -10,4 +10,24 @@ namespace ShopBundle\Repository;
  */
 class ProductRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findArray($array)
+    {
+        $qb = $this->createQueryBuilder('u')
+            ->Select('u')
+            ->Where('u.id IN (:array)')
+            ->setParameter('array', $array);
+        return $qb->getQuery()->getResult();
+    }
+
+    public function byCategorie($category)
+    {
+        $qb = $this->createQueryBuilder('u')
+            ->select('u')
+            ->where('u.category = :category')
+            ->andWhere('u.available = 1')
+            ->orderBy('u.id')
+            ->setParameter('category', $category);
+        return $qb->getQuery()->getResult();
+    }
+
 }
