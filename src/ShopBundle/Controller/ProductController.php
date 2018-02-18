@@ -11,7 +11,6 @@ class ProductController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $produits= $em->getRepository('ShopBundle:Product')->byCategorie($category);
-        dump($produits);
         return $this->render('ShopBundle:Default/Produits:showProduits.html.twig', array("produits"=>$produits
         ));
 
@@ -21,6 +20,15 @@ class ProductController extends Controller
         $em = $this->getDoctrine()->getManager();
         $produit = $em->getRepository('ShopBundle:Product')->find($id);
         return $this->render('ShopBundle:Default/Produits:infoProduit.html.twig', array("produit"=>$produit
+        ));
+    }
+
+    public function listCategoriesAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $categories = $em->getRepository('ShopBundle:Category')->findTypeProduct();
+        return $this->render('ShopBundle:Default/Categories:menu.html.twig', array(
+            'categories' => $categories
         ));
     }
 

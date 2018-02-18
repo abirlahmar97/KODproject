@@ -19,7 +19,7 @@ class Category
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $idCategory;
+    private $id;
 
     /**
      * @var string

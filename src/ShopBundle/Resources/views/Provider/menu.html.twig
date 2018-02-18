@@ -3,14 +3,21 @@
         <i class="icon-gauge"></i><span class="title">Dashboard</span>
     </a>
 </li>
-<li>
-    <a href="{{ path('create_product') }}">
-        <i class="fa fa-users"></i><span class="title">Products</span>
+<li class="has-sub">
+    <a href="{{ path('show_products') }}">
+        <i class="fa fa-users"></i><span class="title">Produits</span>
     </a>
-</li>
-<li>
-    <a href="{{ path('show_product') }}">
-        <i class="fa fa-users"></i><span class="title">Products</span>
-    </a>
+    <ul class="nav-collapse">
+        <li>
+            <a href="{{ path('show_products') }}">
+                <i class="fa fa-plus"></i> <span class="title">Liste des produits</span>
+            </a>
+        </li
+        <li>
+            <a href="{{ path('create_product') }}">
+                <i class="fa fa-plus"></i> <span class="title">Ajouter un produit</span>
+            </a>
+        </li>
+    </ul>
 </li>
 

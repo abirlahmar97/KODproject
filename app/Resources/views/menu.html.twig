@@ -17,8 +17,7 @@
                 <i class="fa fa-shopping-cart bg-color-1" aria-hidden="true"></i> <span>Shopping</span>
             </a>
             <ul class="dropdown-menu dropdown-menu-left">
-                <li class=""><a href="index.html">Vetements</a></li>
-                <li class=""><a href="index-v2.html">Accessoirs</a></li>
+                {{ render(controller('ShopBundle:Product:listCategories')) }}
             </ul>
         </li>
         <li class="dropdown singleDrop color-4">

@@ -2,7 +2,9 @@
 
 namespace ShopBundle\Form;
 
+use Doctrine\ORM\QueryBuilder;
 use MediaBundle\Form\PhotoType;
+use ShopBundle\Repository\CategoryRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,11 +21,16 @@ class ProductType extends AbstractType
             ->add('description')
             ->add('price')
             ->add('available')
-            ->add('category',EntityType::class,array(
-        'class' => 'ShopBundle\Entity\Category',
-        'choice_label' => 'name',
-        'multiple' => false
-    ))
+            ->add('category',EntityType::class, array(
+                'class' => 'ShopBundle\Entity\Category',
+                'query_builder' => function(CategoryRepository $r){
+                    $qb = $r->createQueryBuilder('c')
+                        ->where("c.type = 'Produits'");
+                    return $qb;
+                },
+                'choice_label' => 'name',
+                'multiple' => false
+            ))
             ->add('img', PhotoType::class)
             ->add('tva');
     }/**

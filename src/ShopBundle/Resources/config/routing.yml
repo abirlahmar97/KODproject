@@ -3,56 +3,65 @@ shop_homepage:
     defaults: { _controller: ShopBundle:Default:index }
 
 create_product:
-    path:     /createProduct
+    path:     /provider/products/create
     defaults: { _controller: ShopBundle:ProductProvider:createProduct }
 
 update_product:
-    path:     /updateProduct/{id}
+    path:     /provider/products/update/{id}
     defaults: { _controller: ShopBundle:ProductProvider:updateProduct }
 
-show_product:
-    path:     /showProduct
+show_products:
+    path:     /provider/products
     defaults: { _controller: ShopBundle:ProductProvider:showProduct }
 
 delete_product:
-    path:     /deleteProduct/{id}
+    path:     /provider/products/delete/{id}
     defaults: { _controller: ShopBundle:ProductProvider:deleteProduct }
 
 product_blk_delete:
-    path:     /deleteProduct
+    path:     /provider/products/delete
     defaults: { _controller: ShopBundle:ProductProvider:deleteProductBulk }
 
 add_category:
-    path:     /addCategory
+    path:     /admin/categories/add
     defaults: { _controller: ShopBundle:Category:addCategory }
 
 show_category:
-    path:     /showCategory
+    path:     /admin/categories
     defaults: { _controller: ShopBundle:Category:showCategory }
 
 category_blk_delete:
-    path:     /deleteCategory
+    path:     /admin/categories/delete
     defaults: { _controller: ShopBundle:Category:deletCategoryBulk }
 
-read:
-    path:     /read
-    defaults: { _controller: ShopBundle:CategoryFront:read }
+categories_list:
+    path:     /parent/categories
+    defaults: { _controller: ShopBundle:Product:listCategories }
 
-categorieProduits:
-    path:     /category/{category}
+product_bycategory:
+    path:     /parent/products/category/{category}
     defaults: { _controller: ShopBundle:Product:categorie }
 
 infoProduits:
-    path:     /produit/{id}
+    path:     /parent/products/{id}
     defaults: { _controller: ShopBundle:Product:infoProduit }
 
 ajouterpanier:
-    path:     /ajouterpanier/{id}
+    path:     /parent/cart/add/{id}
     defaults: { _controller: ShopBundle:Panier:ajouterpanier }
 
+supprimerpanier:
+    path:     /parent/cart/delete/{id}
+    defaults: { _controller: ShopBundle:Panier:supprimerpanier }
+
 panier:
-    path:     /
+    path:     /parent/cart
     defaults: { _controller: ShopBundle:Panier:panier }
+
 read_fournisseur:
-    path:     /readFournisseur/{roles}
+    path:     /admin/providers
     defaults: { _controller: ShopBundle:Fournisseur:readFournisseur }
+
+create_fournisseur:
+    path:     /admin/providers/add
+    defaults: { _controller: ShopBundle:Fournisseur:createFournisseur }

@@ -1,0 +1,84 @@
+
+
+{%extends "ShopBundle:Provider:layout.html.twig" %}
+
+{% block title %}ShopBundle:ProdcutProviderController:createProduct{% endblock %}
+
+{% block main %}
+
+    <section class="mainContent full-width clearfix">
+        <div class="container">
+            <div class="sectionTitle text-center">
+                <h2>
+                    <span class="shape shape-left bg-color-4"></span>
+                    <span>Forms</span>
+                    <span class="shape shape-right bg-color-4"></span>
+                </h2>
+            </div>
+
+            <h4 class="text-center">Contact form</h4>
+            {{ form_start(form) }}
+            {{ form_errors(form) }}
+            <div class="form-group row">
+                <div class="col-sm-2 control-label">
+                    {{ form_label(form.firstname, 'firstname') }}
+                </div>
+                {{ form_row(form._token) }}
+
+                <div class="col-sm-10">
+                    {{ form_widget(form.firstname, { 'attr' : { 'class' : 'form-control' } }) }}
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-2 control-label">
+                    {{ form_label(form.lastname, 'lastname') }}
+                </div>
+                <div class="col-sm-10">
+                    {{ form_widget(form.lastname, { 'attr' : { 'class' : 'form-control' } }) }}
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-2 control-label">
+                    {{ form_label(form.phone, 'phone') }}
+                </div>
+                <div class="col-sm-10">
+                    {{ form_widget(form.phone, { 'attr' : { 'class' : 'form-control' } }) }}
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-2 control-label">
+                    {{ form_label(form.region, 'region') }}
+                </div>
+                <div class="col-sm-10">
+                    {{ form_widget(form.region) }}
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-2 control-label">
+                    {{ form_label(form.photo, 'photo') }}
+                </div>
+                <div class="col-sm-10">
+                    {{ form_widget(form.photo.file) }}
+                </div>
+            </div>
+
+
+            <button class="btn btn-success">Ajouter</button>
+            {{ form_end(form) }}
+            <!-- Starts contact form 1 -->
+            <div class="row">
+
+
+
+                <div class="col-sm-6 col-xs-12">
+
+                </div>
+            </div><!-- Ends contact form 1 -->
+
+
+        </div>
+    </section>
+{% endblock %}
