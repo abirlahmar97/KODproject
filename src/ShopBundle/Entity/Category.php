@@ -19,7 +19,7 @@ class Category
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private $idCategory;
 
     /**
      * @var string
@@ -31,9 +31,11 @@ class Category
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="string", length=255)
+     * @ORM\Column(name="type", type="string", length=255)
      */
-    private $description;
+    private $type;
+
+
 
     /**
      * Get id
@@ -80,26 +82,30 @@ class Category
     }
 
     /**
-     * Set description
+     * Set type
      *
-     * @param string $description
+     * @param string $type
      *
      * @return Category
      */
-    public function setDescription($description)
+    public function setType($type)
     {
-        $this->description = $description;
+        $this->type = $type;
 
         return $this;
     }
 
     /**
-     * Get description
+     * Get type
      *
      * @return string
      */
-    public function getDescription()
+    public function getType()
     {
-        return $this->description;
+        return $this->type;
     }
+
+
+
+
 }
