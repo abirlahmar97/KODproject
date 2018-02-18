@@ -71,6 +71,7 @@ class Babysitter
 
     /**
      * @ORM\OneToOne(targetEntity="MediaBundle\Entity\Photo", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
      */
     private $image;
 

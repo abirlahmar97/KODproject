@@ -3,7 +3,7 @@
 {% block main %}
 <div class="panel panel-default">
     <div class="panel-heading clearfix">
-        <h4 class="panel-title">Modifier un article</h4>
+        <h4 class="panel-title">Modifier les informations d'un babysitter</h4>
     </div>
     <div class="panel-body">
         {{ form_start(form) }}
@@ -63,7 +63,7 @@
                     {{ form_label(form.image, 'Image') }}
                 </div>
                 <div class="col-sm-10">
-                    {{ form_widget(form.image.file, { 'attr' : { 'class' : 'form-control' } }) }}
+                    {{ form_widget(form.image.file, { 'attr' : { 'class' : 'form-control'} }) }}
                 </div>
             </div>
             <button class="btn btn-success">Modifier</button>

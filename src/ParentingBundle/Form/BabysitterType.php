@@ -22,7 +22,6 @@ class BabysitterType extends AbstractType
                 'choices' => array(
                     'Occupée' => 'Occupée',
                     'Libre' => 'Libre',
-
                 )))
 
             ->add('address',ChoiceType::class, array(
@@ -33,7 +32,9 @@ class BabysitterType extends AbstractType
                     'Bardo' => 'Bardo',
                 )))
             ->add('price')
-            ->add('image',PhotoType::class);
+            ->add('image',PhotoType::class, [
+                'required' => false
+            ]);
     }/**
      * {@inheritdoc}
      */

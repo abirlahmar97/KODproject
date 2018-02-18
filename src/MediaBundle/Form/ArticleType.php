@@ -1,39 +1,55 @@
 <?php
 
-namespace UserBundle\Form;
+namespace MediaBundle\Form;
 
+use Doctrine\ORM\Mapping\Entity;
 use ShopBundle\Repository\CategoryRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ComplaintType extends AbstractType
+class ArticleType extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('description')
+        $builder
+
+            ->add('description')
+            ->add('src')
+            ->add('title')
             ->add('subject')
+            ->add('auteur')
+            ->add('type',ChoiceType::class, array(
+                'choices' => array(
+                    'Aides et services' => 'Aides et services',
+                    'Education' => 'Education',
+
+                )))
             ->add('category',EntityType::class, array(
                 'class' => 'ShopBundle\Entity\Category',
-                'choice_label' => 'name',
                 'query_builder' => function (CategoryRepository $er) {
                     return $er->createQueryBuilder('u')
-                        ->where("u.type='Complaint'");},
-                'multiple' => false
+                       ->where("u.type='Article'");},
+                'choice_label' => 'name',
 
-                ))
+            ))
+            ->add('date')
+            ->add('image',PhotoType::class)
         ;
+
     }/**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'UserBundle\Entity\Complaint'
+            'data_class' => 'MediaBundle\Entity\Article'
         ));
     }
 
@@ -42,7 +58,7 @@ class ComplaintType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'userbundle_complaint';
+        return 'mediabundle_article';
     }
 
 

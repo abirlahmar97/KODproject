@@ -24,4 +24,7 @@ delete_complaint:
 front_read_complaint:
     path:     /Parent/Complaint/read
     defaults: { _controller: UserBundle:Complaint:front_read }
+create_category:
+    path:     /Parent/Complaint/Category/Add
+    defaults: { _controller: UserBundle:Complaint:add_category }
 
