@@ -63,6 +63,7 @@
                                 <option selected value="-1">Actions</option>
                                 <option value="0">Supprimer</option>
                                 <option value="1">Désactiver</option>
+                                <option value="2">Activer</option>
                             </select>
                             <button class="btn btn-blue" id="action_ok">OK</button>
                             <label class="control-label" id="user_count" style="padding-left: 10px;"></label>
@@ -73,6 +74,9 @@
                     <input type="hidden" class="users" name="users">
                 </form>
                 <form action="{{ path('users_blk_disable') }}" id="dis_form" method="post">
+                    <input type="hidden" class="users" name="users">
+                </form>
+                <form action="{{ path('users_blk_enable') }}" id="en_form" method="post">
                     <input type="hidden" class="users" name="users">
                 </form>
             </div>
@@ -133,6 +137,8 @@
                     $('#del_form').submit();
                 else if ($('#action_blk').val() === '1')
                     $('#dis_form').submit();
+                else if ($('#action_blk').val() === '2')
+                    $('#en_form').submit();
             })
         })
     </script>

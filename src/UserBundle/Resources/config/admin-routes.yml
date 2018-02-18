@@ -29,3 +29,7 @@ users_blk_delete:
 users_blk_disable:
     path:     /users/disable
     defaults: { _controller: UserBundle:Admin:disableUsersBulk }
+
+users_blk_enable:
+    path:     /users/enable
+    defaults: { _controller: UserBundle:Admin:enableUsersBulk }

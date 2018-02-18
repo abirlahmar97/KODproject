@@ -1,0 +1,49 @@
+{% extends 'layout.html.twig' %}
+
+{% block main %}
+<section class="pageTitleSection">
+    <div class="container">
+        <div class="pageTitleInfo">
+            <h2>Contacter</h2>
+            <ol class="breadcrumb">
+                <li><a href="{{ path('user_homepage') }}">Accueil</a></li>
+                <li class="active">Babysitter</li>
+            </ol>
+        </div>
+    </div>
+</section>
+<section class="mainContent full-width clearfix conactSection">
+    <div class="container">
+        <div class="row">
+
+            <h4 class="text-center">Ecrivez votre message à {{ babysitter.firstName }} {{ babysitter.lastName }}</h4>
+    <div class="row">
+    <div class="col-md-6 col-md-offset-3 col-xs-12">
+        <div class="homeContactContent">
+            <form action="#" method="POST" role="form">
+                <div class="form-group">
+                    <i class="fa fa-user"></i>
+                    <input type="text" class="form-control border-color-1" id="exampleInputEmail1" placeholder="Sujet">
+                </div>
+                <div class="form-group">
+                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                    <input type="text" class="form-control border-color-2" id="exampleInputEmail2" placeholder="Adresse Email">
+                </div>
+                <div class="form-group">
+                    <i class="fa fa-comments" aria-hidden="true"></i>
+                    <textarea class="form-control border-color-4" placeholder="Rédigez votre message"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Envoyer</button>
+            </form>
+        </div>
+    </div>
+    </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+

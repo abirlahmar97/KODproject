@@ -1,0 +1,31 @@
+<li class="active">
+    <a href="{{ path('admin_homepage') }}">
+        <i class="icon-gauge"></i><span class="title">Dashboard</span>
+    </a>
+</li>
+<li>
+    <a href="{{ path('users_list') }}">
+        <i class="fa fa-users"></i><span class="title">Utilisateurs</span>
+    </a>
+</li>
+<li>
+    <a href="{{ path('games_list') }}">
+        <i class="fa fa-gamepad"></i><span class="title">Jeux</span>
+    </a>
+</li>
+
+<ul id="side-nav" class="main-menu navbar-collapse collapse">
+    <li class="fe feed-element"><a><i class="fa fa-users"></i><span class="title">espace prof</span></a>
+        <ul class="nav collapse">
+            <li><a href="{{ path('teacher_add') }}"><span class="title">ajouter prof</span></a></li>
+            <li><a href="{{ path('subject_add') }}"><span class="title">ajouter matiere</span></a></li>
+
+            <li><a href="{{ path('read_teachers1') }}"><span class="title">delete</span></a></li>
+        </ul>
+    </li>
+    <li class="has-sub"><a><i class="fa fa-users"></i><span class="title">espace media </span></a>
+        <ul class="nav collapse">
+            <li><a href="{{ path('video_add') }}"><span class="title">ajouter  video</span></a></li>
+        </ul>
+    </li>
+</ul>

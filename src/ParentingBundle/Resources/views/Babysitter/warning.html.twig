@@ -1,0 +1,18 @@
+{% extends 'layout.html.twig' %}
+
+{% block main %}
+    <section class="mainContent full-width clearfix conactSection">
+        <div class="container">
+            <div class="row" >
+                <div class="col-md-6 col-md-offset-3 col-xs-12">
+    <div class="alert alert-warning fade in alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <strong>Warning!</strong> Le babysitter {{ babysitter.firstName }} {{ babysitter.lastName }} n'est malheureusement pas disponible <a class="alert-link" href="{{ path('front_read_babysitter') }}">Retourner à la liste de babysitters</a>
+    </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+
+

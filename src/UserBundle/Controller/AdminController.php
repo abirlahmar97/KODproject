@@ -50,15 +50,6 @@ class AdminController extends Controller
         return $this->redirectToRoute('users_list');
     }
 
-    public function disableUserAction($id, Request $request){
-        $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository('UserBundle:User')->find($id);
-        $user->setEnabled(false);
-        $em->flush();
-        $request->getSession()->getFlashBag()->add('notice', "L'utilisateur a été supprimé avec succes");
-        return $this->redirectToRoute('users_list');
-    }
-
     public function deleteUsersBulkAction(Request $request){
         $users = $request->get('users');
         $users = explode(',', $users);
@@ -72,6 +63,15 @@ class AdminController extends Controller
         return $this->redirectToRoute('users_list');
     }
 
+    public function disableUserAction($id, Request $request){
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('UserBundle:User')->find($id);
+        $user->setEnabled(false);
+        $em->flush();
+        $request->getSession()->getFlashBag()->add('notice', "L'utilisateur a été désactivé");
+        return $this->redirectToRoute('users_list');
+    }
+
     public function disableUsersBulkAction(Request $request){
         $users = $request->get('users');
         $users = explode(',', $users);
@@ -82,6 +82,19 @@ class AdminController extends Controller
         }
         $em->flush();
         $request->getSession()->getFlashBag()->add('notice', "L'utilisateur a été désactivés");
+        return $this->redirectToRoute('users_list');
+    }
+
+    public function enableUsersBulkAction(Request $request){
+        $users = $request->get('users');
+        $users = explode(',', $users);
+        $em = $this->getDoctrine()->getManager();
+        foreach ($users as $id){
+            $user = $em->getRepository('UserBundle:User')->find($id);
+            $user->setEnabled(true);
+        }
+        $em->flush();
+        $request->getSession()->getFlashBag()->add('notice', "Les utilisateurs a sélectionnés ont été activés");
         return $this->redirectToRoute('users_list');
     }
 }

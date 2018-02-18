@@ -3,5 +3,25 @@ user_homepage:
     defaults: { _controller: UserBundle:Home:index }
 
 edit_profile:
-    path:     /profile/edit
+    path:     /profile/manage
     defaults: { _controller: UserBundle:Home:editProfile }
+
+create_complaint:
+    path:     /Parent/Complaint/create
+    defaults: { _controller: UserBundle:Complaint:create }
+
+read_complaint:
+    path:     /Admin/Complaint/read
+    defaults: { _controller: UserBundle:Complaint:read }
+
+update_complaint:
+    path:     /Admin/Complaint/update{id}
+    defaults: { _controller: UserBundle:Complaint:update }
+
+delete_complaint:
+    path:     /Admin/Complaint/delete{id}
+    defaults: { _controller: UserBundle:Complaint:delete }
+front_read_complaint:
+    path:     /Parent/Complaint/read
+    defaults: { _controller: UserBundle:Complaint:front_read }
+
