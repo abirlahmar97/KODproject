@@ -1,32 +1,34 @@
 <?php
 
-namespace UserBundle\Form;
+namespace ShopBundle\Form;
 
-use MediaBundle\Form\PhotoType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UserInfosType extends AbstractType
+class UtilisateursAdressesType extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('firstname')
-            ->add('lastname')
-            ->add('phone')
-            ->add('region')
-            ->add('photo', PhotoType::class);
+        $builder->add('nom')
+            ->add('prenom')
+            ->add('telephone')
+            ->add('adresse')
+            ->add('cp')
+            ->add('region');
+        //->add('utilisateur')
+
     }/**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'UserBundle\Entity\UserInfos'
+            'data_class' => 'ShopBundle\Entity\UtilisateursAdresses'
         ));
     }
 
@@ -35,7 +37,7 @@ class UserInfosType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'userbundle_userinfos';
+        return 'shopbundle_utilisateursadresses';
     }
 
 

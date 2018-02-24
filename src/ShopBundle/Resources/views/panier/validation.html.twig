@@ -1,0 +1,112 @@
+{% extends '::layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('plugins/owl-carousel/owl.carousel.css') }}" media="screen">
+    <link rel="stylesheet" href="{{ asset('js/ion.rangeSlider-2.2.0/css/ion.rangeSlider.css') }}">
+    <link rel="stylesheet" href="{{ asset('js/ion.rangeSlider-2.2.0/css/ion.rangeSlider.skinFlat.css') }}">
+{% endblock %}
+{% block main %}
+    <section class="pageTitleSection">
+        <div class="container">
+            <div class="pageTitleInfo">
+                <h2>Checkout Step 1</h2>
+                <ol class="breadcrumb">
+                    <li><a href="index.html">Home</a></li>
+                    <li class="active">Checkout Step 1</li>
+                </ol>
+            </div>
+            </div>
+        </div>
+    </section>
+    <br> </br>
+    <div class="row progress-wizard" style="border-bottom:0;">
+
+        <div class="col-sm-4 col-xs-12 progress-wizard-step complete">
+            <div class="progress"><div class="progress-bar"></div></div>
+            <a href="checkout-step-1.html" class="progress-wizard-dot">
+                <i class="fa fa-user" aria-hidden="true"></i>
+            </a>
+            <div class="progressInfo">1. Personal info</div>
+        </div>
+
+        <div class="col-sm-4 col-xs-12 progress-wizard-step active">
+            <div class="progress"><div class="progress-bar"></div></div>
+            <a href="checkout-step-2.html" class="progress-wizard-dot">
+                <i class="fa fa-usd" aria-hidden="true"></i>
+            </a>
+            <div class="progressInfo">2. Payment Mathod</div>
+        </div>
+
+        <div class="col-sm-4 col-xs-12 progress-wizard-step incomplete">
+            <div class="progress"><div class="progress-bar"></div></div>
+            <a href="checkout-step-3.html" class="progress-wizard-dot">
+                <i class="fa fa-check" aria-hidden="true"></i>
+            </a>
+            <div class="progressInfo">3. Confirmation</div>
+        </div>
+    </div>
+    </div>
+
+                <h2>Valider mon panier</h2>
+                <table class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>Références</th>
+                        <th>Quantité</th>
+                        <th>Prix unitaire</th>
+                        <th>Total HT</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for produit in commande.commande.produit %}
+                        <tr>
+                            <td>{{ produit.reference }}</td>
+                            <td>
+                                {{ produit.quantite }}
+                            </td>
+                            <td>{{ produit.prixHT }} €</td>
+                            <td>{{ produit.prixHT * produit.quantite }} DT</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+                <dl class="dl-horizontal pull-right">
+                    <dt>Total HT :</dt><dd>{{ commande.commande.prixHT }} €</dd>
+
+
+                </dl>
+
+                <div class="span3 pull-left">
+                    <dl class="pull-left">
+                        <dt><h4>Adresse de livraison</h4></dt>
+                        <dt>{{ commande.commande.livraison.prenom }} {{ commande.commande.livraison.nom }}</dt>
+                        <dt>{{ commande.commande.livraison.adresse }}</dt>
+                        <dt>{{ commande.commande.livraison.cp }} {{ commande.commande.livraison.region}}
+                        </dt>
+                    </dl>
+                </div>
+
+                <div class="span3 pull-left">
+                    <dl class="pull-left">
+                        <dt><h4>Adresse de facturation</h4></dt>
+                        <dt>{{ commande.commande.facturation.prenom }} {{ commande.commande.facturation.nom }}</dt>
+                        <dt>{{ commande.commande.facturation.adresse }}</dt>
+                        <dt>{{ commande.commande.facturation.cp }} {{ commande.commande.facturation.region }}</dt>
+                    </dl>
+                </div>
+
+                <div class="clearfix"></div>
+                <form action="{{ path('validationCommande', { 'id' : commande.id }) }}" method="POST"/>
+                <input name="token" type="hidden" value="{{ commande.commande.token }}" />
+
+                <input name="date" type="hidden" value="{{ commande.date|date('dmyhms') }}" />
+                <button type="submit" class="btn btn-success pull-right" href="{{ path('factures') }}">Payer</button>
+                </form>
+
+                <a href="{{ path('livraison') }}" class="btn btn-primary">retour</a>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

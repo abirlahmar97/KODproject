@@ -19,7 +19,7 @@ class ProductProviderController extends Controller
             $em=$this->getDoctrine()->getManager();
             $em->persist($product);
             $em->flush();
-            return $this->redirectToRoute("show_product");
+            return $this->redirectToRoute("show_products");
         }
         return $this->render('ShopBundle:Provider/Products:create.html.twig', array(
             "form"=>$form->createView()
@@ -37,7 +37,7 @@ class ProductProviderController extends Controller
             $em=$this->getDoctrine()->getManager();
             $em->persist($product);
             $em->flush();
-            return $this->redirectToRoute('show_product');
+            return $this->redirectToRoute('show_products');
         }
         return $this->render('@Shop/Provider/Products/update_product.html.twig', array(
            'form'=>$Form->createView()

@@ -69,6 +69,19 @@ class Product
      */
     private $tva;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="gender", type="string", length=100)
+     */
+    private $gender;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="age", type="integer")
+     */
+    private $age;
 
     /**
      * Get id
@@ -246,5 +259,53 @@ class Product
     public function getImg()
     {
         return $this->img;
+    }
+
+    /**
+     * Set gender
+     *
+     * @param string $gender
+     *
+     * @return Product
+     */
+    public function setGender($gender)
+    {
+        $this->gender = $gender;
+
+        return $this;
+    }
+
+    /**
+     * Get gender
+     *
+     * @return string
+     */
+    public function getGender()
+    {
+        return $this->gender;
+    }
+
+    /**
+     * Set age
+     *
+     * @param integer $age
+     *
+     * @return Product
+     */
+    public function setAge($age)
+    {
+        $this->age = $age;
+
+        return $this;
+    }
+
+    /**
+     * Get age
+     *
+     * @return integer
+     */
+    public function getAge()
+    {
+        return $this->age;
     }
 }

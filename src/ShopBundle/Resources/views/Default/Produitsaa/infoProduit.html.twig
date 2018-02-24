@@ -1,0 +1,11 @@
+<script src="{{ asset('js/jquery.min.js') }}"></script>
+    {# ... #}
+    <div id="fos_comment_thread" data-thread="{{ thread.id }}">
+
+        {% include '@FOSComment/Thread/comments.html.twig' with {
+        'comments': comments,
+        'thread': thread
+        } %}
+
+    </div>
+    {# ... #}

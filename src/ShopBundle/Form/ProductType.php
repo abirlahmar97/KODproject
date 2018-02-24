@@ -7,6 +7,7 @@ use MediaBundle\Form\PhotoType;
 use ShopBundle\Repository\CategoryRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -32,7 +33,13 @@ class ProductType extends AbstractType
                 'multiple' => false
             ))
             ->add('img', PhotoType::class)
-            ->add('tva');
+            ->add('tva')
+            ->add('gender',ChoiceType::class,array('choices' =>array(
+                'Garçon' => 'Garçon',
+                'fille' => 'fille',
+            )))
+            ->add('age');
+
     }/**
      * {@inheritdoc}
      */

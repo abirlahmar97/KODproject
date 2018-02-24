@@ -65,3 +65,40 @@ read_fournisseur:
 create_fournisseur:
     path:     /admin/providers/add
     defaults: { _controller: ShopBundle:Fournisseur:createFournisseur }
+
+produits:
+    path:     /parent/produits
+    defaults: { _controller: ShopBundle:Product:produits }
+
+livraison:
+    path:     /parent/livraison
+    defaults: { _controller: ShopBundle:Panier:livraison }
+
+produitsss:
+    path:     /parent/produitsss
+    defaults: { _controller: ShopBundle:Product:something }
+
+validation:
+    path:     /parent/validation
+    defaults: { _controller: ShopBundle:Panier:validation }
+
+menu:
+    path:     /parent/menu
+    defaults: { _controller: ShopBundle:Panier:menu }
+
+livraisonAdresseSuppression:
+    path:     /parent/suppaddress/{id}
+    defaults: { _controller: ShopBundle:Panier:adresseSuppression }
+
+preparecommande:
+    path:     /parent/commande
+    defaults: { _controller: ShopBundle:Commande:prepareCommande }
+
+validationCommande:
+    path:  /api/banque/{id}
+    defaults: { _controller: ShopBundle:Commande:validationCommande }
+
+relatedproduct_bycategory:
+    path:     /parent/products/category/{category}
+    defaults: { _controller: ShopBundle:Product:relatedcategorie }
+

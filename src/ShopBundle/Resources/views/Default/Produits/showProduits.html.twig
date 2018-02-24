@@ -2,6 +2,8 @@
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('plugins/owl-carousel/owl.carousel.css') }}" media="screen">
+    <link rel="stylesheet" href="{{ asset('js/ion.rangeSlider-2.2.0/css/ion.rangeSlider.css') }}">
+    <link rel="stylesheet" href="{{ asset('js/ion.rangeSlider-2.2.0/css/ion.rangeSlider.skinFlat.css') }}">
 {% endblock %}
 {% block main %}
     <section class="pageTitleSection">
@@ -18,30 +20,177 @@
 
     <section class="mainContent full-width clearfix productSection">
         <div class="container">
+            <div class="col-md-3 col-sm-5 col-xs-12 pull-left">
+                <aside>
+                    <div class="panel panel-default courseSidebar">
+                        <div class="panel-heading bg-color-1 border-color-1">
+                            <h3 class="panel-title">Search</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Enter Your Search" aria-describedby="basic-addon2">
+                                <span class="input-group-addon" id="basic-addon2"><input class="btn btn-primary bg-color-1" type="submit" value="Search"></span>
+                            </div>
+                        </div>
+                    </div>
+                    {% set color = random(5)+1 %}
+                    <div class="panel panel-default courseSidebar">
+                        <div class="panel-heading bg-color-{{ color}} border-color-{{ color }}">
+                            <h3 class="panel-title">Filter By</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="lightDrop">
+                                <select name="guiest_id4" id="guiest_id4" class="select-drop" sb="70534562" style="display: none;">
+                                    <option value="Garçon">Garçon</option>
+                                    <option value="fille">Fille</option>
+                                </select>
+                            </div>
+                            <div class="lightDrop">
+                                <select name="guiest_id5" id="guiest_id5" class="select-drop" sb="64099993" style="display: none;">
+                                    <option value="0">Ages</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+
+                                </select><div id="sbHolder_64099993" class="sbHolder"><a id="sbToggle_64099993" href="#" class="sbToggle"></a><a id="sbSelector_64099993" href="#" class="sbSelector">Ages</a><ul id="sbOptions_64099993" class="sbOptions" style="display: none;"><li><a href="#0" rel="0">Ages</a></li><li><a href="#1" rel="1">3</a></li><li><a href="#2" rel="2">4</a></li><li><a href="#3" rel="3">5</a></li></ul></div>
+                            </div>
+                            <div class="priceRange">
+                                <div class="price-slider-inner">
+                      <span class="amount-wrapper">
+                        Price:
+                        <input type="text" id="price-amount-1" readonly="">
+                        <strong>-</strong>
+                        <input type="text" id="price-amount-2" readonly="">
+                      </span>
+                                    <input type="text" id="example_id" name="example_name" value="" />
+                                </div>
+                                <input class="btn btn-primary bg-color-2" id="filter" type="button" value="Filter">
+                                <!-- <span class="priceLabel">Price: <strong>$12 - $30</strong></span> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default courseSidebar">
+                        <div class="panel-heading bg-color-5 border-color-5">
+                            <h3 class="panel-title">Categories</h3>
+                        </div>
+                        <div class="panel-body">
+                            <ul class="list-unstyled categoryItem">
+                                {{ render(controller('ShopBundle:Product:listCategories')) }}
+                            </ul>
+                        </div>
+                    </div>
+                </aside>
+            </div>
             {% for row in produits | batch(4) %}
             <div class="row">
                 {% for produit in row %}
-                <div class="col-md-3 col-xs-6">
-                    <div class="box bg-color-1">
-                        <div class="box-img border-color-1 text-center">
+                    {% set color = random(5)+1 %}
+                <div data-price="{{ produit.price }}" data-age="{{produit.age}}" data-gender="{{produit.gender}}" class="col-md-3 col-xs-6 price">
+                    <div class="box bg-color-{{ color }}">
+                        <div class="box-img border-color-{{ color }} text-center">
                             <a href="{{ path('infoProduits',{'id':produit.id}) }}">
                                 <img src="{{ asset(produit.img.webPath) }}" alt="image" class="img-responsive">
                             </a>
-                            <a data-toggle="modal" href="#" class="btn-block"><i class="fa fa-eye" aria-hidden="true"></i>Quick View</a>
+                            <a data-toggle="modal" href=".quick-view" class="btn-block"><i class="fa fa-eye" aria-hidden="true"></i>Quick View</a>
                         </div>
                         <div class="box-info">
                             <h4>{{ produit.name }}</h4>
                             <div class="price">
-                                <span>{{ produit.price }} DT </span>
+                                <span >{{ produit.price }} DT </span>
                             </div>
+                            {% if panier[produit.id] is not defined %}
                             <a href="{{ path('ajouterpanier',{'id':produit.id}) }}" class="btn btn-primary "><i class="fa fa-shopping-basket " aria-hidden="true"></i>Add to Cart</a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
                 {% endfor %}
             </div>
             {% endfor %}
+
         </div>
+
     </section>
 
+    <div class="modal fade quick-view" tabindex="-1" role="dialog" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="container-fluid">
+                    <div class="row">
+
+                        <div class="col-md-6 col-sm-7 col-xs-12">
+                            <div class="product-gallery text-center">
+                                <img src="img/single-product/preview01.jpg" alt="Product" class="img-responsive">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-5 col-xs-12">
+                            <div class="product-info">
+                                <h1 class="product-title">Barbie Racing Car</h1>
+                                <div class="price">
+                                    <span>$50</span>
+                                    <span><del>$60</del></span>
+                                </div>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.</p>
+                                <div class="add-cart">
+                                    <div class="count-input">
+                                        <input class="quantity btn-primary" type="text" value="1">
+                                        <a class="incr-btn incr-up" data-action="decrease" href="#"><i class="fa fa-caret-up" aria-hidden="true"></i></a>
+                                        <a class="incr-btn incr-down" data-action="increase" href="#"><i class="fa fa-caret-down" aria-hidden="true"></i></a>
+                                    </div>
+                                    <a href="cart-page.html" class="add-to-cart btn btn-primary">Add to Cart</a>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/ion.rangeSlider-2.2.0/js/ion-rangeSlider/ion.rangeSlider.min.js') }}"></script>
+    <script>
+        $(document).ready(function(){
+            $("#example_id").ionRangeSlider(
+                {
+                    type: "double",
+                    grid: true,
+                    min: 10,
+                    max: 100,
+                    step: 1,
+                    suffix: "DT"
+                }
+            );
+            $('#filter').click(function(){
+                var prix=$("#example_id").val();
+                var prix_min=prix.slice(0, prix.indexOf(";"));
+                var prix_max=prix.slice(prix.indexOf(";")+1, prix.length);
+                console.log(prix_max);
+                console.log(prix_min);
+                var gender=$("#guiest_id4").val();
+                var age=$("#guiest_id5").val();
+                console.log(gender);
+                $(".price").each(function(index, el) {
+                    if(($(this).data("price")<prix_min || $(this).data("price")>prix_max )|| $(this).data("gender")!=gender || $(this).data("age")!=age)
+                    {
+                        $(this).hide();
+                    }
+                    else{
+                        $(this).show();
+                    }
+                });
+
+
+            })
+        });
+
+    </script>
+{% endblock javascripts %}

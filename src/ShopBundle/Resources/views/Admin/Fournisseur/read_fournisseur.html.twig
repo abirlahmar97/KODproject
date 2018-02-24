@@ -1,4 +1,4 @@
-{%extends "back-layout.html.twig" %}
+{% extends "back-layout.html.twig" %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -7,392 +7,126 @@
 {% endblock %}
 
 {% block main %}
-
-
-    <div class="header-secondary row">
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb breadcrumb-2">
+        <li><a href="{{ path('admin_homepage') }}"><i class="fa fa-home"></i>Home</a></li>
+        <li class="active"><strong>Utilisateurs</strong></li>
+    </ol>
+    <div class="row">
         <div class="col-lg-12">
-            <div class="page-heading clearfix">
-                <h1 class="page-title pull-left">Users</h1><button class="btn btn-primary btn-sm btn-add">Add New</button>
-            </div>
-            <!-- Breadcrumb -->
-            <ol class="breadcrumb breadcrumb-2">
-                <li><a href="index.html"><i class="fa fa-home"></i>Home</a></li>
-                <li><a href="short-view.html">Grid Views</a></li>
-                <li class="active"><strong>Providers</strong></li>
-            </ol>
-            <div class="tab-wrapper clearfix">
-                <ul class="nav nav-pills nav-pulls-default pull-left">
-                    <li role="presentation"><a href="short-view.html">STYLE 1</a></li>
-                    <li class="active" role="presentation"><a href="detailed-view.html">STYLE 2</a></li>
-                    <li role="presentation"><a href="detailed-view-2.html">STYLE 3</a></li>
-                </ul>
-                <ul class="nav nav-pills nav-icons pull-right">
-                    <li class="active" role="presentation"><a href="#"><i class="icon-layout"></i></a></li>
-                    <li role="presentation"><a href="#"><i class="icon-list"></i></a></li>
-                    <li role="presentation" class="active"><a href="#" class="toggle-filter" data-block-id="filter-box"><i class="fa fa-filter"></i></a></li>
-                </ul>
+            <div class="panel panel-default">
+                <div class="panel-heading clearfix">
+                    <h4 class="panel-title">Liste des fournisseurs</h4>
+                    <ul class="panel-tool-options">
+                        <li><a href="{{ path('users_add') }}"><i class="fa fa-user-plus"></i> Ajouter</a></li>
+                    </ul>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover dataTables-example" >
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th>Id</th>
+                                <th>Email</th>
+                                <th>Pseudo</th>
+                                <th>Etat</th>
+                                <th>Derniére connection</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for provider in providers %}
+                                <tr class="gradeX">
+                                    <td><input type="checkbox" name="{{ provider.id }}"></td>
+                                    <td>{{ provider.id }}</td>
+                                    <td>{{ provider.email }}</td>
+                                    <td>{{ provider.username }}</td>
+                                    <td>{{ provider.enabled ? "Activé" : "Désactivé" }}</td>
+                                    <td>{{ provider.lastLogin | date('j F, Y H:i') }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <div class="row" style="margin-bottom: 0">
+                        <div class="form-inline col-md-12">
+                            <select class="form-control" id="action_blk">
+                                <option selected value="-1">Actions</option>
+                                <option value="0">Supprimer</option>
+                                <option value="1">Désactiver</option>
+                            </select>
+                            <button class="btn btn-blue" id="action_ok">OK</button>
+                            <label class="control-label" id="user_count" style="padding-left: 10px;"></label>
+                        </div>
+                    </div>
+                </div>
+                <form action="{{ path('users_blk_delete') }}" id="del_form" method="post">
+                    <input type="hidden" class="users" name="users">
+                </form>
+                <form action="{{ path('users_blk_disable') }}" id="dis_form" method="post">
+                    <input type="hidden" class="users" name="users">
+                </form>
             </div>
         </div>
     </div>
-    <div class="row filter-wrapper visible-box gray-bg" id="filter-box">
-        <div class="col-lg-12">
-            <div class="filter-header">
-                <button aria-label="Close" class="close toggle-filter" type="button" data-block-id="filter-box"><i class="icon-cancel"></i></button>
-                <h3 class="title">Filter Members</h3>
-            </div>
-            <form class="form-inline">
-                <div class="form-group">
-                    <label class="form-label">Keywords</label>
-                    <input type="text" placeholder="Separate by commas..." class="form-control">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Member Since</label>
-                    <select class="select2 form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
-                        <option>2008</option>
-                        <option>2009</option>
-                        <option>2015</option>
-                    </select><span class="select2 select2-container select2-container--default" dir="ltr" style="width: 76px;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-hkau-container"><span class="select2-selection__rendered" id="select2-hkau-container" title="2008">2008</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">User Roles</label>
-                    <div class="checkbox-group">
-                        <div class="checkbox checkbox-replace">
-                            <input type="checkbox" id="admin">
-                            <label for="admin">Admin</label>
-                        </div>
-                        <div class="checkbox checkbox-replace">
-                            <input type="checkbox" id="operator">
-                            <label for="operator">Operator</label>
-                        </div>
-                        <div class="checkbox checkbox-replace">
-                            <input type="checkbox" id="customer">
-                            <label for="customer">Customer</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group filter-btn">
-                    <button class="btn btn-default">Filter</button>
-                </div>
-            </form>
-        </div>
-    </div>
-    <div class="main-content">
+{% endblock %}
 
-        <!-- List header -->
-        <div class="row datatable-wrapper form-inline">
-            <div class="col-lg-12">
-                <div class="data-col-first clearfix">
-                    <div class="col-checkbox">
-                        <div class="form-checkbox">
-                            <input type="checkbox" value="checked" name="checked"> <span class="check"><i class="fa fa-check"></i></span>
-                        </div>
-                    </div>
-                    <div class="col-selectbox">
-                        <select class="form-control input-sm">
-                            <option>Bulk Action</option>
-                            <option>Bulk Action</option>
-                            <option>Bulk Action</option>
-                        </select>&nbsp;
-                        <button class="btn btn-primary btn-sm">Go</button>
-                    </div>
-                </div>
-                <div class="data-col-last clearfix">
-                    <div class="col-selectbox">
-                        <select class="form-control input-sm">
-                            <option>Sort By</option>
-                            <option>Sort By</option>
-                            <option>Sort By</option>
-                        </select>
-                    </div>
-                    <div class="col-selectbox">
-                        <select class="form-control input-sm">
-                            <option>25 Records</option>
-                            <option>10 Records</option>
-                            <option>50 Records</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- /list header -->
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('plugins/datatables/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables/extensions/Buttons/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables/extensions/Buttons/js/buttons.html5.js') }}"></script>
+    <script src="{{ asset('plugins/datatables/extensions/Buttons/js/buttons.colVis.js') }}"></script>
+    <script>
+        $(function () {
+            $('table').DataTable({
+                language : {
+                    url : "{{ asset('plugins/datatables/extensions/french.json') }}"
+                },
+                dom: '<"html5buttons" B>lTfgitp',
+                buttons: [
+                    {
+                        extend: 'copyHtml5',
+                        exportOptions: {
+                            columns: [ 0, ':visible' ]
+                        }
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, 4 ]
+                        }
+                    },
+                    'colvis'
+                ]
+            });
+            var users = [];
+            $(':checkbox').change(function () {
+                users = [];
+                $(':checkbox:checked').each(function (i) {
+                    users[i] = $(this).attr('name');
+                });
+                if(users.length > 0)
+                    $('#user_count').text(users.length + " élément(s) sélectionné(s)");
+                else
+                    $('#user_count').text("");
+            });
 
-        <!-- Card grid view -->
-        <div class="cards-container">
-            <div class="row">
-
-                <div class="col-md-4 col-sm-6">
-
-                    <!-- Card -->
-                    <div class="card">
-
-                        <!-- Card header -->
-                        <div class="card-header primary-bg">
-
-                            <!-- Card photo -->
-                            <div class="card-photo">
-                                <img title="Alex Dolgove" alt="Alex Dolgove" src="images/alex-dolgove.png" class="img-circle avatar size-105">
-                            </div>
-                            <!-- /card photo -->
-
-                            <!-- Card short description -->
-                            <div class="card-short-description media-middle">
-                                <h5>Domnic Brown</h5>
-                                <p>Singer</p>
-                            </div>
-                            <!-- /card short description -->
-
-                            <!-- Card action dropdown -->
-                            <div class="action-dropdown dropdown">
-                                <a data-toggle="dropdown" href="#/" aria-expanded="true" class="btn btn-lg btn-fab"><i class="fa fa-ellipsis-v"></i></a>
-                                <ul class="dropdown-menu dropdown-menu-right">
-                                    <li><a href="">Change Setting</a></li>
-                                    <li><a href="">View Profile</a></li>
-                                    <li><a href="">Send Message</a></li>
-                                </ul>
-                            </div>
-                            <!-- /card action dropdown -->
-                        </div>
-                        <!-- /card header -->
-
-                        <!-- Card content -->
-                        <div class="card-content">
-                            <p class="badges"><span class="badge badge-bordered">8 Albums</span><span class="badge badge-bordered">32 Songs</span></p>
-                            <p>Amet, consectetur adipiscing elit. Vivamus nunc ligula, faucibus ac accumsan quis, venenatis mattis lorem. Fusce suscipit finibus lectus</p>
-                        </div>
-                        <!-- /card content -->
-                    </div>
-                    <!-- /card -->
-                </div>
-
-                <div class="col-md-4 col-sm-6">
-
-                    <!-- Card -->
-                    <div class="card">
-
-                        <!-- Card header -->
-                        <div class="card-header primary-bg">
-
-                            <!-- Card photo -->
-                            <div class="card-photo">
-                                <img title="Alex Dolgove" alt="Alex Dolgove" src="images/alex-dolgove.png" class="img-circle avatar size-105">
-                            </div>
-                            <!-- /card photo -->
-
-                            <!-- Card short description -->
-                            <div class="card-short-description media-middle">
-                                <h5>Domnic Brown</h5>
-                                <p>Singer</p>
-                            </div>
-                            <!-- /card short description -->
-
-                            <!-- Card action dropdown -->
-                            <div class="action-dropdown dropdown">
-                                <a data-toggle="dropdown" href="#/" aria-expanded="true" class="btn btn-lg btn-fab"><i class="fa fa-ellipsis-v"></i></a>
-                                <ul class="dropdown-menu dropdown-menu-right">
-                                    <li><a href="">Change Setting</a></li>
-                                    <li><a href="">View Profile</a></li>
-                                    <li><a href="">Send Message</a></li>
-                                </ul>
-                            </div>
-                            <!-- /card action dropdown -->
-                        </div>
-                        <!-- /card header -->
-
-                        <!-- Card content -->
-                        <div class="card-content">
-                            <p class="badges"><span class="badge badge-bordered">8 Albums</span><span class="badge badge-bordered">32 Songs</span></p>
-                            <p>Amet, consectetur adipiscing elit. Vivamus nunc ligula, faucibus ac accumsan quis, venenatis mattis lorem. Fusce suscipit finibus lectus</p>
-                        </div>
-                        <!-- /card content -->
-                    </div>
-                    <!-- /card -->
-                </div>
-
-                <div class="col-md-4 col-sm-6">
-
-                    <!-- Card -->
-                    <div class="card">
-
-                        <!-- Card header -->
-                        <div class="card-header primary-bg">
-
-                            <!-- Card photo -->
-                            <div class="card-photo">
-                                <img title="Alex Dolgove" alt="Alex Dolgove" src="images/alex-dolgove.png" class="img-circle avatar size-105">
-                            </div>
-                            <!-- /card photo -->
-
-                            <!-- Card short description -->
-                            <div class="card-short-description media-middle">
-                                <h5>Domnic Brown</h5>
-                                <p>Singer</p>
-                            </div>
-                            <!-- /card short description -->
-
-                            <!-- Card action dropdown -->
-                            <div class="action-dropdown dropdown">
-                                <a data-toggle="dropdown" href="#/" aria-expanded="true" class="btn btn-lg btn-fab"><i class="fa fa-ellipsis-v"></i></a>
-                                <ul class="dropdown-menu dropdown-menu-right">
-                                    <li><a href="">Change Setting</a></li>
-                                    <li><a href="">View Profile</a></li>
-                                    <li><a href="">Send Message</a></li>
-                                </ul>
-                            </div>
-                            <!-- /card action dropdown -->
-                        </div>
-                        <!-- /card header -->
-
-                        <!-- Card content -->
-                        <div class="card-content">
-                            <p class="badges"><span class="badge badge-bordered">8 Albums</span><span class="badge badge-bordered">32 Songs</span></p>
-                            <p>Amet, consectetur adipiscing elit. Vivamus nunc ligula, faucibus ac accumsan quis, venenatis mattis lorem. Fusce suscipit finibus lectus</p>
-                        </div>
-                        <!-- /card content -->
-                    </div>
-                    <!-- /card -->
-                </div>
-
-                <div class="col-md-4 col-sm-6">
-
-                    <!-- Card -->
-                    <div class="card">
-
-                        <!-- Card header -->
-                        <div class="card-header primary-bg">
-
-                            <!-- Card photo -->
-                            <div class="card-photo">
-                                <img title="Alex Dolgove" alt="Alex Dolgove" src="images/alex-dolgove.png" class="img-circle avatar size-105">
-                            </div>
-                            <!-- /card photo -->
-
-                            <!-- Card short description -->
-                            <div class="card-short-description media-middle">
-                                <h5>Domnic Brown</h5>
-                                <p>Singer</p>
-                            </div>
-                            <!-- /card short description -->
-
-                            <!-- Card action dropdown -->
-                            <div class="action-dropdown dropdown">
-                                <a data-toggle="dropdown" href="#/" aria-expanded="true" class="btn btn-lg btn-fab"><i class="fa fa-ellipsis-v"></i></a>
-                                <ul class="dropdown-menu dropdown-menu-right">
-                                    <li><a href="">Change Setting</a></li>
-                                    <li><a href="">View Profile</a></li>
-                                    <li><a href="">Send Message</a></li>
-                                </ul>
-                            </div>
-                            <!-- /card action dropdown -->
-                        </div>
-                        <!-- /card header -->
-
-                        <!-- Card content -->
-                        <div class="card-content">
-                            <p class="badges"><span class="badge badge-bordered">8 Albums</span><span class="badge badge-bordered">32 Songs</span></p>
-                            <p>Amet, consectetur adipiscing elit. Vivamus nunc ligula, faucibus ac accumsan quis, venenatis mattis lorem. Fusce suscipit finibus lectus</p>
-                        </div>
-                        <!-- /card content -->
-                    </div>
-                    <!-- /card -->
-                </div>
-
-                <div class="col-md-4 col-sm-6">
-
-                    <!-- Card -->
-                    <div class="card">
-
-                        <!-- Card header -->
-                        <div class="card-header primary-bg">
-
-                            <!-- Card photo -->
-                            <div class="card-photo">
-                                <img title="Alex Dolgove" alt="Alex Dolgove" src="images/alex-dolgove.png" class="img-circle avatar size-105">
-                            </div>
-                            <!-- /card photo -->
-
-                            <!-- Card short description -->
-                            <div class="card-short-description media-middle">
-                                <h5>Domnic Brown</h5>
-                                <p>Singer</p>
-                            </div>
-                            <!-- /card short description -->
-
-                            <!-- Card action dropdown -->
-                            <div class="action-dropdown dropdown">
-                                <a data-toggle="dropdown" href="#/" aria-expanded="false" class="btn btn-lg btn-fab"><i class="fa fa-ellipsis-v"></i></a>
-                                <ul class="dropdown-menu dropdown-menu-right">
-                                    <li><a href="">Change Setting</a></li>
-                                    <li><a href="">View Profile</a></li>
-                                    <li><a href="">Send Message</a></li>
-                                </ul>
-                            </div>
-                            <!-- /card action dropdown -->
-                        </div>
-                        <!-- /card header -->
-
-                        <!-- Card content -->
-                        <div class="card-content">
-                            <p class="badges"><span class="badge badge-bordered">8 Albums</span><span class="badge badge-bordered">32 Songs</span></p>
-                            <p>Amet, consectetur adipiscing elit. Vivamus nunc ligula, faucibus ac accumsan quis, venenatis mattis lorem. Fusce suscipit finibus lectus</p>
-                        </div>
-                        <!-- /card content -->
-                    </div>
-                    <!-- /card -->
-                </div>
-
-                <div class="col-md-4 col-sm-6">
-
-                    <!-- Card -->
-                    <div class="card">
-
-                        <!-- Card header -->
-                        <div class="card-header primary-bg">
-
-                            <!-- Card photo -->
-                            <div class="card-photo">
-                                <img title="Alex Dolgove" alt="Alex Dolgove" src="images/alex-dolgove.png" class="img-circle avatar size-105">
-                            </div>
-                            <!-- /card photo -->
-
-                            <!-- Card short description -->
-                            <div class="card-short-description media-middle">
-                                <h5>Domnic Brown</h5>
-                                <p>Singer</p>
-                            </div>
-                            <!-- /card short description -->
-
-                            <!-- Card action dropdown -->
-                            <div class="action-dropdown dropdown">
-                                <a data-toggle="dropdown" href="#/" aria-expanded="true" class="btn btn-lg btn-fab"><i class="fa fa-ellipsis-v"></i></a>
-                                <ul class="dropdown-menu dropdown-menu-right">
-                                    <li><a href="">Change Setting</a></li>
-                                    <li><a href="">View Profile</a></li>
-                                    <li><a href="">Send Message</a></li>
-                                </ul>
-                            </div>
-                            <!-- /card action dropdown -->
-                        </div>
-                        <!-- /card header -->
-
-                        <!-- Card content -->
-                        <div class="card-content">
-                            <p class="badges"><span class="badge badge-bordered">8 Albums</span><span class="badge badge-bordered">32 Songs</span></p>
-                            <p>Amet, consectetur adipiscing elit. Vivamus nunc ligula, faucibus ac accumsan quis, venenatis mattis lorem. Fusce suscipit finibus lectus</p>
-                        </div>
-                        <!-- /card content -->
-                    </div>
-                    <!-- /card -->
-                </div>
-
-
-            </div>
-
-        </div>
-
-        <!-- Footer -->
-        <footer class="footer-main">
-            © 2016 <strong>Integral</strong> Admin Template by <a target="_blank" href="#/">G-axon</a>
-        </footer>
-        <!-- /footer -->
-    </div>
+            $('#action_ok').click(function () {
+                $('.users').val(users);
+                if($('#action_blk').val() === '0')
+                    $('#del_form').submit();
+                else if ($('#action_blk').val() === '1')
+                    $('#dis_form').submit();
+            })
+        })
+    </script>
 {% endblock %}

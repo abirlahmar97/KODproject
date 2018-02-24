@@ -1,0 +1,155 @@
+{% extends '::layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('plugins/owl-carousel/owl.carousel.css') }}" media="screen">
+    <link rel="stylesheet" href="{{ asset('js/ion.rangeSlider-2.2.0/css/ion.rangeSlider.css') }}">
+    <link rel="stylesheet" href="{{ asset('js/ion.rangeSlider-2.2.0/css/ion.rangeSlider.skinFlat.css') }}">
+{% endblock %}
+{% block main %}
+
+            <section class="pageTitleSection">
+                <div class="container">
+                    <div class="pageTitleInfo">
+                        <h2>Checkout Step 1</h2>
+                        <ol class="breadcrumb">
+                            <li><a href="index.html">Home</a></li>
+                            <li class="active">Checkout Step 1</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+    <section class="mainContent full-width clearfix">
+        <div class="container">
+            <div class="row progress-wizard" style="border-bottom:0;">
+                <div class="col-sm-4 col-xs-12 progress-wizard-step active">
+                    <div class="progress"><div class="progress-bar"></div></div>
+                    <a href="{{ path('livraison') }}" class="progress-wizard-dot">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                    </a>
+                    <div class="progressInfo">1. Personal info</div>
+                </div>
+
+                <div class="col-sm-4 col-xs-12 progress-wizard-step incomplete">
+                    <div class="progress"><div class="progress-bar"></div></div>
+                    <a href="{{ path('validation') }}"l" class="progress-wizard-dot">
+                        <i class="fa fa-usd" aria-hidden="true"></i>
+                    </a>
+                    <div class="progressInfo">2. Payment Mathod</div>
+                </div>
+
+                <div class="col-sm-4 col-xs-12 progress-wizard-step incomplete">
+                    <div class="progress"><div class="progress-bar"></div></div>
+                    <a href="{{ path('factures') }}" class="progress-wizard-dot">
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                    </a>
+                    <div class="progressInfo">3. Confirmation</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 col-sm-push-8 col-xs-12">
+                    <div class="pricingTable">
+                        <div class="priceUper">
+                            <div class="priceTitle alt bg-color-3 checkingTitle"><h3>Morning Session</h3></div>
+                            <div class="priceInfo alt p-n bg-color-3"><img src="img/home/news/news-1.jpg" class="img-responsive"></div>
+                        </div>
+                        <div class="priceLower">
+                            <ul class="list-unstyled priceOffer">
+                                <li><i class="fa fa-calendar-o color-3" aria-hidden="true"></i> Age 2 to 4 Years</li>
+                                <li><i class="fa fa-clock-o color-3" aria-hidden="true"></i> 9.00 AM _ 11.00AM</li>
+                                <li><i class="fa fa-paint-brush color-3" aria-hidden="true"></i> Drowing &amp; Dancing</li>
+                                <li><i class="fa fa-taxi color-3" aria-hidden="true"></i> Free Transport</li>
+                            </ul>
+                            <div class="priceBtn">
+                                <h5>Total: <span>$69</span></h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-8  col-sm-pull-4 col-xs-12">
+                    <h4>Ajouter une nouvelle adresse</h4>
+                    <form role="form" class="form" action="{{ path('livraison') }}" method="POST">
+                        <div class="panel panel-default checkoutInfo">
+                            <div class="panel-heading bg-color-3 border-color-3">
+                                <h3 class="panel-title">Personal info</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <div class="col-sm-6 col-xs-12">
+                                        <label for="">    {{ form_widget(form) }}</label>
+                                        <input type="text" class="form-control border-color-1" id="">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="checkbox col-xs-12">
+                                        <label>
+                                            <input type="checkbox"> I have read and accept the <a href="#">terms and conditions</a>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="continueBtnArea">
+                            <ul class="list-inline">
+                                <li><a href="javascript:void(0)" class="btn btn-primary">back</a></li>
+                                <button class="btn btn-primary" type="submit">Ajouter</button>
+                            </ul>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+            <br /><br />
+            <br /><br />
+
+            <h1>Livraison</h1>
+            <div id="collapseOne" class="accordion-body collapse in" >
+                <div class="accordion-inner">
+                    <div class="span4">
+                        {% if utilisateur.adresses|length != 0 %}
+                            <form action="{{ path('validation') }}" method="POST">
+
+                                <h4>Adresse de livraison</h4>
+                                {% for adresse in utilisateur.adresses %}
+                                    <label class="radio">
+                                        <input type="radio" name="livraison" value="{{ adresse.id }}" {% if loop.index0 == 0 %}checked="checked"{% endif %}>
+                                        {{ adresse.adresse }}, {{ adresse.cp }} {{ adresse.region}}
+                                        <a href="{{ path('livraisonAdresseSuppression', { 'id' : adresse.id }) }}"><i class="icon-trash"></i></a>
+                                        <br />{{ adresse.prenom }} {{ adresse.nom }}
+                                    </label>
+                                {% endfor %}
+
+                                <br /><br />
+
+                                <h4>Adresse de facturation</h4>
+                                {% for adresse in utilisateur.adresses %}
+                                    <label class="radio">
+                                        <input type="radio" name="facturation" value="{{ adresse.id }}" {% if loop.index0 == 0 %}checked="checked"{% endif %}>
+                                        {{ adresse.adresse }}, {{ adresse.cp }} {{ adresse.region }}
+                                        <a href="{{ path('livraisonAdresseSuppression', { 'id' : adresse.id }) }}"><i class="icon-trash"></i></a>
+                                        <br />{{ adresse.prenom }} {{ adresse.nom }}
+
+                                    </label>
+
+                                {% endfor %}
+
+
+                                <br />
+
+                                <button class="btn btn-primary">Valider mes adresses</button>
+                            </form>
+                        {% endif %}
+        </div>
+    </section>
+
+                    </div>
+
+
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    {% endblock %}

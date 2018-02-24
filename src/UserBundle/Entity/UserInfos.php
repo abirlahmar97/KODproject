@@ -58,6 +58,10 @@ class UserInfos
     private $region;
 
 
+
+
+
+
     /**
      * Get id
      *
@@ -188,4 +192,76 @@ class UserInfos
         return $this->photo;
     }
 
+
+    /**
+     * Set adresse
+     *
+     * @param string $adresse
+     *
+     * @return UserInfos
+     */
+    public function setAdresse($adresse)
+    {
+        $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    /**
+     * Get adresse
+     *
+     * @return string
+     */
+    public function getAdresse()
+    {
+        return $this->adresse;
+    }
+
+    /**
+     * Set codePostale
+     *
+     * @param string $codePostale
+     *
+     * @return UserInfos
+     */
+    public function setCodePostale($codePostale)
+    {
+        $this->CodePostale = $codePostale;
+
+        return $this;
+    }
+
+    /**
+     * Get codePostale
+     *
+     * @return string
+     */
+    public function getCodePostale()
+    {
+        return $this->CodePostale;
+    }
+
+    /**
+     * Set utilisateur
+     *
+     * @param \UserBundle\Entity\User $utilisateur
+     *
+     * @return UserInfos
+     */
+    public function setUtilisateur(\UserBundle\Entity\User $utilisateur = null)
+    {
+        $this->utilisateur = $utilisateur;
+
+        return $this;
+    }
+
+    /**
+     * Get utilisateur
+     *
+     * @return \UserBundle\Entity\User
+     */
+    public function getUtilisateur()
+    {
+        return $this->utilisateur;
+    }
 }

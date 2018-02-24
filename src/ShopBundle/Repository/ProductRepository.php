@@ -26,7 +26,8 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
             ->where('u.category = :category')
             ->andWhere('u.available = 1')
             ->orderBy('u.id')
-            ->setParameter('category', $category);
+            ->setParameter('category', $category)
+            ->setMaxResults(4);
         return $qb->getQuery()->getResult();
     }
 

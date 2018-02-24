@@ -28,3 +28,8 @@ create_category:
     path:     /Parent/Complaint/Category/Add
     defaults: { _controller: UserBundle:Complaint:add_category }
 
+factures:
+    path: /profile/factures
+    defaults: { _controller: UserBundle:Utilisateur:factures }
+
+
