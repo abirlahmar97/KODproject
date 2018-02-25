@@ -23,6 +23,9 @@ class AppKernel extends Kernel
             new ParentingBundle\ParentingBundle(),
             new ChildBundle\ChildBundle(),
             new EventsBundle\EventsBundle(),
+            new FOS\RestBundle\FOSRestBundle(),
+            new FOS\CommentBundle\FOSCommentBundle(),
+            new JMS\SerializerBundle\JMSSerializerBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

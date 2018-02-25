@@ -50,7 +50,7 @@
                         <span>{{ product.description }}</span>
                         <div class="add-cart">
                             {% if panier[product.id] is not defined %}
-                                <form method='GET' action="{{ path('ajouterpanier',{'id' :product.id}) }}">
+                                <form method='GET' action="{{ path('cart_add',{'id' :product.id}) }}">
                                     <div class="count-input">
                                         <select class="quantity btn-primary" type="text" name="qte">
                                             {% for i in 1..10 %}

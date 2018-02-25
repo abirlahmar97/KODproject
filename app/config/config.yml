@@ -83,3 +83,11 @@ fos_user:
     from_email:
         address: "%mailer_user%"
         sender_name: "%mailer_user%"
+
+fos_comment:
+   db_driver: orm
+   class:
+       model:
+           comment: ShopBundle\Entity\Comment
+           thread:  ShopBundle\Entity\Thread
+

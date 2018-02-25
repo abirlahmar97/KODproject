@@ -102,3 +102,6 @@ products_related:
     path:     /parent/products/related/{category}
     defaults: { _controller: ShopBundle:Products:related }
 
+search_product:
+    path:   /products/search
+    defaults: { _controller : ShopBundle:Products:search }

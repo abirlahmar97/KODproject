@@ -6,6 +6,7 @@ use ShopBundle\Entity\Category;
 use ShopBundle\Repository\CategoryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class ProductsController extends Controller
@@ -46,6 +47,20 @@ class ProductsController extends Controller
             'comments' => $comments,
             'thread' => $thread
         ));
+    }
+
+    public function searchAction(Request $request){
+        $data = $request->get('filters');
+        $filters = json_decode($data);
+        $gender = $filters[0]->value;
+        $age = $filters[1]->value;
+        $price = explode(';', $filters[2]->value);
+        $pricemin = $price[0];
+        $pricemax = $price[1];
+        $products = $this->getDoctrine()->getRepository("ShopBundle:Product")->search($age,$gender,$pricemin,$pricemax);
+        return $this->render('ShopBundle:Products:search.html.twig', [
+            'products' => $products
+        ]);
     }
 
     public function listCategoriesAction()

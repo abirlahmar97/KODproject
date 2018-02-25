@@ -31,4 +31,26 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function search($age, $gender,$pmin, $pmax){
+        $qb = $this->createQueryBuilder('p');
+        if ($age != 0)
+            $qb->where("p.age = :age")
+                ->setParameter("age", $age);
+        else
+            $qb->where("p.age LIKE :age ")
+            ->setParameter('age', "_");
+        if ($gender != 0)
+            $qb->andWhere("p.gender = :gender")
+                ->setParameter("gender", $gender);
+        else
+            $qb->andWhere("p.gender LIKE :gender")
+                ->setParameter('gender', "%");
+        $qb->andWhere("p.price >= :pmin")
+            ->andWhere("p.price <= :pmax")
+            ->setParameter("pmax", (int)$pmax)
+            ->setParameter("pmin", (int)$pmin);
+        return $qb->getQuery()->getResult();
+
+    }
+
 }
