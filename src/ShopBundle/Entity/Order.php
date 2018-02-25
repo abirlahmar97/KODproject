@@ -3,14 +3,15 @@
 namespace ShopBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use UserBundle\Entity\User;
 
 /**
- * Commande
+ * Order
  *
- * @ORM\Table(name="commande")
- * @ORM\Entity(repositoryClass="ShopBundle\Repository\CommandeRepository")
+ * @ORM\Table(name="orders")
+ * @ORM\Entity(repositoryClass="ShopBundle\Repository\OrderRepository")
  */
-class Commande
+class Order
 {
     /**
      * @var int
@@ -24,14 +25,14 @@ class Commande
     /**
      * @var bool
      *
-     * @ORM\Column(name="valider", type="boolean")
+     * @ORM\Column(name="confirmed", type="boolean")
      */
-    private $valider;
+    private $confirmed;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date", type="datetime")
+     * @ORM\Column(name="date", type="datetime", nullable=true)
      */
     private $date;
 
@@ -45,16 +46,16 @@ class Commande
     /**
      * @var array
      *
-     * @ORM\Column(name="commande", type="array")
+     * @ORM\Column(name="orders", type="array")
      */
-    private $commande;
+    private $order;
 
     /**
-     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User", inversedBy="commandes")
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User", inversedBy="orders")
      * @ORM\JoinColumn(nullable=true)
      */
 
-    private $utilisateur;
+    private $user;
 
 
 
@@ -69,27 +70,27 @@ class Commande
     }
 
     /**
-     * Set valider
+     * Set confirmed
      *
-     * @param boolean $valider
+     * @param boolean $confirmed
      *
-     * @return Commande
+     * @return Order
      */
-    public function setValider($valider)
+    public function setConfirmed($confirmed)
     {
-        $this->valider = $valider;
+        $this->confirmed = $confirmed;
 
         return $this;
     }
 
     /**
-     * Get valider
+     * Get confirmed
      *
      * @return bool
      */
-    public function getValider()
+    public function getConfirmed()
     {
-        return $this->valider;
+        return $this->confirmed;
     }
 
     /**
@@ -97,7 +98,7 @@ class Commande
      *
      * @param \DateTime $date
      *
-     * @return Commande
+     * @return Order
      */
     public function setDate($date)
     {
@@ -121,7 +122,7 @@ class Commande
      *
      * @param integer $reference
      *
-     * @return Commande
+     * @return Order
      */
     public function setReference($reference)
     {
@@ -144,52 +145,52 @@ class Commande
 
 
     /**
-     * Set utilisateur
+     * Set user
      *
-     * @param \UserBundle\Entity\User $utilisateur
+     * @param User $user
      *
-     * @return Commande
+     * @return Order
      */
-    public function setUtilisateur(\UserBundle\Entity\User $utilisateur = null)
+    public function setUser(User $user = null)
     {
-        $this->utilisateur = $utilisateur;
+        $this->user = $user;
 
         return $this;
     }
 
     /**
-     * Get utilisateur
+     * Get user
      *
-     * @return \UserBundle\Entity\User
+     * @return User
      */
-    public function getUtilisateur()
+    public function getUser()
     {
-        return $this->utilisateur;
+        return $this->user;
     }
 
 
 
     /**
-     * Set commande
+     * Set order
      *
-     * @param array $commande
+     * @param array $order
      *
-     * @return Commande
+     * @return Order
      */
-    public function setCommande($commande)
+    public function setOrder($order)
     {
-        $this->commande = $commande;
+        $this->order = $order;
 
         return $this;
     }
 
     /**
-     * Get commande
+     * Get order
      *
      * @return array
      */
-    public function getCommande()
+    public function getOrder()
     {
-        return $this->commande;
+        return $this->order;
     }
 }

@@ -7,28 +7,27 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UtilisateursAdressesType extends AbstractType
+class UserAddressType extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('nom')
-            ->add('prenom')
-            ->add('telephone')
-            ->add('adresse')
-            ->add('cp')
+        $builder
+            ->add('address')
+            ->add('postalCode')
             ->add('region');
-        //->add('utilisateur')
 
-    }/**
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'ShopBundle\Entity\UtilisateursAdresses'
+            'data_class' => 'ShopBundle\Entity\UserAddress'
         ));
     }
 
@@ -37,7 +36,7 @@ class UtilisateursAdressesType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'shopbundle_utilisateursadresses';
+        return 'shopbundle_useraddress';
     }
 
 

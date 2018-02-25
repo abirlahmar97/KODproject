@@ -12,20 +12,20 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
 {
     public function findArray($array)
     {
-        $qb = $this->createQueryBuilder('u')
-            ->Select('u')
-            ->Where('u.id IN (:array)')
+        $qb = $this->createQueryBuilder('p')
+            ->Select('p')
+            ->Where('p.id IN (:array)')
             ->setParameter('array', $array);
         return $qb->getQuery()->getResult();
     }
 
-    public function byCategorie($category)
+    public function byCategory($category)
     {
-        $qb = $this->createQueryBuilder('u')
-            ->select('u')
-            ->where('u.category = :category')
-            ->andWhere('u.available = 1')
-            ->orderBy('u.id')
+        $qb = $this->createQueryBuilder('p')
+            ->select('p')
+            ->where('p.category = :category')
+            ->andWhere('p.available = 1')
+            ->orderBy('p.id')
             ->setParameter('category', $category)
             ->setMaxResults(4);
         return $qb->getQuery()->getResult();

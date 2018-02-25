@@ -19,7 +19,7 @@ class ProductProviderController extends Controller
             $em=$this->getDoctrine()->getManager();
             $em->persist($product);
             $em->flush();
-            return $this->redirectToRoute("show_products");
+            return $this->redirectToRoute("list_products");
         }
         return $this->render('ShopBundle:Provider/Products:create.html.twig', array(
             "form"=>$form->createView()
@@ -37,9 +37,9 @@ class ProductProviderController extends Controller
             $em=$this->getDoctrine()->getManager();
             $em->persist($product);
             $em->flush();
-            return $this->redirectToRoute('show_products');
+            return $this->redirectToRoute('list_products');
         }
-        return $this->render('@Shop/Provider/Products/update_product.html.twig', array(
+        return $this->render('@Shop/Provider/Products/update.html.twig', array(
            'form'=>$Form->createView()
         ));
     }
@@ -60,7 +60,7 @@ class ProductProviderController extends Controller
         $product=$em->getRepository("ShopBundle:Product")->find($id);
         $em->remove($product);
         $em->flush();
-        return $this->redirecttoRoute("show_product");
+        return $this->redirecttoRoute("list_products");
 
     }
 
@@ -74,7 +74,7 @@ class ProductProviderController extends Controller
         }
         $em->flush();
         $request->getSession()->getFlashBag()->add('notice', "Les produits sélectionnées on été supprimés avec succes");
-        return $this->redirectToRoute('show_product');
+        return $this->redirectToRoute('list_products');
     }
 
 }

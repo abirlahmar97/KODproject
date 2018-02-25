@@ -3,8 +3,11 @@ namespace ShopBundle\Services;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 
-class GetReference
+class SetNewReference
 {
+    private $securityContext;
+    private $em;
+
     public function __construct(AuthorizationChecker $securityContext, EntityManager $entityManager)
     {
         $this->securityContext = $securityContext;
@@ -13,12 +16,12 @@ class GetReference
 
     public function reference()
     {
-        $reference = $this->em->getRepository('ShopBundle:Commande')
-            ->findOneBy(array('valider' => 1), array('id' => 'DESC'));
+        $reference = $this->em->getRepository("ShopBundle:Order")
+            ->findOneBy(array('confirmed' => 1), array('id' => 'DESC'));
 
         if (!$reference)
             return 1;
         else
-            return $reference->getReference() +1;
+            return $reference->getReference() + 1;
     }
 }

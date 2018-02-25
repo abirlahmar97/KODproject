@@ -4,6 +4,9 @@ namespace UserBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use ShopBundle\Entity\Order;
+use ShopBundle\Entity\UserAddress;
+use UserBundle\Entity\UserInfos;
 
 /**
  * User
@@ -16,8 +19,8 @@ class User extends BaseUser
     public function __construct()
     {
         parent::__construct();
-        $this->commandes = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->adresses = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->orders = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->addresses = new \Doctrine\Common\Collections\ArrayCollection();
     }
     /**
      * @var UserInfos
@@ -35,27 +38,17 @@ class User extends BaseUser
      */
     protected $id;
 
-
-
     /**
-     * @var int
-     *
-     * @ORM\Column(name="phone", type="integer", nullable=true)
-     */
-    private $phone;
-
-
-    /**
-     * @ORM\OneToMany(targetEntity="ShopBundle\Entity\Commande", mappedBy="utilisateur", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="ShopBundle\Entity\Order", mappedBy="user", cascade={"remove"})
      * @ORM\JoinColumn(nullable=true)
      */
-    private $commandes;
+    private $orders;
 
     /**
-     * @ORM\OneToMany(targetEntity="ShopBundle\Entity\UtilisateursAdresses", mappedBy="utilisateur", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="ShopBundle\Entity\UserAddress", mappedBy="user", cascade={"remove"})
      * @ORM\JoinColumn(nullable=true)
      */
-    private $adresses;
+    private $addresses;
 
 
     /**
@@ -69,37 +62,13 @@ class User extends BaseUser
     }
 
     /**
-     * Set phone
-     *
-     * @param integer $phone
-     *
-     * @return User
-     */
-    public function setPhone($phone)
-    {
-        $this->phone = $phone;
-
-        return $this;
-    }
-
-    /**
-     * Get phone
-     *
-     * @return int
-     */
-    public function getPhone()
-    {
-        return $this->phone;
-    }
-
-    /**
      * Set infos
      *
-     * @param \UserBundle\Entity\UserInfos $infos
+     * @param UserInfos $infos
      *
      * @return User
      */
-    public function setInfos(\UserBundle\Entity\UserInfos $infos = null)
+    public function setInfos(UserInfos $infos = null)
     {
         $this->infos = $infos;
 
@@ -109,7 +78,7 @@ class User extends BaseUser
     /**
      * Get infos
      *
-     * @return \UserBundle\Entity\UserInfos
+     * @return UserInfos
      */
     public function getInfos()
     {
@@ -120,40 +89,38 @@ class User extends BaseUser
         return $this->infos->getFirstname() . ' ' . $this->infos->getLastname();
     }
 
-
-
     /**
-     * Add commande
+     * Add order
      *
-     * @param \ShopBundle\Entity\Commande $commande
+     * @param Order $order
      *
      * @return User
      */
-    public function addCommande(\ShopBundle\Entity\Commande $commande)
+    public function addOrder(Order $order)
     {
-        $this->commandes[] = $commande;
+        $this->orders[] = $order;
 
         return $this;
     }
 
     /**
-     * Remove commande
+     * Remove order
      *
-     * @param \ShopBundle\Entity\Commande $commande
+     * @param Order $order
      */
-    public function removeCommande(\ShopBundle\Entity\Commande $commande)
+    public function removeOrder(Order $order)
     {
-        $this->commandes->removeElement($commande);
+        $this->orders->removeElement($order);
     }
 
     /**
-     * Get commandes
+     * Get orders
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getCommandes()
+    public function getOrders()
     {
-        return $this->commandes;
+        return $this->orders;
     }
 
 
@@ -162,13 +129,13 @@ class User extends BaseUser
     /**
      * Add adress
      *
-     * @param \ShopBundle\Entity\UtilisateursAdresses $adress
+     * @param UserAddress $address
      *
      * @return User
      */
-    public function addAdress(\ShopBundle\Entity\UtilisateursAdresses $adress)
+    public function addAddress(UserAddress $address)
     {
-        $this->adresses[] = $adress;
+        $this->addresses[] = $address;
 
         return $this;
     }
@@ -176,20 +143,20 @@ class User extends BaseUser
     /**
      * Remove adress
      *
-     * @param \ShopBundle\Entity\UtilisateursAdresses $adress
+     * @param UserAddress $address
      */
-    public function removeAdress(\ShopBundle\Entity\UtilisateursAdresses $adress)
+    public function removeAddress(UserAddress $address)
     {
-        $this->adresses->removeElement($adress);
+        $this->addresses->removeElement($address);
     }
 
     /**
-     * Get adresses
+     * Get addresses
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getAdresses()
+    public function getAddresses()
     {
-        return $this->adresses;
+        return $this->addresses;
     }
 }

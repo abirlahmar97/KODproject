@@ -48,5 +48,13 @@ class CategoryController extends Controller
         return $this->redirectToRoute('show_category');
     }
 
+    public function menuAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $categories = $em->getRepository('ShopBundle:Category')->findAll();
+        return $this->render('ShopBundle:Default/Categories:menu.html.twig', array(
+            'categories' => $categories
+        ));
+    }
 
 }
