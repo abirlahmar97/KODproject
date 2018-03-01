@@ -10,4 +10,16 @@ namespace ShopBundle\Repository;
  */
 class CategoryRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findArticle()
+    {
+        $q=$this->createQueryBuilder('c')
+            ->where("c.type='Article'");
+        return $q->getQuery()->getResult();
+    }
+
+    public function findTypeProduct(){
+        $q=$this->createQueryBuilder('c')
+            ->where("c.type='Produits'");
+        return $q->getQuery()->getResult();
+    }
 }

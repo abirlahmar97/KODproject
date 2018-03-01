@@ -21,7 +21,17 @@ update_complaint:
 delete_complaint:
     path:     /Admin/Complaint/delete{id}
     defaults: { _controller: UserBundle:Complaint:delete }
+
 front_read_complaint:
     path:     /Parent/Complaint/read
     defaults: { _controller: UserBundle:Complaint:front_read }
+
+create_category:
+    path:     /Parent/Complaint/Category/Add
+    defaults: { _controller: UserBundle:Complaint:add_category }
+
+bills:
+    path: /profile/bills
+    defaults: { _controller: UserBundle:Users:bills }
+
 

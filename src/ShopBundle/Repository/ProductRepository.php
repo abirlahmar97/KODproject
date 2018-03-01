@@ -10,4 +10,47 @@ namespace ShopBundle\Repository;
  */
 class ProductRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findArray($array)
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->Select('p')
+            ->Where('p.id IN (:array)')
+            ->setParameter('array', $array);
+        return $qb->getQuery()->getResult();
+    }
+
+    public function byCategory($category)
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->select('p')
+            ->where('p.category = :category')
+            ->andWhere('p.available = 1')
+            ->orderBy('p.id')
+            ->setParameter('category', $category)
+            ->setMaxResults(4);
+        return $qb->getQuery()->getResult();
+    }
+
+    public function search($age, $gender,$pmin, $pmax){
+        $qb = $this->createQueryBuilder('p');
+        if ($age != 0)
+            $qb->where("p.age = :age")
+                ->setParameter("age", $age);
+        else
+            $qb->where("p.age LIKE :age ")
+            ->setParameter('age', "_");
+        if ($gender != 0)
+            $qb->andWhere("p.gender = :gender")
+                ->setParameter("gender", $gender);
+        else
+            $qb->andWhere("p.gender LIKE :gender")
+                ->setParameter('gender', "%");
+        $qb->andWhere("p.price >= :pmin")
+            ->andWhere("p.price <= :pmax")
+            ->setParameter("pmax", (int)$pmax)
+            ->setParameter("pmin", (int)$pmin);
+        return $qb->getQuery()->getResult();
+
+    }
+
 }

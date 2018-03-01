@@ -4,6 +4,9 @@ namespace UserBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use ShopBundle\Entity\Order;
+use ShopBundle\Entity\UserAddress;
+use UserBundle\Entity\UserInfos;
 
 /**
  * User
@@ -13,7 +16,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class User extends BaseUser
 {
-
+    public function __construct()
+    {
+        parent::__construct();
+        $this->orders = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->addresses = new \Doctrine\Common\Collections\ArrayCollection();
+    }
     /**
      * @var UserInfos
      * @ORM\OneToOne(targetEntity="UserBundle\Entity\UserInfos", cascade={"persist"})
@@ -31,11 +39,16 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="phone", type="integer", nullable=true)
+     * @ORM\OneToMany(targetEntity="ShopBundle\Entity\Order", mappedBy="user", cascade={"remove"})
+     * @ORM\JoinColumn(nullable=true)
      */
-    private $phone;
+    private $orders;
+
+    /**
+     * @ORM\OneToMany(targetEntity="ShopBundle\Entity\UserAddress", mappedBy="user", cascade={"remove"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $addresses;
 
 
     /**
@@ -49,37 +62,13 @@ class User extends BaseUser
     }
 
     /**
-     * Set phone
-     *
-     * @param integer $phone
-     *
-     * @return User
-     */
-    public function setPhone($phone)
-    {
-        $this->phone = $phone;
-
-        return $this;
-    }
-
-    /**
-     * Get phone
-     *
-     * @return int
-     */
-    public function getPhone()
-    {
-        return $this->phone;
-    }
-
-    /**
      * Set infos
      *
-     * @param \UserBundle\Entity\UserInfos $infos
+     * @param UserInfos $infos
      *
      * @return User
      */
-    public function setInfos(\UserBundle\Entity\UserInfos $infos = null)
+    public function setInfos(UserInfos $infos = null)
     {
         $this->infos = $infos;
 
@@ -89,7 +78,7 @@ class User extends BaseUser
     /**
      * Get infos
      *
-     * @return \UserBundle\Entity\UserInfos
+     * @return UserInfos
      */
     public function getInfos()
     {
@@ -98,5 +87,76 @@ class User extends BaseUser
 
     public function getFullname(){
         return $this->infos->getFirstname() . ' ' . $this->infos->getLastname();
+    }
+
+    /**
+     * Add order
+     *
+     * @param Order $order
+     *
+     * @return User
+     */
+    public function addOrder(Order $order)
+    {
+        $this->orders[] = $order;
+
+        return $this;
+    }
+
+    /**
+     * Remove order
+     *
+     * @param Order $order
+     */
+    public function removeOrder(Order $order)
+    {
+        $this->orders->removeElement($order);
+    }
+
+    /**
+     * Get orders
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOrders()
+    {
+        return $this->orders;
+    }
+
+
+
+
+    /**
+     * Add adress
+     *
+     * @param UserAddress $address
+     *
+     * @return User
+     */
+    public function addAddress(UserAddress $address)
+    {
+        $this->addresses[] = $address;
+
+        return $this;
+    }
+
+    /**
+     * Remove adress
+     *
+     * @param UserAddress $address
+     */
+    public function removeAddress(UserAddress $address)
+    {
+        $this->addresses->removeElement($address);
+    }
+
+    /**
+     * Get addresses
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAddresses()
+    {
+        return $this->addresses;
     }
 }

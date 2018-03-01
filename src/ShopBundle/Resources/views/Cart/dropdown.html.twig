@@ -1,0 +1,11 @@
+    <li>
+        <a href="{{ path('cart_show') }}">
+            {% if count == 0 %}
+                Aucun article dans votre panier
+            {% elseif count == 1 %}
+                1 article dans votre panier
+            {% else %}
+                {{ count }} articles dans votre panier
+            {% endif %}
+        </a>
+    </li>

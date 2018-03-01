@@ -1,0 +1,142 @@
+{% extends '::layout.html.twig' %}
+{% set totalHT = 0 %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('plugins/owl-carousel/owl.carousel.css') }}" media="screen">
+{% endblock %}
+{% block main %}
+    <section class="pageTitleSection">
+        <div class="container">
+            <div class="pageTitleInfo">
+                <h2>Cart Page</h2>
+                <ol class="breadcrumb">
+                    <li><a href="index.html">Home</a></li>
+                    <li class="active">Cart Page</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+    <section class="mainContent full-width clearfix">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    {% for flashMessage in app.session.flashbag.get('success') %}
+                        <div class="alert alert-success">
+                            {{ flashMessage }}
+                        </div>
+                    {% endfor %}
+                    <div class="cartInfo">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr class="bg-color-1">
+                                    <th class="col-lg-2 col-xs-3" style="min-width: 190px; text-indent:-999px;">
+                                        empty
+                                    </th>
+
+                                    <th class="col-lg-4 col-xs-3">Product Name</th>
+                                    <th class="col-lg-2 col-xs-2">Price</th>
+                                    <th class="col-lg-2 col-xs-2">Quantity</th>
+                                    <th class="col-lg-2 col-xs-2">Total</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% if products | length == 0 %}
+                                    <tr>
+                                        <td colspan="4">
+                                            <center>Aucun articles dans votre panier</center>
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                                {% for product in products %}
+                                    <tr>
+                                        <td>
+                                            <a href="{{ path('cart_delete', {'id':product.id}) }}">
+                                                <span class="glyphicon glyphicon-trash"></span>
+                                            </a>
+                                            <span class="cartImage"><img src="{{ asset(product.img.webPath) }}"
+                                                                         width="70" height="100" alt="image"
+                                                                         class="img-rounded"></span>
+                                        </td>
+
+                                        <td class="col-lg-4 col-xs-3"> {{ product.name }} </td>
+                                        <td class="col-lg-2 col-xs-2">{{ product.price }}</td>
+                                        <td class="col-lg-2 col-xs-2">
+                                            <select name="qte" class="span1" onChange="this.form.submit()">
+                                                {% for i in 1..10 %}
+                                                    <option value="{{ i }}" {% if i == cart[product.id] %} selected="selected" {% endif %}>{{ i }}</option>
+                                                {% endfor %}
+                                            </select>&nbsp;
+                                        </td>
+                                        <td class="col-lg-2 col-xs-2">{{ product.price * cart[product.id] }} DT
+                                        </td>
+
+                                        {% set totalHT = totalHT + (product.price * cart[product.id]) %}
+
+                                    </tr>
+                                {% endfor %}
+
+
+                                <tr>
+                                    <td colspan="4">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control"
+                                                   placeholder="I have a discount coupon"
+                                                   aria-describedby="basic-addon2">
+                                            <a href="#" class="btn btn-primary input-group-addon" id="basic-addon2">apply
+                                                coupon</a>
+                                        </div>
+                                    </td>
+                                    <td><a href="#" class="btn btn-primary pull-right">update cart</a></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <form action="#">
+                <div class="row">
+                    <div class="col-sm-6 col-sm-offset-6 col-xs-12">
+                        <div class="cartInfo cartTotal">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                    <tr class="bg-color-2">
+                                        <th>Cart Total</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="col-xs-6">
+                                                <strong>
+                                                    <dt>Total HT :</dt>
+                                                    <dt>{{ totalHT }} DT</dt>
+                                                </strong>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="col-xs-6">
+                                                <strong>Grand Total</strong>
+                                            </td>
+                                            <td class="col-xs-6"><strong>{{ totalHT }} DT</strong></td>
+                                        <tr>
+                                            <td colspan="2" class="btnPart"><a href="{{ path('shipping') }}"
+                                                                               class="btn btn-primary pull-right">checkout<i
+                                                            class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <a href="{{ path('products_list') }}" class="btn btn-primary">Continuer mes achats</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+{% endblock %}
