@@ -1,81 +1,83 @@
 {% extends 'layout.html.twig' %}
-{% block main %}
-    <section class="whiteSection full-width clearfix">
-        <div class="container">
+{#{% block main %}#}
+    {#<section class="whiteSection full-width clearfix">#}
+        {#<div class="container">#}
 
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="sectionTitle text-center">
-                        <h2>
-                            <span class="shape shape-left bg-color-4"></span>
-                            <span>Our Babysitters</span>
-                            <span class="shape shape-right bg-color-4"></span>
-                        </h2>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                {% for babysitter in babysitters %}
-                <div class="col-sm-6 col-xs-12">
-                    <div class="media teamStyle">
-                        <a class="media-left" href="#">
-                            {% if babysitter.image != null %}
-                                <img class="img-rounded img-responsive" src="{{ asset(babysitter.image.webPath) }}" alt="Image">
-                            {% endif %}
-
-                        </a>
-                        <div class="media-body">
-                            <h4 class="media-heading"><a href="#">{{ babysitter.lastName }} {{ babysitter.firstName }}</a></h4>
-                            <h5>{{ babysitter.price }} DT</h5>
-                            <h5>{{ babysitter.phone }} </h5>
-                            <p>{{ babysitter.address }}</p>
-
-                            <ul class="list-inline">
-                                <a><a href="{{ path('contact_babysitter', {'id':babysitter.id}) }}"<button  class="btn btn-sm btn-warning btn-pill">Contacter</button></a></li>
-                                <li><a href="#" class="btn-facebook-filled"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                <li><a href="#" class="btn-twitter-filled"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                                <li><a href="#" class="btn-google-filled"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
-
-
-                            </ul>
-
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-    </section>
-{#<section>#}
-{#<div class="container">#}
-    {#{% for row in babysitters | batch(2) %}#}
-    {#<div class="row">#}
-    {#{% for babysitter in row %}#}
-        {#<div class="col-sm-6 col-xs-12 block">#}
-            {#<div class="media eventContent bg-color-2">#}
-                {#<a class="media-left" href="single-event-left-sidebar.html">#}
-                    {#{% if babysitter.image != null %}#}
-                        {#<img class="media-object" src="{{ asset(babysitter.image.webPath) }}"  alt="Image">#}
-                    {#{% endif %}#}
-                    {#<span class="sticker-round">10 <br>July</span>#}
-                {#</a>#}
-                {#<div class="media-body">#}
-                    {#<h3 class="media-heading"><a href="single-event-left-sidebar.html">{{ babysitter.lastName }}{{ babysitter.firstName }}</a></h3>#}
-                    {#<ul class="list-unstyled">#}
-                        {#<li><i class="fa fa-calendar-o" aria-hidden="true"></i>{{ babysitter.phone }}</li>#}
-                        {#<li><i class="fa fa-clock-o" aria-hidden="true"></i>{{ babysitter.price }} TND</li>#}
-                    {#</ul>#}
-                    {#<p>{{ babysitter.address }}</p>#}
-                    {#<ul class="list-inline btn-yellow">#}
-                        {#<li><a href="{{ path('contact_babysitter', {'id': 'babysitter.id'}) }}" class="btn btn-primary">Contacter</a></li>#}
-                    {#</ul>#}
+            {#<div class="row">#}
+                {#<div class="col-xs-12">#}
+                    {#<div class="sectionTitle text-center">#}
+                        {#<h2>#}
+                            {#<span class="shape shape-left bg-color-4"></span>#}
+                            {#<span>Our Babysitters</span>#}
+                            {#<span class="shape shape-right bg-color-4"></span>#}
+                        {#</h2>#}
+                    {#</div>#}
                 {#</div>#}
             {#</div>#}
+            {#<div class="row">#}
+                {#{% for babysitter in babysitters %}#}
+                {#<div class="col-sm-6 col-xs-12">#}
+                    {#<div class="media teamStyle">#}
+                        {#<a class="media-left" href="#">#}
+                            {#{% if babysitter.image != null %}#}
+                                {#<img class="img-rounded img-responsive" src="{{ asset(babysitter.image.webPath) }}" alt="Image">#}
+                            {#{% endif %}#}
+
+                        {#</a>#}
+                        {#<div class="media-body">#}
+                            {#<h4 class="media-heading"><a href="#">{{ babysitter.lastName }} {{ babysitter.firstName }}</a></h4>#}
+                            {#<h5>{{ babysitter.price }} DT</h5>#}
+                            {#<h5>{{ babysitter.phone }} </h5>#}
+                            {#<p>{{ babysitter.address }}</p>#}
+
+                            {#<ul class="list-inline">#}
+                                {#<a><a href="{{ path('contact_babysitter', {'id':babysitter.id}) }}"<button  class="btn btn-sm btn-warning btn-pill">Contacter</button></a></li>#}
+                                {#<li><a href="#" class="btn-facebook-filled"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>#}
+                                {#<li><a href="#" class="btn-twitter-filled"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>#}
+                                {#<li><a href="#" class="btn-google-filled"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>#}
+
+
+                            {#</ul>#}
+
+                        {#</div>#}
+                    {#</div>#}
+                {#</div>#}
+                {#{% endfor %}#}
+            {#</div>#}
         {#</div>#}
-    {#{% endfor %}#}
-    {#</div>#}
-    {#{% endfor %}#}
-{#</div>#}
-{#</section>#}
+    {#</section>#}
+{% block main %}
+<section>
+<div class="container">
+    {% for row in babysitters | batch(2) %}
+    <div class="row">
+    {% for babysitter in row %}
+        <div class="col-sm-6 col-xs-12 block">
+            {% set color = random(5)+1 %}
+            <div class="media eventContent bg-color-{{ color }}">
+                <a class="media-left" href="single-event-left-sidebar.html">
+                    {% if babysitter.image != null %}
+                        <img class="media-object" src="{{ asset(babysitter.image.webPath) }}"  alt="Image">
+                    {% endif %}
+                    {#<span class="sticker-round">10 <br>July</span>#}
+                </a>
+                <div class="media-body">
+                    <h3 class="media-heading"><a href="single-event-left-sidebar.html">{{ babysitter.lastName }} {{ babysitter.firstName }}</a></h3>
+                    <ul class="list-unstyled">
+                        <li><i class="fa fa-calendar-o" aria-hidden="true"></i>{{ babysitter.phone }}</li>
+                        <li><i class="fa fa-clock-o" aria-hidden="true"></i>{{ babysitter.price }} TND</li>
+                    </ul>
+                    <p>{{ babysitter.address }}</p>
+                    <ul class="list-inline btn-yellow">
+                        <li><a href="{{ path('contact_babysitter', {'id': babysitter.id}) }}" class="btn btn-primary">Contacter</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+    {% endfor %}
+</div>
+</section>
 {% endblock %}
 

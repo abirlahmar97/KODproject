@@ -1,0 +1,27 @@
+{% extends 'back-layout.html.twig' %}
+
+{% block main %}
+
+    <div id="div_chart"></div>
+
+    <script type="text/javascript" src="{{ asset('https://www.gstatic.com/charts/loader.js') }}"></script>
+    <script type="text/javascript">
+        {{ gc_draw(barStat, 'div_chart') }}
+    </script>
+
+
+    {#<div id="div_piechart"></div>#}
+    {#<div id="div_histogram"></div>#}
+
+    {#<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>#}
+    {#<script type="text/javascript">#}
+        {#{{ gc_draw([piechart, histogram], ['div_piechart', 'div_histogram']) }}#}
+    {#</script>#}
+
+
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+

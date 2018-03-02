@@ -28,6 +28,7 @@
                             <tr>
 
                                 <th>Id</th>
+                                <th>Titre</th>
                                 <th>Description</th>
                                 <th>Source</th>
                                 <th>Sujet</th>
@@ -42,9 +43,10 @@
                             <tbody>
                             {% for article in articles %}
                                 <tr class="gradeX">
-                                    {#<td><input type="checkbox" name="{{ article.id }}"></td>#}
+
                                     <td>{{ article.id }}</td>
-                                    <td>{{ article.description }}</td>
+                                    <td>{{ article.title | title }}</td>
+                                    <td>{{ article.description | raw }}</td>
                                     <td>{{ article.src }}</td>
                                     <td>{{ article.subject }}</td>
                                     <td> {{ article.category.name }}</td>
@@ -53,8 +55,8 @@
                                     <td>{% if article.image != null %}
                                     <img width="100" src="{{ asset(article.image.webPath) }}">
                                     {% endif %} </td>
-                                    <td> <a  href="{{ path('update', {'id':article.id})}}"><button class="btn btn-success" type="button"> <i class="icon-check"></i> </button> </td>
-                                    <td> <a  href="{{ path('delete', {'id':article.id})}}"><button class="btn btn-danger" type="button"> <i class="icon-cancel"></i> </button></a> </td>
+                                    <td> <a  href="{{ path('update', {'id':article.id})}}"><button  type="button"> <i class="fa fa-edit"></i> </button> </td>
+                                    <td> <a  href="{{ path('delete', {'id':article.id})}}"><button  type="button"> <i class="fa fa-trash"></i> </button></a> </td>
 
                                 </tr>
                             {% endfor %}

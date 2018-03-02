@@ -2,7 +2,9 @@
 
 namespace MediaBundle\Form;
 
+use Doctrine\DBAL\Types\DateType;
 use Doctrine\ORM\Mapping\Entity;
+use KMS\FroalaEditorBundle\Form\Type\FroalaEditorType;
 use ShopBundle\Repository\CategoryRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -42,6 +44,8 @@ class ArticleType extends AbstractType
             ->add('date')
             ->add('image',PhotoType::class)
         ;
+        $builder->add( "description", FroalaEditorType::class);
+
 
     }/**
      * {@inheritdoc}

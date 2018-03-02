@@ -1,4 +1,21 @@
 {% extends 'layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/kmsfroalaeditor/froala_editor_2.7.5/css/froala_editor.min.css') }}" rel="stylesheet" type="text/css" />
+
+        <style>
+            #date {
+                font-size: x-small;
+
+            }
+            .star-rating {
+                line-height:32px;
+                font-size:1.25em;
+            }
+
+            .star-rating .fa-star{color: yellow;}
+</style>
+{% endblock %}
 {% block main %}
 
     <!-- PAGE TITLE SECTION-->
@@ -18,19 +35,39 @@
     <section class="mainContent full-width clearfix">
         <div class="container">
             <div class="row" class="tableau">
+
                 <div class="col-md-9 col-sm-8 col-xs-12 block">
                     <div class="thumbnail thumbnailContent">
                    {% if article.image != null %}
                         <img src="{{ asset(article.image.webPath) }}" alt="image" class="img-responsive">
                        {% endif %}
-                        <div class="sticker-round bg-color-1">{{ article.date|date('l F\n j\n Y  ')}} </div>
+                        <div class="sticker-round bg-color-1" id="date">{{ article.date|date('l F\n j\n Y  ')}} </div>
                         <div class="caption border-color-1 singleBlog">
-                            <h3 class="color-1">{{ article.subject }}</h3>
+
+                            <h3 class="color-1">{{ article.title | title }}</h3>
+
+                            <h4 class="color-4">{{ article.subject }}</h4>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="star-rating">
+                                            <span class="fa fa-star-o" data-rating="1"></span>
+                                            <span class="fa fa-star-o" data-rating="2"></span>
+                                            <span class="fa fa-star-o" data-rating="3"></span>
+                                            <span class="fa fa-star-o" data-rating="4"></span>
+                                            <span class="fa fa-star-o" data-rating="5"></span>
+                                            <input type="hidden" name="whatever1" class="rating-value" value="2.56">
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
                             <ul class="list-inline blogInfo">
                                 <li><i class="fa fa-user" aria-hidden="true"></i>{{ article.auteur }}</li>
                                 <li><i class="fa fa-comments-o" aria-hidden="true"></i>4 Comments </li>
                             </ul>
-                           <p> {{ article.description }}</p>
+                           <p> {{ article.description | raw}}</p>
                             <ul class="list-inline socailLink">
                                 <li><a href="#" class="bg-color-1"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
                                 <li><a href="#" class="bg-color-2"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
@@ -79,7 +116,7 @@
                             <div class="panel-body">
                                 <ul class="list-unstyled categoryItem">
                                     {% for categorie in categories %}
-                                    <li><a href="{{ path('show_by_category',{'category':categorie.name}) }}" >{{ categorie.name }}</a></li>
+                                        <li><a href="{{ path('show_by_category',{'category':categorie.name}) }}" >{{ categorie.name }}</a></li>
                                     {% endfor %}
                                 </ul>
                             </div>
@@ -87,46 +124,24 @@
                         <div class="rightSidebar">
                             <div class="panel panel-default">
                                 <div class="panel-heading bg-color-5 border-color-5">
-                                    <h3 class="panel-title">Related Articles</h3>
+                                    <h3 class="panel-title">Article le plus vu</h3>
                                 </div>
                                 <div class="panel-body">
                                     <ul class="media-list blogListing">
                                         <li class="media">
-                                            <div class="media-left">
-                                                <a href="course-single-left-sidebar.html"><img src="img/course-single/related-course-01.jpg" alt="image"></a>
-                                            </div>
-                                            <div class="media-body">
-                                                <h4 class="media-heading"><a href="course-single-left-sidebar.html">Mauris semper mass feugiat facilisis.</a></h4>
-                                                <p>July 7, 2016</p>
-                                            </div>
+                                            {% for m in max %}
+                                                <div class="media-left">
+                                                    {% if m.image != null %}
+                                                        <a href="#"><img src="{{ asset(m.image.webPath) }}" alt="image" height="20px" width="20px"></a>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="media-body">
+                                                    <h4 class="media-heading"><a href="{{ path('more', {'id': m.id}) }}">{{ m.title }}</a></h4>
+                                                    <p>{{ m.date|date('l F\n j\n Y  ')}}</p>
+                                                </div>
+                                            {% endfor %}
                                         </li>
-                                        <li class="media">
-                                            <div class="media-left">
-                                                <a href="course-single-left-sidebar.html"><img src="img/course-single/related-course-02.jpg" alt="image"></a>
-                                            </div>
-                                            <div class="media-body">
-                                                <h4 class="media-heading"><a href="course-single-left-sidebar.html">Mauris semper mass feugiat facilisis.</a></h4>
-                                                <p>July 7, 2016</p>
-                                            </div>
-                                        </li>
-                                        <li class="media">
-                                            <div class="media-left">
-                                                <a href="course-single-left-sidebar.html"><img src="img/course-single/related-course-03.jpg" alt="image"></a>
-                                            </div>
-                                            <div class="media-body">
-                                                <h4 class="media-heading"><a href="course-single-left-sidebar.html">Mauris semper mass feugiat facilisis.</a></h4>
-                                                <p>July 7, 2016</p>
-                                            </div>
-                                        </li>
-                                        <li class="media">
-                                            <div class="media-left">
-                                                <a href="course-single-left-sidebar.html"><img src="img/course-single/related-course-04.jpg" alt="image"></a>
-                                            </div>
-                                            <div class="media-body">
-                                                <h4 class="media-heading"><a href="course-single-left-sidebar.html">Mauris semper mass feugiat facilisis.</a></h4>
-                                                <p>July 7, 2016</p>
-                                            </div>
-                                        </li>
+
                                     </ul>
                                 </div>
                             </div>
@@ -141,4 +156,36 @@
 
 
 
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/kmsfroalaeditor/froala_editor_2.7.5/js/froala_editor.min.js') }}"></script>
+    <script>
+        $(function() {
+            $('.fr-view input').froalaEditor({toolbarInline: true})
+        });
+    </script>
+    <script>
+        var $star_rating = $('.star-rating .fa');
+
+        var SetRatingStar = function() {
+            return $star_rating.each(function() {
+                if (parseInt($star_rating.siblings('input.rating-value').val()) >= parseInt($(this).data('rating'))) {
+                    return $(this).removeClass('fa-star-o').addClass('fa-star');
+                } else {
+                    return $(this).removeClass('fa-star').addClass('fa-star-o');
+                }
+            });
+        };
+
+        $star_rating.on('click', function() {
+            $star_rating.siblings('input.rating-value').val($(this).data('rating'));
+            return SetRatingStar();
+        });
+
+        SetRatingStar();
+        $(document).ready(function() {
+
+        });
+    </script>
 {% endblock %}

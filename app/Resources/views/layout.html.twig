@@ -116,7 +116,7 @@
                             {% else %}
                                 <li>
                                     <i class="fa fa-sign-in bg-color-5" aria-hidden="true"></i>
-                                    {{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}
+                                    <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
                                 </li>
                             {% endif %}
 

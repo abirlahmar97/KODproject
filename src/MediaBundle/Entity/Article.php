@@ -49,6 +49,12 @@ class Article
      */
     private $subject;
     /**
+     * @var int
+     *
+     * @ORM\Column(name="views", type="integer")
+     */
+    private $views;
+    /**
      * @var string
      *
      * @ORM\Column(name="type", type="string", length=255, nullable=true)
@@ -67,6 +73,7 @@ class Article
      * @ORM\Column(name="date", type="date", nullable=true)
      */
     private $date;
+
     /**
      * @ORM\OneToOne(targetEntity="MediaBundle\Entity\Photo", cascade={"persist"})
      */
@@ -77,6 +84,13 @@ class Article
      */
     private $category;
 
+    /**
+     * Article constructor.
+     */
+    public function __construct()
+    {
+        $this->views=0;
+    }
 
 
     /**
@@ -304,5 +318,29 @@ class Article
     public function getAuteur()
     {
         return $this->auteur;
+    }
+
+    /**
+     * Set views
+     *
+     * @param integer $views
+     *
+     * @return Article
+     */
+    public function setViews($views)
+    {
+        $this->views = $views;
+
+        return $this;
+    }
+
+    /**
+     * Get views
+     *
+     * @return integer
+     */
+    public function getViews()
+    {
+        return $this->views;
     }
 }

@@ -12,50 +12,53 @@
         </div>
     </section>
     <section class="mainContent full-width clearfix conactSection">
-    <div class="container">
-<center><h2 class="color-4">Historique de vos réclamations</h2></center>
-<a class="table-responsive">
-    <table class="table table-curved">
-        <thead>
-        <tr>
-            <th class="col-sm-2 bg-color-1">Date <i class="fa fa-arrow-down" aria-hidden="true"></i></th>
-            <th class="col-sm-2 bg-color-2">Sujet</th>
-            <th class="col-sm-2 bg-color-6">Catégorie</th>
-            <th class="col-sm-2 bg-color-4">Contenu</th>
-            <th class="col-sm-2 bg-color-5">Etat</th>
+        <div class="container">
+            <center><h2 class="color-4">Historique de vos réclamations</h2></center>
+            <a class="table-responsive">
+                <table class="table table-curved">
+                    <thead>
+                    <tr>
+                        <th class="col-sm-2 bg-color-1">Date <i class="fa fa-arrow-down" aria-hidden="true"></i></th>
+                        <th class="col-sm-2 bg-color-2">Sujet</th>
+                        <th class="col-sm-2 bg-color-6">Catégorie</th>
+                        <th class="col-sm-2 bg-color-4">Contenu</th>
+                        <th class="col-sm-2 bg-color-5">Etat</th>
 
-        </tr>
-        </thead>
-        <tbody>
-        {% for complaint in complaints %}
-        <tr>
-            <td>{{ complaint.date|date }}</td>
-            <td>
-                <span class="color-3">{{ complaint.subject }}</span>
-            </td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for complaint in complaints %}
+                    <tr>
+                        <td>{{ complaint.date|date }}</td>
+                        <td>
+                            <span class="color-3">{{ complaint.subject }}</span>
+                        </td>
 
-            <td>
-                <span class="color-5">{{ complaint.category.name }}</span>
+                        <td>
+                            <span class="color-5">{{ complaint.category.name }}</span>
 
-            </td>
-            <td>
-                <span class="color-5">{{ complaint.description }}</span>
+                        </td>
+                        <td>
+                            <span class="color-5">{{ complaint.description }}</span>
 
-            </td>
-            <td>
-                <span class="color-5">{{ complaint.state }}</span>
+                        </td>
+                        <td>
+                            <span class="color-5">{{ complaint.state }}</span>
 
-            </td>
+                        </td>
 
-        </tr>
-        </tbody>
-        {% endfor %}
+                    </tr>
+                    </tbody>
+                    {% endfor %}
 
-    </table>
-    <a href="{{ path('create_complaint') }}" <button type="button" class="btn btn-xl btn-primary col-md-offset-4 ">Rédiger une nouvelle réclamation</button></a>
+                </table>
+                <div>
+                    <a href="{{ path('create_complaint') }}" <button type="button" class="btn btn-xl btn-primary col-md-offset-4 ">Rédiger une nouvelle réclamation</button></a>
+            <a href="{{ path('pdf_complaint') }}"> <button type="submit" class="btn btn-primary">Imprimer votre historique</button></a>
+        </div>
+        </div>
 
-</div>
-    </div>
+
 
     </section>
 
