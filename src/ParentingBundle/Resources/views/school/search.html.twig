@@ -1,0 +1,55 @@
+{% block main %}
+    {%  for schoolname in schoolnames %}
+<section class="mainContent full-width clearfix conactSection">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4 col-xs-12">
+
+                <div class="media addressContent">
+              <span class="media-left bg-color-1" href="#">
+                <i class="fa fa-map-marker" aria-hidden="true"></i>
+              </span>
+                    <div class="media-body">
+                        <h3 class="media-heading">Adresse:</h3>
+                        <p>{{ schoolname.address }}</p>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-4 col-xs-12">
+                <div class="media addressContent">
+              <span class="media-left bg-color-2" href="#">
+                <i class="fa fa-phone" aria-hidden="true"></i>
+              </span>
+                    <div class="media-body">
+                        <h3 class="media-heading">numero de télephone </h3>
+                        <p>{{ schoolname.schoolphone}}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-4 col-xs-12">
+                <div class="media addressContent">
+              <span class="media-left bg-color-3" href="#">
+                <i class="fa fa-envelope-o" aria-hidden="true"></i>
+              </span>
+                    <div class="media-body">
+                        <h3 class="media-heading">Email:</h3>
+                        <p><a href="kidzschool@test.com">bienvenue a l'ecole  {{ schoolname.schoolname }}</a>
+                            <br>notre email:
+                            <a href="mailto:hello1@example.com">{{ schoolname.mail }}</a>
+                        </p>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+                {% endfor %}
+{% endblock %}

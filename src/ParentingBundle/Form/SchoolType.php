@@ -1,12 +1,12 @@
 <?php
 
-namespace parentiingBundle\Form;
+namespace ParentingBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class SubjectType extends AbstractType
+class SchoolType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -14,15 +14,19 @@ class SubjectType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('description');
+            ->add('schoolname')
+            ->add('address')
+            ->add('Xschool')
+            ->add('Yschool')
+            ->add('schoolphone')
+            ->add('mail');
     }/**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'parentiingBundle\Entity\Subject'
+            'data_class' => 'ParentingBundle\Entity\School'
         ));
     }
 
@@ -31,7 +35,7 @@ class SubjectType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'parentiingbundle_subject';
+        return 'parentingbundle_school';
     }
 
 

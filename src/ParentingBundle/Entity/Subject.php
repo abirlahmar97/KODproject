@@ -1,6 +1,6 @@
 <?php
 
-namespace parentiingBundle\Entity;
+namespace ParentingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -8,12 +8,10 @@ use Doctrine\ORM\Mapping as ORM;
  * Subject
  *
  * @ORM\Table(name="subject")
- * @ORM\Entity(repositoryClass="parentiingBundle\Repository\SubjectRepository")
+ * @ORM\Entity(repositoryClass="ParentingBundle\Repository\SubjectRepository")
  */
 class Subject
 {
-
-
 
     /**
      * @var int
@@ -98,11 +96,11 @@ class Subject
     /**
      * Set teachers
      *
-     * @param \parentiingBundle\Entity\Teacher $teachers
+     * @param \ParentingBundle\Entity\Teacher $teachers
      *
      * @return Subject
      */
-    public function setTeachers(\parentiingBundle\Entity\Teacher $teachers = null)
+    public function setTeachers(\ParentingBundle\Entity\Teacher $teachers = null)
     {
         $this->Teachers = $teachers;
 
@@ -112,7 +110,7 @@ class Subject
     /**
      * Get teachers
      *
-     * @return \parentiingBundle\Entity\Teacher
+     * @return \ParentingBundle\Entity\Teacher
      */
     public function getTeachers()
     {

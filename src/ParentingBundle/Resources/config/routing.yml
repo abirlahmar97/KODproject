@@ -25,6 +25,60 @@ contact_babysitter:
     path:    /Parent/Babysitter/contact{id}
     defaults: { _controller: ParentingBundle:Babysitter:contact }
 
+
+read_teachers:
+    path:     /teachers/read
+    defaults: { _controller: ParentingBundle:Teacher:readteachers }
+
+teacher_add:
+    path:     admin/teacher/add
+    defaults: { _controller: ParentingBundle:Teacher:create }
+
+delete_prof:
+    path:     admin/teacher/delete{id}
+    defaults: { _controller: ParentingBundle:Teacher:delete }
+
+read_teachers1:
+        path:     admin/teacher/delete
+        defaults: { _controller: ParentingBundle:Teacher:readteachers1 }
+
+subject_add:
+    path:     subject/add
+    defaults: { _controller: ParentingBundle:Subject:create }
+
+update_teacher:
+    path:     /teacher/update{id}
+    defaults: { _controller: ParentingBundle:Teacher:updateteacher }
+
+school_add:
+    path:     admin/school/add
+    defaults: { _controller: ParentingBundle:School:createSchool }
+
+delete_school:
+    path:     school/delete{id}
+    defaults: { _controller: ParentingBundle:School:delete }
+
+read_school1:
+        path:     admin/school/delete
+        defaults: { _controller: ParentingBundle:School:readschool1 }
+
+look_school:
+        path:     see
+        defaults: { _controller: ParentingBundle:School:readschool1 }
+
+
+map:
+  path:    /Parent/mapschool/
+  defaults: { _controller: ParentingBundle:School:map}
+
+recherche_school:
+    path:     /find/school
+    defaults: { _controller: ParentingBundle:School:Recherche}
+
+about_teacher:
+    path:    /Parent/teacher/about{id}
+    defaults: { _controller: ParentingBundle:Teacher:about }
+
 mail_babysitter:
         path:    /Parent/Babysitter/Mail{name}
         defaults: { _controller: ParentingBundle:Babysitter:Mail }

@@ -1,6 +1,6 @@
 <?php
 
-namespace parentiingBundle\Repository;
+namespace ParentingBundle\Repository;
 
 /**
  * TeacherRepository
@@ -10,6 +10,5 @@ namespace parentiingBundle\Repository;
  */
 class TeacherRepository extends \Doctrine\ORM\EntityRepository
 {
-
 
 }

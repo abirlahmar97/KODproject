@@ -1,0 +1,54 @@
+{% extends 'layout.html.twig' %}
+{% block main %}
+    <section class="pageTitleSection">
+        <div class="container">
+            <div class="pageTitleInfo">
+                <h2>Teachers Details</h2>
+                <ol class="breadcrumb">
+                    <li><a href="http://localhost/KODproject/web/app_dev.php/">Accueil</a></li>
+                    <li class="active">Teachers Details</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+    <section class="mainContent full-width clearfix">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4 col-xs-12">
+
+                    <div class="teachersPhoto">
+                        <img src="{{ asset(teacher.photo.webpath)}}" alt="image" class="img-rounded img-responsive">
+                    </div>
+                </div>
+
+                <div class="col-sm-8 col-xs-12">
+                    <div class="teachersInfo">
+
+                        <h3>Information d'enseignant</h3>  <ul class="list-inline">
+                            <li><a href=href="{{ asset(teacher.linefb)}}" class="bg-color-1"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                            <li><a href="#" class="bg-color-2"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                            <li><a href="#" class="bg-color-3"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                            <li><a href="#" class="bg-color-4"><i class="fa fa-pinterest-p" aria-hidden="true"></i></a></li>
+                            <li><a href="#" class="bg-color-5"><i class="fa fa-vimeo" aria-hidden="true"></i></a></li>
+                        </ul>
+
+                        <div class="teachersProfession bg-color-1">nom</div>
+                        <div class="professionDetails">{{  teacher.name}}</div>
+                        <div class="teachersProfession bg-color-2">DEGRÉ</div>
+                        <div class="professionDetails">{{  teacher.degree}}</div>
+                        <div class="teachersProfession bg-color-3">EXPÉRIENCE</div>
+                        <div class="professionDetails">{{  teacher.experience}}</div>
+                        <div class="teachersProfession bg-color-4">LOISIRS</div>
+                        <div class="professionDetails">{{  teacher.hobbies}}</div>
+                        <div class="teachersProfession bg-color-5">Mon cours</div>
+                        <div class="professionDetails">{{  teacher.subject.name}}</div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+{% endblock %}
+
+
