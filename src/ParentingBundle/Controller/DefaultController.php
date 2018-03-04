@@ -10,5 +10,4 @@ class DefaultController extends Controller
     {
         return $this->render('ParentingBundle:Default:index.html.twig');
     }
-
 }

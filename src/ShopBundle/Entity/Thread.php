@@ -8,11 +8,11 @@ use FOS\CommentBundle\Entity\Thread as BaseThread;
 /**
  * Thread
  *
- * @ORM\Table(name="cthread")
+ * @ORM\Table(name="thread")
  * @ORM\Entity(repositoryClass="ShopBundle\Repository\ThreadRepository")
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  */
-class CThread extends BaseThread
+class Thread extends BaseThread
 {
     /**
      * @var string $id

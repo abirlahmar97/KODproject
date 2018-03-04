@@ -27,7 +27,7 @@ class Comment extends BaseComment implements SignedCommentInterface
      * Thread of this comment
      *
      * @var Thread
-     * @ORM\ManyToOne(targetEntity="ShopBundle\Entity\CThread")
+     * @ORM\ManyToOne(targetEntity="ShopBundle\Entity\Thread")
      * @ORM\JoinColumn(name="idP",referencedColumnName="id")
      */
     protected $thread;

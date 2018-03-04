@@ -23,16 +23,9 @@ class AppKernel extends Kernel
             new ParentingBundle\ParentingBundle(),
             new ChildBundle\ChildBundle(),
             new EventsBundle\EventsBundle(),
-            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
-            new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
-            new Discutea\DForumBundle\DForumBundle(),
-            new CMEN\GoogleChartsBundle\CMENGoogleChartsBundle(),
-            new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
-            new FOS\MessageBundle\FOSMessageBundle(),
             new FOS\RestBundle\FOSRestBundle(),
             new FOS\CommentBundle\FOSCommentBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
-            new KMS\FroalaEditorBundle\KMSFroalaEditorBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

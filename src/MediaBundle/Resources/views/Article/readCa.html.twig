@@ -1,13 +1,4 @@
 {% extends 'layout.html.twig' %}
-{% block stylesheets %}
-    {{ parent() }}
-    <style>
-        #date {
-            font-size: small;
-
-        }
-    </style>
-{% endblock %}
 {% block main %}
     <section class="pageTitleSection">
         <div class="container">
@@ -35,7 +26,7 @@
                                 {% endif %}
 
                             </a>
-                            <div class="sticker-round bg-color-1" id="date"><br> {{ article.date|date('l F\n j\n Y  ')}} </div>
+                            <div class="sticker-round bg-color-1"><br> {{ article.date|date('l F\n j\n Y  ')}} </div>
                             <div class="caption border-color-1">
                                 <h3><a href="{{ path('more', {'id': 'article.id'}) }}" class="color-1">{{ article.title }}</a></h3>
                                 <ul class="list-inline">

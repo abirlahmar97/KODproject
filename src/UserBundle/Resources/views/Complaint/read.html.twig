@@ -27,6 +27,7 @@
                         <table class="table table-striped table-bordered table-hover dataTables-example" >
                             <thead>
                             <tr>
+                                {#<th></th>#}
                                 <th>Id</th>
                                 <th>Utilisateur</th>
                                 <th>Sujet</th>
@@ -42,16 +43,17 @@
                             <tbody>
                             {% for complaint in complaints %}
                                 <tr class="gradeX">
+                                   {#<td> <input type="checkbox" name="{{ complaint.id }}"></td>#}
                                     <td>{{ complaint.id }}</td>
-                                    <td>{{ complaint.parent }}</td>
+                                    <td>{{ complaint.parent.fullname }}</td>
                                     <td>{{ complaint.subject}}</td>
                                     <td>{{ complaint.category.name}}</td>
                                     <td> {{ complaint.description }}</td>
-                                    <td> {{ complaint.date|date('Y-d-F') }}</td>
+                                    <td> {{ complaint.date|date }}</td>
                                     <td> {{ complaint.state }}</td>
 
-                                    <td> <a  href="{{ path('update_complaint', {'id':complaint.id})}}"><button  type="submit"> <i class="fa fa-edit"></i> </button> </td>
-                                    <td> <a  href="{{ path('delete_complaint', {'id':complaint.id})}}"><button type="submit"> <i class="fa fa-trash"></i> </button></a> </td>
+                                    <td> <a  href="{{ path('update_complaint', {'id':complaint.id})}}"><button class="btn btn-success" type="button"> <i class="icon-check"></i> </button> </td>
+                                    <td> <a  href="{{ path('delete_complaint', {'id':complaint.id})}}"><button class="btn btn-danger" type="button"> <i class="icon-cancel"></i> </button></a> </td>
 
                                 </tr>
                             {% endfor %}
@@ -121,6 +123,5 @@
             })
         })
     </script>
-
 {% endblock %}
 

@@ -22,7 +22,7 @@ class CategoryController extends Controller
             $em->flush();
             return $this->redirectToRoute("show_category");
         }
-        return $this->render('@Shop/Provider/Categories/add.html.twig', array("form"=>$form->createView()
+        return $this->render('ShopBundle:Provider/Category:add_category.html.twig', array("form"=>$form->createView()
 
         ));
     }

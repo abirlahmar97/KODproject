@@ -36,12 +36,3 @@ recherche_front:
 show_by_category:
         path:   /Parent/Aide/Article/Category/show{category}
         defaults: { _controller: MediaBundle:Article:showbyCategory }
-stat_article:
-        path:   /Admin/Article/Aide/Stat
-        defaults: { _controller: MediaBundle:Article:index }
-fos_message:
-    resource: "@FOSMessageBundle/Resources/config/routing.xml"
-    prefix: /messaging
-recherche_article:
-        path:   /Parent/Article/rechercher
-        defaults: { _controller: MediaBundle:Article:recherche }

@@ -10,11 +10,4 @@ namespace UserBundle\Repository;
  */
 class ComplaintRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function findUser($user)
-    {
-        $q=$this->createQueryBuilder('m')
-            ->where("m.parent=:user")
-            ->setParameter(':user',$user);
-        return $q->getQuery()->getResult();
-    }
 }

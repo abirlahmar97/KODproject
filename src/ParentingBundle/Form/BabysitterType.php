@@ -30,14 +30,6 @@ class BabysitterType extends AbstractType
                     'Ben Arous' => 'Ben Arous',
                     'Manouba' => 'Manouba',
                     'Bardo' => 'Bardo',
-                    'Gabes' => 'Gabes',
-                    'Sousse' => 'Sousse',
-                    'Mahdia' => 'Mahdia',
-                     'Sfax' => 'Sfax',
-                    'Nabeul' => 'Nabeul',
-                    'Tunis' => 'Tunis',
-                    'Gafsa' => 'Gafsa',
-                    'Seliana' => 'Seliana'
                 )))
             ->add('price')
             ->add('image',PhotoType::class, [

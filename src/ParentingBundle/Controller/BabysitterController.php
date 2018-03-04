@@ -24,10 +24,8 @@ class BabysitterController extends Controller
         return $this->render('@Parenting/Babysitter/create.html.twig', array(
             "form"=>$form->createView()
         ));
-
-
-
     }
+
     public function readAction()
     {
         $em= $this->getDoctrine()->getManager();
@@ -74,6 +72,7 @@ class BabysitterController extends Controller
         ));
     }
 
+
     public function contactAction($id)
     {
         $em=$this->getDoctrine()->getManager();
@@ -83,5 +82,6 @@ class BabysitterController extends Controller
             return $this->render('@Parenting/Babysitter/warning.html.twig',array('babysitter'=>$babysitter,'user' => $this->getUser()));
         }
 
-       return $this->redirectToRoute('fos_message_inbox');
-    }}
+        return $this->render('@Parenting/Babysitter/contact.html.twig',array( 'babysitter'=>$babysitter,'user' => $this->getUser()));
+    }
+}

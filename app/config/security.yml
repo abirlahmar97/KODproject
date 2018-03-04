@@ -9,7 +9,7 @@ security:
     role_hierarchy:
         ROLE_PROVIDER:    ROLE_USER
         ROLE_PARENT:      ROLE_USER
-        ROLE_ADMIN:       [ROLE_PARENT, ROLE_PROVIDER, ROLE_MODERATOR]
+        ROLE_ADMIN:       [ROLE_PARENT, ROLE_PROVIDER]
         ROLE_SUPER_ADMIN: ROLE_ADMIN
 
     providers:

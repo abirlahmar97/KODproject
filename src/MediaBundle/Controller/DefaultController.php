@@ -10,8 +10,4 @@ class DefaultController extends Controller
     {
         return $this->render('MediaBundle:Default:index.html.twig');
     }
-    public function FOSMessageAction()
-    {
-        return $this->render('layout.html.twig');
-    }
 }

@@ -12,7 +12,6 @@ read_babysitter:
 front_read_babysitter:
     path:     /Parent/Babysitter/read
     defaults: { _controller: ParentingBundle:Babysitter:front_read }
-
 update_babysitter:
     path:    /Admin/Babysitter/update{id}
     defaults: { _controller: ParentingBundle:Babysitter:update }
@@ -79,47 +78,6 @@ about_teacher:
     path:    /Parent/teacher/about{id}
     defaults: { _controller: ParentingBundle:Teacher:about }
 
-mail_babysitter:
-        path:    /Parent/Babysitter/Mail{name}
-        defaults: { _controller: ParentingBundle:Babysitter:Mail }
 
-create_address:
-    path:     /Admin/Address/Create
-    defaults: { _controller: ParentingBundle:Address:create }
-
-delete_address:
-    path:     /Admin/Address/Delete{id}
-    defaults: { _controller: ParentingBundle:Address:delete }
-
-read_address:
-    path:     /Admin/Address/Read
-    defaults: { _controller: ParentingBundle:Address:read }
-
-update_address:
-    path:     /Admin/Address/Update{id}
-    defaults: { _controller: ParentingBundle:Address:update }
-
-map_address:
-    path:     /Admin/Address/map
-    defaults: { _controller: ParentingBundle:Address:map }
-
-map2_address:
-    path:     /Admin/Address/map2
-    defaults: { _controller: ParentingBundle:Address:map2 }
-
-front_addresses:
-    path:     /Parent/Address/List
-    defaults: { _controller: ParentingBundle:Address:front_read }
-
-discutea_forum:
-    resource: "@DForumBundle/Resources/config/routing.yml"
-    prefix:   /
-
-more_addresses:
-    path:     /Parent/Address/more{id}
-    defaults: { _controller: ParentingBundle:Address:more }
-categories_addresses:
-    path:     /Parent/Address/Category/{category}
-    defaults: { _controller: ParentingBundle:Address:showbyCategory }
 
 

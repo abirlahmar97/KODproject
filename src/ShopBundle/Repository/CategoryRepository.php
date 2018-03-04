@@ -17,21 +17,9 @@ class CategoryRepository extends \Doctrine\ORM\EntityRepository
         return $q->getQuery()->getResult();
     }
 
-    public function findAddress()
-    {
-        $q=$this->createQueryBuilder('c')
-
-            ->where("c.type='Adresse'");
-
-        ;
-        return $q->getQuery()->getResult();
-    }
-
-
     public function findTypeProduct(){
         $q=$this->createQueryBuilder('c')
             ->where("c.type='Produits'");
         return $q->getQuery()->getResult();
     }
-
 }
