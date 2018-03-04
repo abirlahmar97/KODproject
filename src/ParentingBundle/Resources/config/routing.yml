@@ -24,7 +24,6 @@ contact_babysitter:
     path:    /Parent/Babysitter/contact{id}
     defaults: { _controller: ParentingBundle:Babysitter:contact }
 
-
 read_teachers:
     path:     /teachers/read
     defaults: { _controller: ParentingBundle:Teacher:readteachers }
@@ -76,4 +75,3 @@ recherche_school:
 about_teacher:
     path:    /Parent/teacher/about{id}
     defaults: { _controller: ParentingBundle:Teacher:about }
-

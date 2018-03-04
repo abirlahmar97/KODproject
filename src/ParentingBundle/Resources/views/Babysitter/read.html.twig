@@ -54,6 +54,7 @@
                                 <td>{% if babysitter.image != null %}
                                         <img width="100" src="{{ asset(babysitter.image.webPath) }}">
                                     {% endif %} </td>
+
                                 <td>{{ babysitter.state }}</td>
                                 <td> <a  href="{{ path('update_babysitter', {'id':babysitter.id})}}"><button class="btn btn-success" type="button"> <i class="icon-check"></i> </button> </td>
                                 <td> <a  href="{{ path('delete_babysitter', {'id':babysitter.id})}}"><button class="btn btn-danger" type="button"> <i class="icon-cancel"></i> </button></a> </td>

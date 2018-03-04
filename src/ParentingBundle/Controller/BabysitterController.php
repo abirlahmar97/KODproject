@@ -24,7 +24,11 @@ class BabysitterController extends Controller
         return $this->render('@Parenting/Babysitter/create.html.twig', array(
             "form"=>$form->createView()
         ));
+
+
+
     }
+    
     public function readAction()
     {
         $em= $this->getDoctrine()->getManager();
@@ -82,5 +86,4 @@ class BabysitterController extends Controller
         }
 
         return $this->render('@Parenting/Babysitter/contact.html.twig',array( 'babysitter'=>$babysitter,'user' => $this->getUser()));
-    }
-}
+    }}
