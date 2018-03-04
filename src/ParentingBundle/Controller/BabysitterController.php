@@ -25,7 +25,6 @@ class BabysitterController extends Controller
             "form"=>$form->createView()
         ));
     }
-
     public function readAction()
     {
         $em= $this->getDoctrine()->getManager();

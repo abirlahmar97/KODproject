@@ -65,7 +65,6 @@ look_school:
         path:     see
         defaults: { _controller: ParentingBundle:School:readschool1 }
 
-
 map:
   path:    /Parent/mapschool/
   defaults: { _controller: ParentingBundle:School:map}
@@ -77,7 +76,4 @@ recherche_school:
 about_teacher:
     path:    /Parent/teacher/about{id}
     defaults: { _controller: ParentingBundle:Teacher:about }
-
-
-
 
