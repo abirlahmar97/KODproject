@@ -19,100 +19,101 @@
             </div>
         </div>
     </section>
-    <br> </br>
-    <div class="row progress-wizard" style="border-bottom:0;">
 
-        <div class="col-sm-4 col-xs-12 progress-wizard-step complete">
-            <div class="progress">
-                <div class="progress-bar"></div>
+    <section class="mainContent full-width clearfix">
+        <div class="container">
+            <div class="row progress-wizard" style="border-bottom:0;">
+                <div class="col-sm-4 col-xs-12 progress-wizard-step active">
+                    <div class="progress">
+                        <div class="progress-bar"></div>
+                    </div>
+                    <a href="{{ path('shipping') }}" class="progress-wizard-dot">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                    </a>
+                    <div class="progressInfo">1. Personal info</div>
+                </div>
+
+                <div class="col-sm-4 col-xs-12 progress-wizard-step incomplete">
+                    <div class="progress">
+                        <div class="progress-bar"></div>
+                    </div>
+                    <a href="{{ path('api_order_confirm', {'id' : 1}) }}" class="progress-wizard-dot">
+                        <i class="fa fa-usd" aria-hidden="true"></i>
+                    </a>
+                    <div class="progressInfo">2. Payment Mathod</div>
+                </div>
+
+                <div class="col-sm-4 col-xs-12 progress-wizard-step incomplete">
+                    <div class="progress">
+                        <div class="progress-bar"></div>
+                    </div>
+                    <a href="{{ path('bills') }}" class="progress-wizard-dot">
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                    </a>
+                    <div class="progressInfo">3. Confirmation</div>
+                </div>
             </div>
-            <a href="checkout-step-1.html" class="progress-wizard-dot">
-                <i class="fa fa-user" aria-hidden="true"></i>
-            </a>
-            <div class="progressInfo">1. Personal info</div>
-        </div>
 
-        <div class="col-sm-4 col-xs-12 progress-wizard-step active">
-            <div class="progress">
-                <div class="progress-bar"></div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>Valider mon panier</h2>
+                    <table class="table table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th>Références</th>
+                            <th>Quantité</th>
+                            <th>Prix unitaire</th>
+                            <th>Total HT</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for product in order.order.product %}
+                            <tr>
+                                <td>{{ product.reference }}</td>
+                                <td>
+                                    {{ product.quantity }}
+                                </td>
+                                <td>{{ product.priceTF }} DT</td>
+                                <td>{{ product.priceTF * product.quantity }} DT</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                    <dl class="dl-horizontal pull-right">
+                        <dt>Total HT :</dt>
+                        <dd>{{ order.order.priceTF }} DT</dd>
+                    </dl>
+
+                    <div class="">
+                        <dl class="">
+                            <dt><h4>Adresse de livraison</h4></dt>
+                            <dt>{{ order.order.shipping_add.address }}</dt>
+                            <dt>{{ order.order.shipping_add.postalCode }} {{ order.order.shipping_add.region }}
+                            </dt>
+                        </dl>
+                    </div>
+
+                    <div class="">
+                        <dl class="pull-left">
+                            <dt><h4>Adresse de facturation</h4></dt>
+                            <dt>{{ order.order.billing_add.address }}</dt>
+                            <dt>{{ order.order.billing_add.postalCode }} {{ order.order.billing_add.region }}</dt>
+                        </dl>
+                    </div>
+
+                    <div class="clearfix"></div>
+                        <form action="{{ path('api_order_confirm', { 'id' : order.id }) }}" method="POST" >
+                            <input name="token" type="hidden" value="{{ order.order.token }}"/>
+
+                            <input name="date" type="hidden" value="{{ order.date|date('dmyhms') }}"/>
+                            <button type="submit" class="btn btn-success pull-right" href="{{ path('bills') }}">Payer</button>
+                        </form>
+                    
+                        <a href="{{ path('shipping') }}" class="btn btn-primary">retour</a>
+                    </div>
+                </div>
             </div>
-            <a href="checkout-step-2.html" class="progress-wizard-dot">
-                <i class="fa fa-usd" aria-hidden="true"></i>
-            </a>
-            <div class="progressInfo">2. Payment Mathod</div>
-        </div>
-
-        <div class="col-sm-4 col-xs-12 progress-wizard-step incomplete">
-            <div class="progress">
-                <div class="progress-bar"></div>
-            </div>
-            <a href="checkout-step-3.html" class="progress-wizard-dot">
-                <i class="fa fa-check" aria-hidden="true"></i>
-            </a>
-            <div class="progressInfo">3. Confirmation</div>
-        </div>
-    </div>
-    </div>
-
-    <h2>Valider mon panier</h2>
-    <table class="table table-striped table-hover">
-        <thead>
-        <tr>
-            <th>Références</th>
-            <th>Quantité</th>
-            <th>Prix unitaire</th>
-            <th>Total HT</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for product in order.order.product %}
-            <tr>
-                <td>{{ product.reference }}</td>
-                <td>
-                    {{ product.quantity }}
-                </td>
-                <td>{{ product.priceTF }} €</td>
-                <td>{{ product.priceTF * product.quantity }} DT</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <dl class="dl-horizontal pull-right">
-        <dt>Total HT :</dt>
-        <dd>{{ order.order.priceTF }} DT</dd>
-
-
-    </dl>
-
-    <div class="span3 pull-left">
-        <dl class="pull-left">
-            <dt><h4>Adresse de livraison</h4></dt>
-            <dt>{{ order.order.shipping_add.address }}</dt>
-            <dt>{{ order.order.shipping_add.postalCode }} {{ order.order.shipping_add.region }}
-            </dt>
-        </dl>
-    </div>
-
-    <div class="span3 pull-left">
-        <dl class="pull-left">
-            <dt><h4>Adresse de facturation</h4></dt>
-            <dt>{{ order.order.billing_add.address }}</dt>
-            <dt>{{ order.order.billing_add.postalCode }} {{ order.order.billing_add.region }}</dt>
-        </dl>
-    </div>
-
-    <div class="clearfix"></div>
-        <form action="{{ path('api_order_confirm', { 'id' : order.id }) }}" method="POST" >
-            <input name="token" type="hidden" value="{{ order.order.token }}"/>
-
-            <input name="date" type="hidden" value="{{ order.date|date('dmyhms') }}"/>
-            <button type="submit" class="btn btn-success pull-right" href="{{ path('bills') }}">Payer</button>
-        </form>
-    
-        <a href="{{ path('shipping') }}" class="btn btn-primary">retour</a>
-    </div>
-
-    </div>
-    </div>
+        </section>  
 {% endblock %}

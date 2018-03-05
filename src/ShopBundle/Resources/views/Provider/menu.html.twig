@@ -1,23 +1,27 @@
 <li class="active">
-    <a href="{{ path('shop_homepage') }}">
+    <a href="{{ path('provider_homepage') }}">
         <i class="icon-gauge"></i><span class="title">Dashboard</span>
     </a>
 </li>
 <li class="has-sub">
     <a href="{{ path('list_products') }}">
-        <i class="fa fa-users"></i><span class="title">Produits</span>
+        <i class="fa fa-archive"></i><span class="title">Produits</span>
     </a>
     <ul class="nav-collapse">
         <li>
             <a href="{{ path('list_products') }}">
-                <i class="fa fa-plus"></i> <span class="title">Liste des produits</span>
+                <span class="title">Liste des produits</span>
             </a>
-        </li
+        </li>
         <li>
             <a href="{{ path('create_product') }}">
-                <i class="fa fa-plus"></i> <span class="title">Ajouter un produit</span>
+                <span class="title">Ajouter un produit</span>
             </a>
         </li>
     </ul>
 </li>
-
+<li>
+    <a href="{{ path('list_order') }}">
+        <i class="fa fa-shopping-cart"></i> <span class="title">Commandes</span>
+    </a>
+</li>

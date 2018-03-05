@@ -44,6 +44,13 @@ class OrdersController extends Controller
             'postalCode' => $billing_add->getPostalCode(),
             'region' => $billing_add->getRegion()
         );
+
+        if ($session->get('coupon') ) {
+            $code = $session->get('coupon');
+            $coupon = $this->getDoctrine()->getRepository("ShopBundle:Coupons")->findOneBy(['code' => $code]);
+            if ($coupon != null)
+                $totalTF = $totalTF - ($totalTF * $coupon->getPercent() / 100);
+        }
         $order['priceTF'] = round($totalTF, 2);
         $order['token'] = bin2hex(random_bytes(20));
 
@@ -67,7 +74,7 @@ class OrdersController extends Controller
 
         if (!$session->has('order')) {
             $em->persist($order);
-            $session->set('order', $order);
+                $session->set('order', $order);
 //            die();
         }
         $em->flush();
@@ -94,4 +101,28 @@ class OrdersController extends Controller
         return $this->redirect($this->generateUrl('bills'));
     }
 
+
+    public function billpdfAction()
+    {
+        $em=$this->getDoctrine()->getManager();
+        $factures=$em->getRepository("ShopBundle:Order")->findAll($this->getUser());
+
+        $snappy = $this->get('knp_snappy.pdf');
+        if (!$factures) {
+            $this->get('session')->getFlashBag()->add('error', 'Une erreur est survenue');
+            return $this->redirect($this->generateUrl('bills'));
+        }
+        $html = $this->renderView('UserBundle:Home:billpdf.html.twig', array('factures' => $factures));
+
+        $filename = 'Historique des factures';
+
+        return new Response(
+            $snappy->getOutputFromHtml($html),
+            200,
+            array(
+                'Content-Type'          => 'application/pdf',
+                'Content-Disposition'   => 'inline; filename="'.$filename.'.pdf"'
+            )
+        );
+    }
 }

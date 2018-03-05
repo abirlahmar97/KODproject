@@ -1,0 +1,39 @@
+categories_list:
+    path:     /categories
+    defaults: { _controller: ShopBundle:Products:listCategories }
+
+cart_add:
+    path:     /art/add/{id}
+    defaults: { _controller: ShopBundle:Cart:addItem }
+
+delete_order_addr:
+    path:      /deleteAddr/{id}
+    defaults: { _controller: ShopBundle:Cart:deleteAddr }
+
+cart_delete:
+    path:     /cart/delete/{id}
+    defaults: { _controller: ShopBundle:Cart:deleteItem }
+
+cart_show:
+    path:     /cart
+    defaults: { _controller: ShopBundle:Cart:cart }
+
+shipping:
+    path:     /shipping
+    defaults: { _controller: ShopBundle:Cart:shipping }
+
+produitsss:
+    path:     /produitsss
+    defaults: { _controller: ShopBundle:Product:something }
+
+cart_confirmation:
+    path:     /cart/confirmation
+    defaults: { _controller: ShopBundle:Cart:confirmation }
+
+cart_menu:
+    path:     /menu
+    defaults: { _controller: ShopBundle:Cart:dropdown }
+
+add_coupon:
+    path:     /cart/coupon
+    defaults: { _controller: ShopBundle:Cart:applyCoupon }

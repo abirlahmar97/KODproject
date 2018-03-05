@@ -32,11 +32,14 @@ class ProductType extends AbstractType
                 'choice_label' => 'name',
                 'multiple' => false
             ))
-            ->add('img', PhotoType::class)
+            ->add('img', PhotoType::class, [
+                'required' => false 
+            ])
             ->add('tva')
-            ->add('gender',ChoiceType::class,array('choices' =>array(
-                'Garçon' => 'Garçon',
-                'fille' => 'fille',
+            ->add('gender', ChoiceType::class, array('choices' =>array(
+                'Garçon' => '0',
+                'Fille' => '1',
+                'Les deux' => '2',
             )))
             ->add('age');
 

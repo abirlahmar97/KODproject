@@ -1,6 +1,6 @@
 {%extends "ShopBundle:Provider:layout.html.twig" %}
 
-{% block title %}ShopBundle:CategoryProviderController:createProduct{% endblock %}
+{% block title %}{{ parent }} Ajouter une categorie{% endblock %}
 
 {% block main %}
 
@@ -9,7 +9,7 @@
             <div class="sectionTitle text-center">
                 <h2>
                     <span class="shape shape-left bg-color-4"></span>
-                    <span>Forms</span>
+                    <span>Ca</span>
                     <span class="shape shape-right bg-color-4"></span>
                 </h2>
             </div>
@@ -19,7 +19,7 @@
             {{ form_errors(form) }}
             <div class="form-group row">
                 <div class="col-sm-2 control-label">
-                    {{ form_label(form.name, 'name') }}
+                    {{ form_label(form.name, 'Nom') }}
                 </div>
                 <div class="col-sm-10">
                     {{ form_widget(form.name, { 'attr' : { 'class' : 'form-control' } }) }}

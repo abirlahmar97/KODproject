@@ -2,6 +2,7 @@
 
 namespace ShopBundle\Controller;
 
+use ShopBundle\Entity\Coupons;
 use ShopBundle\Entity\UserAddress;
 use ShopBundle\Entity\UsersAdresses;
 use ShopBundle\Form\UserAddressType;
@@ -25,11 +26,11 @@ class CartController extends Controller
 
 
         if (is_array($cart) && array_key_exists($id, $cart)) {
-            if ($request->query->get('quantity') != null) $cart[$id] = $request->query->get('quantity');
+            if ($request->query->get('qte') != null) $cart[$id] = $request->query->get('qte');
             $this->get('session')->getFlashBag()->add('success', 'Quantité modifié avec succès');
         } else {
-            if ($request->query->get('quantity') != null)
-                $cart[$id] = $request->query->get('quantity');
+            if ($request->query->get('qte') != null)
+                $cart[$id] = $request->query->get('qte');
             else
                 $cart[$id] = 1;
 
@@ -44,19 +45,33 @@ class CartController extends Controller
     public function cartAction(Request $request, SessionInterface $session)
     {
 
-        if (!$session->has('cart')) $session->set('cart', array());
+        if (!$session->has('cart')) 
+            $session->set('cart', array());
         $em = $this->getDoctrine()->getManager();
         $products = $em->getRepository('ShopBundle:Product')->findArray(array_keys($session->get('cart')));
 
         return $this->render('ShopBundle:cart:show.html.twig', array(
             'products' => $products,
-            'cart' => $session->get('cart')));
+            'cart' => $session->get('cart')
+        ));
+    }
+
+    private function getMax(){
+        $em = $this->getDoctrine()->getManager();
+        $result = $em->getRepository('ShopBundle:Order')->getMax();
+        $max=$result[0];
+        foreach ($result as $i){
+            if ($max['cou']<$i['cou']){
+                $max=$i;
+            }
+        }
+        return $max['user_id'];
+
     }
 
     public function deleteItemAction($id, Request $request, SessionInterface $session)
     {
         $cart = $session->get('cart');
-
         if (array_key_exists($id, $cart)) {
             unset($cart[$id]);
             $session->set('cart', $cart);
@@ -65,10 +80,15 @@ class CartController extends Controller
 
         return $this->redirectToRoute('cart_show');
     }
-    public function menuAction(SessionInterface $session)
+
+    public function dropdownAction(SessionInterface $session)
     {
         $em = $this->getDoctrine()->getManager();
-        $products = $em->getRepository('ShopBundle:Product')->findAll();
+        if (!$session->has('cart')) 
+            $session->set('cart', array());
+        $em = $this->getDoctrine()->getManager();
+        $products = $em->getRepository('ShopBundle:Product')->findArray(array_keys($session->get('cart')));
+
         if (!$session->has('cart'))
             $count =0;
         else
@@ -76,12 +96,23 @@ class CartController extends Controller
 
         return $this->render('ShopBundle:Cart:dropdown.html.twig', array(
             'count' => $count ,
-            'products' => $products
-        ));
+            'products' => $products,
+            'cart' => $session->get('cart')));
     }
 
-    public function shippingAction(Request $request)
+    public function  applyAction(Request $request){
+        return $this->render('@Shop/Cart/show.html.twig');
+    }
+
+    public function shippingAction(Request $request,SessionInterface $session)
     {
+        if ($request->isMethod('GET'))
+        {
+            $coupon=$request->get('coupon');
+            if($coupon != '')
+                $session->set('coupon',$coupon);
+
+        }
         $user= $this->getUser();
 
         $entity = new UserAddress();
@@ -124,21 +155,30 @@ class CartController extends Controller
 
     public function confirmationAction(Request $request, SessionInterface $session)
     {
-//        $session->remove('cart');
-//        $session->remove('order');
-//        $session->remove('address');
         if ($request->isMethod('POST') )
             $this->setShippingOnSession($session,$request);
         $em = $this->getDoctrine()->getManager();
         $prepareOrder = $this->forward('ShopBundle:Orders:prepareOrder');
-//        var_dump($prepareOrder->getContent());
-//        return new Response();
         $order = $em->getRepository('ShopBundle:Order')->find($prepareOrder->getContent());
+        dump($order);
         return $this->render('ShopBundle:cart:confirmation.html.twig', array(
             'order' => $order
         ));
     }
 
+    public function deleteAddrAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('ShopBundle:UserAddress')->find($id);
+
+        if ( $user= $this->getUser() != $entity->getUser() || !$entity)
+            return $this->redirect ($this->generateUrl ('shipping'));
+
+        $em->remove($entity);
+        $em->flush();
+
+        return $this->redirect ($this->generateUrl ('shipping'));
+    }
 
 }
 

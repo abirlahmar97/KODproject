@@ -11,7 +11,7 @@ class UsersController extends Controller
         $em = $this->getDoctrine()->getManager();
         $bills = $em->getRepository('ShopBundle:Order')->byFacture($this->getUser());
 
-        return $this->render('UserBundle:Default:bill.html.twig', array(
+        return $this->render('UserBundle:Home:bill.html.twig', array(
             'bills' => $bills
         ));
     }

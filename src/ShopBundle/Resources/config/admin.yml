@@ -1,0 +1,19 @@
+add_category:
+    path:     /categories/add
+    defaults: { _controller: ShopBundle:Admin:addCategory }
+
+show_category:
+    path:     /categories
+    defaults: { _controller: ShopBundle:Admin:showCategory }
+
+category_blk_delete:
+    path:     /categories/delete
+    defaults: { _controller: ShopBundle:Admin:deletCategoryBulk }
+
+list_providers:
+    path:     /providers
+    defaults: { _controller: ShopBundle:Admin:list }
+
+create_provider:
+    path:     /providers/add
+    defaults: { _controller: ShopBundle:Admin:add }

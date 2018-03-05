@@ -8,6 +8,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Doctrine\ORM\Mapping as ORM;
+use FOS\CommentBundle\Entity\Comment as BaseComment;
+use FOS\CommentBundle\Model\SignedCommentInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class ProductsController extends Controller
 {
@@ -67,7 +71,7 @@ class ProductsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $categories = $em->getRepository('ShopBundle:Category')->findTypeProduct();
-        return $this->render('ShopBundle:Default/Categories:menu.html.twig', array(
+        return $this->render('ShopBundle:Categories:menu.html.twig', array(
             'categories' => $categories
         ));
     }
@@ -101,5 +105,14 @@ class ProductsController extends Controller
 
     }
 
+    public function rechercheAction(Request $request)
+    {
+        $search =$request->query->get('product');
+        $en = $this->getDoctrine()->getManager();
+        $product=$en->getRepository("ShopBundle:Product")->searchProduct($search);
+        return $this->render("ShopBundle:Products:list.html.twig",array(
+            'products' => $product
+        ));
+    }
 
 }

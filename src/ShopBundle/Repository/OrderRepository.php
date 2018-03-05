@@ -22,4 +22,14 @@ class OrderRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    public function getMax()
+    {   $statement= $this->getEntityManager()
+        ->getConnection()
+        ->prepare("SELECT  user_id,COUNT(*) as cou  from orders GROUP by user_id");
+        $statement->execute();
+        $results = $statement->fetchAll();
+        return $results;
+    }
+    
 }

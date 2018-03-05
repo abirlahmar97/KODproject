@@ -2,106 +2,35 @@ shop_homepage:
     path:     /
     defaults: { _controller: ShopBundle:Default:index }
 
-create_product:
-    path:     /provider/products/create
-    defaults: { _controller: ShopBundle:ProductProvider:createProduct }
-
-update_product:
-    path:     /provider/products/update/{id}
-    defaults: { _controller: ShopBundle:ProductProvider:updateProduct }
-
-list_products:
-    path:     /provider/products
-    defaults: { _controller: ShopBundle:ProductProvider:showProduct }
-
-delete_product:
-    path:     /provider/products/delete/{id}
-    defaults: { _controller: ShopBundle:ProductProvider:deleteProduct }
-
-product_blk_delete:
-    path:     /provider/products/delete
-    defaults: { _controller: ShopBundle:ProductProvider:deleteProductBulk }
-
-add_category:
-    path:     /admin/categories/add
-    defaults: { _controller: ShopBundle:Category:addCategory }
-
-show_category:
-    path:     /admin/categories
-    defaults: { _controller: ShopBundle:Category:showCategory }
-
-category_blk_delete:
-    path:     /admin/categories/delete
-    defaults: { _controller: ShopBundle:Category:deletCategoryBulk }
-
-categories_list:
-    path:     /parent/categories
-    defaults: { _controller: ShopBundle:Products:listCategories }
-
-product_bycategory:
-    path:     /parent/products/category/{category}
-    defaults: { _controller: ShopBundle:Products:category }
-
-product_details:
-    path:     /parent/products/{id}
-    defaults: { _controller: ShopBundle:Products:details }
-
-cart_add:
-    path:     /parent/cart/add/{id}
-    defaults: { _controller: ShopBundle:Cart:addItem }
-
-cart_delete:
-    path:     /parent/cart/delete/{id}
-    defaults: { _controller: ShopBundle:Cart:deleteItem }
-
-cart_show:
-    path:     /parent/cart
-    defaults: { _controller: ShopBundle:Cart:cart }
-
-list_providers:
-    path:     /admin/providers
-    defaults: { _controller: ShopBundle:Providers:list }
-
-create_provider:
-    path:     /admin/providers/add
-    defaults: { _controller: ShopBundle:Providers:add }
-
-products_list:
-    path:     /parent/products
-    defaults: { _controller: ShopBundle:Products:products }
-
-shipping:
-    path:     /parent/shipping
-    defaults: { _controller: ShopBundle:Cart:shipping }
-
-produitsss:
-    path:     /parent/produitsss
-    defaults: { _controller: ShopBundle:Product:something }
-
-cart_confirmation:
-    path:     /parent/cart/confirmation
-    defaults: { _controller: ShopBundle:Cart:confirmation }
-
-menu:
-    path:     /parent/menu
-    defaults: { _controller: ShopBundle:Cart:menu }
-
-#livraisonAdresseSuppression:
-#    path:     /parent/suppaddress/{id}
-#    defaults: { _controller: ShopBundle:Cart:adresseSuppression }
-
-prepare_order:
-    path:     /parent/order
-    defaults: { _controller: ShopBundle:Orders:prepareOrder }
-
 api_order_confirm:
-    path:  /api/bank/{id}
+    path:      /api/bank/{id}
     defaults: { _controller: ShopBundle:Orders:confirmation }
 
-products_related:
-    path:     /parent/products/related/{category}
-    defaults: { _controller: ShopBundle:Products:related }
-
 search_product:
-    path:   /products/search
+    path:     /products/search
     defaults: { _controller : ShopBundle:Products:search }
+
+product_details:
+    path:     /products/{id}
+    defaults: { _controller: ShopBundle:Products:details }
+
+products:
+    path:     /products
+    defaults: { _controller: ShopBundle:Products:products }
+
+product_bycategory:
+    path:     /products/category/{category}
+    defaults: { _controller: ShopBundle:Products:category }
+
+parent_routes:
+    resource:   '@ShopBundle/Resources/config/parent.yml'
+    prefix:     /parent
+
+provider_routes:
+    resource:   '@ShopBundle/Resources/config/provider.yml'
+
+admin_routes:
+    resource:   '@ShopBundle/Resources/config/admin.yml'
+    prefix:     /admin
+
+

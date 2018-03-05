@@ -1,0 +1,31 @@
+provider_homepage:
+    path:     /provider
+    defaults: { _controller: ShopBundle:Provider:index }
+
+list_order:
+    path:     /provider/orders
+    defaults: { _controller: ShopBundle:Provider:orders }
+
+create_product:
+    path:     /provider/products/create
+    defaults: { _controller: ShopBundle:Provider:createProduct }
+
+update_product:
+    path:     /provider/products/update/{id}
+    defaults: { _controller: ShopBundle:Provider:updateProduct }
+
+list_products:
+    path:     /provider/products
+    defaults: { _controller: ShopBundle:Provider:listProducts }
+
+delete_product:
+    path:     /provider/products/delete/{id}
+    defaults: { _controller: ShopBundle:Provider:deleteProduct }
+
+product_blk_delete:
+    path:     /provider/products/delete
+    defaults: { _controller: ShopBundle:Provider:deleteProductBulk }
+
+pdf:
+    path:     /provider/pdf
+    defaults: { _controller: ShopBundle:Orders:billpdf }

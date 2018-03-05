@@ -54,49 +54,20 @@
                     <div class="progressInfo">3. Confirmation</div>
                 </div>
             </div>
+
+
             <div class="row">
-                <div class="col-sm-4 col-sm-push-8 col-xs-12">
-                    <div class="pricingTable">
-                        <div class="priceUper">
-                            <div class="priceTitle alt bg-color-3 checkingTitle"><h3>Morning Session</h3></div>
-                            <div class="priceInfo alt p-n bg-color-3"><img src="{{ asset('img/home/news/news-1.jpg') }}"
-                                                                           class="img-responsive"></div>
-                        </div>
-                        <div class="priceLower">
-                            <ul class="list-unstyled priceOffer">
-                                <li><i class="fa fa-calendar-o color-3" aria-hidden="true"></i> Age 2 to 4 Years</li>
-                                <li><i class="fa fa-clock-o color-3" aria-hidden="true"></i> 9.00 AM _ 11.00AM</li>
-                                <li><i class="fa fa-paint-brush color-3" aria-hidden="true"></i> Drowing &amp; Dancing
-                                </li>
-                                <li><i class="fa fa-taxi color-3" aria-hidden="true"></i> Free Transport</li>
-                            </ul>
-                            <div class="priceBtn">
-                                <h5>Total: <span>$69</span></h5>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-8  col-sm-pull-4 col-xs-12">
-                    <h4>Ajouter une nouvelle address</h4>
+                <div class="col-sm-8 col-xs-12">
+
                     <form role="form" class="form" action="{{ path('shipping') }}" method="POST">
                         <div class="panel panel-default checkoutInfo">
                             <div class="panel-heading bg-color-3 border-color-3">
-                                <h3 class="panel-title">Personal info</h3>
+                                <h3 class="panel-title">Ajouter une nouvelle adresse</h3>
                             </div>
                             <div class="panel-body">
                                 <div class="form-group">
                                     <div class="col-sm-12 col-xs-12">
-                                        <label for="">    {{ form_widget(form) }}</label>
-                                        <input type="text" class="form-control border-color-1" id="">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="checkbox col-xs-12">
-                                        <label>
-                                            <input type="checkbox"> I have read and accept the <a href="#">terms and
-                                                conditions</a>
-                                        </label>
+                                        {{ form_widget(form) }}
                                     </div>
                                 </div>
                             </div>
@@ -109,51 +80,99 @@
                         </div>
                     </form>
                 </div>
+                <div class="col-sm-4 col-xs-12">
+                    <div class="pricingTable">
+                        <div class="priceUper">
+                            <div class="priceTitle alt bg-color-3 checkingTitle"><h3>Livrasion</h3></div>
+                            <div></div>
+                        </div>
 
-            </div>
-            <br/><br/>
-            <br/><br/>
+                        <div class="priceLower">
+                            {% if user.addresses|length != 0 %}
+                                <form action="{{ path('cart_confirmation') }}" method="POST">
 
-            <h1>Livraison</h1>
-            <div id="collapseOne" class="accordion-body collapse in">
-                <div class="accordion-inner">
-                    <div class="span4">
-                        {% if user.addresses|length != 0 %}
-                            <form action="{{ path('cart_confirmation') }}" method="POST">
-
-                                <h4>Adresse de livraison</h4>
-                                {% for address in user.addresses %}
-                                    <label class="radio">
-                                        <input type="radio" name="shipping_add" value="{{ address.id }}"
-                                               {% if loop.index0 == 0 %}checked="checked"{% endif %}>
-                                        {{ address.address }}, {{ address.postalCode }} {{ address.region }}
-                                        {#<a href="{{ path('livraisonAdresseSuppression', { 'id' : address.id }) }}"><i#}
-                                                    {#class="icon-trash"></i></a>#}
-                                        {#<br/>{{ address.prenom }} {{ address.nom }}#}
-                                    </label>
-                                {% endfor %}
-
-                                <br/><br/>
-
-                                <h4>Adresse de facturation</h4>
-                                {% for address in user.addresses %}
-                                    <label class="radio">
-                                        <input type="radio" name="billing_add" value="{{ address.id }}"
-                                               {% if loop.index0 == 0 %} checked="checked"{% endif %}>
-                                        {{ address.address }}, {{ address.postalCode }} {{ address.region }}
-                                        {#<a href="{{ path('livraisonAdresseSuppression', { 'id' : address.id }) }}"><i#}
-                                                    {#class="icon-trash"></i></a>#}
-                                        {#<br/>{{ address.prenom }} {{ address.nom }}#}
-
-                                    </label>
-
-                                {% endfor %}
-                                <br/>
-                                <button class="btn btn-primary">Valider mes address</button>
-                            </form>
-                        {% endif %}
+                                    <h4>Adresse de livraison</h4>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            {% for address in user.addresses %}
+                                            <div class="radio">
+                                                <label class="radio">
+                                                    <input type="radio" name="shipping_add" value="{{ address.id }}"
+                                                        {% if loop.index0 == 0 %}checked="checked"{% endif %}> 
+                                                    {{ address.address }}, {{ address.postalCode }} {{ address.region }}
+                                                    <a href="{{ path('delete_order_addr', { 'id' : address.id }) }}">
+                                                        <span class="glyphicon glyphicon-trash"></span></a>
+                                                </label>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div><br><br>
+                                    <h4>Adresse de livraison</h4>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            {% for address in user.addresses %}
+                                            <div class="radio">
+                                                <label class="radio">
+                                                    <input type="radio" name="billing_add" value="{{ address.id }}"
+                                                        {% if loop.index0 == 0 %}checked="checked"{% endif %}> 
+                                                    {{ address.address }}, {{ address.postalCode }} {{ address.region }}
+                                                    <a href="{{ path('delete_order_addr', { 'id' : address.id }) }}">
+                                                        <span class="glyphicon glyphicon-trash"></span></a>
+                                                </label>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary">Valider mes addresses</button>
+                                </form>
+                            {% endif %}
+                        </ul>
                     </div>
                 </div>
+
+            </div>
+
+
+        <div class="mapArea areaPadding">
+            <div id="map" style="position: relative; overflow: hidden;"><div style="height: 100%; width: 100%; position: absolute; top: 0px; left: 0px; background-color: rgb(229, 227, 223);"><div class="gm-style" style="position: absolute; z-index: 0; left: 0px; top: 0px; height: 100%; width: 100%; padding: 0px; border-width: 0px; margin: 0px;"><div tabindex="0" style="position: absolute; z-index: 0; left: 0px; top: 0px; height: 100%; width: 100%; padding: 0px; border-width: 0px; margin: 0px; cursor: url(&quot;http://maps.gstatic.com/mapfiles/openhand_8_8.cur&quot;), default; touch-action: pan-x pan-y;"><div style="z-index: 1; position: absolute; left: 50%; top: 50%; transform: translate(0px, 0px);"><div style="position: absolute; left: 0px; top: 0px; z-index: 100; width: 100%;"><div style="position: absolute; left: 0px; top: 0px; z-index: 0;"><div style="position: absolute; z-index: 1; transform: matrix(1, 0, 0, 1, -8, -207);"><div style="width: 256px; height: 256px; position: absolute; left: 0px; top: 0px;"></div><div style="width: 256px; height: 256px; position: absolute; left: -256px; top: 0px;"></div><div style="width: 256px; height: 256px; position: absolute; left: -256px; top: -256px;"></div><div style="width: 256px; height: 256px; position: absolute; left: 0px; top: -256px;"></div><div style="width: 256px; height: 256px; position: absolute; left: 256px; top: -256px;"></div><div style="width: 256px; height: 256px; position: absolute; left: 256px; top: 0px;"></div><div style="width: 256px; height: 256px; position: absolute; left: 256px; top: 256px;"></div><div style="width: 256px; height: 256px; position: absolute; left: 0px; top: 256px;"></div><div style="width: 256px; height: 256px; position: absolute; left: -256px; top: 256px;"></div><div style="width: 256px; height: 256px; position: absolute; left: -512px; top: 256px;"></div><div style="width: 256px; height: 256px; position: absolute; left: -512px; top: 0px;"></div><div style="width: 256px; height: 256px; position: absolute; left: -512px; top: -256px;"></div><div style="width: 256px; height: 256px; position: absolute; left: 512px; top: -256px;"></div><div style="width: 256px; height: 256px; position: absolute; left: 512px; top: 0px;"></div><div style="width: 256px; height: 256px; position: absolute; left: 512px; top: 256px;"></div><div style="width: 256px; height: 256px; position: absolute; left: -768px; top: 256px;"></div><div style="width: 256px; height: 256px; position: absolute; left: -768px; top: 0px;"></div><div style="width: 256px; height: 256px; position: absolute; left: -768px; top: -256px;"></div></div></div></div><div style="position: absolute; left: 0px; top: 0px; z-index: 101; width: 100%;"></div><div style="position: absolute; left: 0px; top: 0px; z-index: 102; width: 100%;"></div><div style="position: absolute; left: 0px; top: 0px; z-index: 103; width: 100%;"></div><div style="position: absolute; left: 0px; top: 0px; z-index: 0;"><div style="position: absolute; z-index: 1; transform: matrix(1, 0, 0, 1, -8, -207);"><div style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px;"><img draggable="false" alt="" src="http://maps.google.com/maps/vt?pb=!1m5!1m4!1i14!2i8125!3i5307!4i256!2m3!1e0!2sm!3i411111651!3m14!2sfr-FR!3sUS!5e18!12m1!1e68!12m3!1e37!2m1!1ssmartmaps!12m4!1e26!2m2!1sstyles!2zcy50OjV8cC5jOiNmZmVlZGRlZSxwLmg6I2ZmMDAwMCxzLnQ6M3xwLmg6IzU1MDBhYXxwLnM6LTcwLHMuZTpsfHAuaDojMDAwMDY2LHMudDoyfHAuaDojMDA0NGZm!4e0!23i1301875&amp;token=82549" style="width: 256px; height: 256px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div><div style="position: absolute; left: -256px; top: 0px; width: 256px; height: 256px;"><img draggable="false" alt="" src="http://maps.google.com/maps/vt?pb=!1m5!1m4!1i14!2i8124!3i5307!4i256!2m3!1e0!2sm!3i411111651!3m14!2sfr-FR!3sUS!5e18!12m1!1e68!12m3!1e37!2m1!1ssmartmaps!12m4!1e26!2m2!1sstyles!2zcy50OjV8cC5jOiNmZmVlZGRlZSxwLmg6I2ZmMDAwMCxzLnQ6M3xwLmg6IzU1MDBhYXxwLnM6LTcwLHMuZTpsfHAuaDojMDAwMDY2LHMudDoyfHAuaDojMDA0NGZm!4e0!23i1301875&amp;token=102814" style="width: 256px; height: 256px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div><div style="position: absolute; left: -256px; top: -256px; width: 256px; height: 256px;"><img draggable="false" alt="" src="http://maps.google.com/maps/vt?pb=!1m5!1m4!1i14!2i8124!3i5306!4i256!2m3!1e0!2sm!3i411111651!3m14!2sfr-FR!3sUS!5e18!12m1!1e68!12m3!1e37!2m1!1ssmartmaps!12m4!1e26!2m2!1sstyles!2zcy50OjV8cC5jOiNmZmVlZGRlZSxwLmg6I2ZmMDAwMCxzLnQ6M3xwLmg6IzU1MDBhYXxwLnM6LTcwLHMuZTpsfHAuaDojMDAwMDY2LHMudDoyfHAuaDojMDA0NGZm!4e0!23i1301875&amp;token=3348" style="width: 256px; height: 256px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div><div style="position: absolute; left: 0px; top: -256px; width: 256px; height: 256px;"><img draggable="false" alt="" src="http://maps.google.com/maps/vt?pb=!1m5!1m4!1i14!2i8125!3i5306!4i256!2m3!1e0!2sm!3i411111651!3m14!2sfr-FR!3sUS!5e18!12m1!1e68!12m3!1e37!2m1!1ssmartmaps!12m4!1e26!2m2!1sstyles!2zcy50OjV8cC5jOiNmZmVlZGRlZSxwLmg6I2ZmMDAwMCxzLnQ6M3xwLmg6IzU1MDBhYXxwLnM6LTcwLHMuZTpsfHAuaDojMDAwMDY2LHMudDoyfHAuaDojMDA0NGZm!4e0!23i1301875&amp;token=114154" style="width: 256px; height: 256px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div><div style="position: absolute; left: 256px; top: -256px; width: 256px; height: 256px;"><img draggable="false" alt="" src="http://maps.google.com/maps/vt?pb=!1m5!1m4!1i14!2i8126!3i5306!4i256!2m3!1e0!2sm!3i411111651!3m14!2sfr-FR!3sUS!5e18!12m1!1e68!12m3!1e37!2m1!1ssmartmaps!12m4!1e26!2m2!1sstyles!2zcy50OjV8cC5jOiNmZmVlZGRlZSxwLmg6I2ZmMDAwMCxzLnQ6M3xwLmg6IzU1MDBhYXxwLnM6LTcwLHMuZTpsfHAuaDojMDAwMDY2LHMudDoyfHAuaDojMDA0NGZm!4e0!23i1301875&amp;token=93889" style="width: 256px; height: 256px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div><div style="position: absolute; left: 256px; top: 0px; width: 256px; height: 256px;"><img draggable="false" alt="" src="http://maps.google.com/maps/vt?pb=!1m5!1m4!1i14!2i8126!3i5307!4i256!2m3!1e0!2sm!3i411111651!3m14!2sfr-FR!3sUS!5e18!12m1!1e68!12m3!1e37!2m1!1ssmartmaps!12m4!1e26!2m2!1sstyles!2zcy50OjV8cC5jOiNmZmVlZGRlZSxwLmg6I2ZmMDAwMCxzLnQ6M3xwLmg6IzU1MDBhYXxwLnM6LTcwLHMuZTpsfHAuaDojMDAwMDY2LHMudDoyfHAuaDojMDA0NGZm!4e0!23i1301875&amp;token=62284" style="width: 256px; height: 256px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div><div style="position: absolute; left: 256px; top: 256px; width: 256px; height: 256px;"><img draggable="false" alt="" src="http://maps.google.com/maps/vt?pb=!1m5!1m4!1i14!2i8126!3i5308!4i256!2m3!1e0!2sm!3i411111614!3m14!2sfr-FR!3sUS!5e18!12m1!1e68!12m3!1e37!2m1!1ssmartmaps!12m4!1e26!2m2!1sstyles!2zcy50OjV8cC5jOiNmZmVlZGRlZSxwLmg6I2ZmMDAwMCxzLnQ6M3xwLmg6IzU1MDBhYXxwLnM6LTcwLHMuZTpsfHAuaDojMDAwMDY2LHMudDoyfHAuaDojMDA0NGZm!4e0!23i1301875&amp;token=110202" style="width: 256px; height: 256px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div><div style="position: absolute; left: 0px; top: 256px; width: 256px; height: 256px;"><img draggable="false" alt="" src="http://maps.google.com/maps/vt?pb=!1m5!1m4!1i14!2i8125!3i5308!4i256!2m3!1e0!2sm!3i411111603!3m14!2sfr-FR!3sUS!5e18!12m1!1e68!12m3!1e37!2m1!1ssmartmaps!12m4!1e26!2m2!1sstyles!2zcy50OjV8cC5jOiNmZmVlZGRlZSxwLmg6I2ZmMDAwMCxzLnQ6M3xwLmg6IzU1MDBhYXxwLnM6LTcwLHMuZTpsfHAuaDojMDAwMDY2LHMudDoyfHAuaDojMDA0NGZm!4e0!23i1301875&amp;token=79552" style="width: 256px; height: 256px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div><div style="position: absolute; left: -256px; top: 256px; width: 256px; height: 256px;"><img draggable="false" alt="" src="http://maps.google.com/maps/vt?pb=!1m5!1m4!1i14!2i8124!3i5308!4i256!2m3!1e0!2sm!3i411111651!3m14!2sfr-FR!3sUS!5e18!12m1!1e68!12m3!1e37!2m1!1ssmartmaps!12m4!1e26!2m2!1sstyles!2zcy50OjV8cC5jOiNmZmVlZGRlZSxwLmg6I2ZmMDAwMCxzLnQ6M3xwLmg6IzU1MDBhYXxwLnM6LTcwLHMuZTpsfHAuaDojMDAwMDY2LHMudDoyfHAuaDojMDA0NGZm!4e0!23i1301875&amp;token=71209" style="width: 256px; height: 256px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div><div style="position: absolute; left: -512px; top: 256px; width: 256px; height: 256px;"><img draggable="false" alt="" src="http://maps.google.com/maps/vt?pb=!1m5!1m4!1i14!2i8123!3i5308!4i256!2m3!1e0!2sm!3i411111651!3m14!2sfr-FR!3sUS!5e18!12m1!1e68!12m3!1e37!2m1!1ssmartmaps!12m4!1e26!2m2!1sstyles!2zcy50OjV8cC5jOiNmZmVlZGRlZSxwLmg6I2ZmMDAwMCxzLnQ6M3xwLmg6IzU1MDBhYXxwLnM6LTcwLHMuZTpsfHAuaDojMDAwMDY2LHMudDoyfHAuaDojMDA0NGZm!4e0!23i1301875&amp;token=91474" style="width: 256px; height: 256px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div><div style="position: absolute; left: -512px; top: 0px; width: 256px; height: 256px;"><img draggable="false" alt="" src="http://maps.google.com/maps/vt?pb=!1m5!1m4!1i14!2i8123!3i5307!4i256!2m3!1e0!2sm!3i411111651!3m14!2sfr-FR!3sUS!5e18!12m1!1e68!12m3!1e37!2m1!1ssmartmaps!12m4!1e26!2m2!1sstyles!2zcy50OjV8cC5jOiNmZmVlZGRlZSxwLmg6I2ZmMDAwMCxzLnQ6M3xwLmg6IzU1MDBhYXxwLnM6LTcwLHMuZTpsfHAuaDojMDAwMDY2LHMudDoyfHAuaDojMDA0NGZm!4e0!23i1301875&amp;token=123079" style="width: 256px; height: 256px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div><div style="position: absolute; left: -512px; top: -256px; width: 256px; height: 256px;"><img draggable="false" alt="" src="http://maps.google.com/maps/vt?pb=!1m5!1m4!1i14!2i8123!3i5306!4i256!2m3!1e0!2sm!3i411111651!3m14!2sfr-FR!3sUS!5e18!12m1!1e68!12m3!1e37!2m1!1ssmartmaps!12m4!1e26!2m2!1sstyles!2zcy50OjV8cC5jOiNmZmVlZGRlZSxwLmg6I2ZmMDAwMCxzLnQ6M3xwLmg6IzU1MDBhYXxwLnM6LTcwLHMuZTpsfHAuaDojMDAwMDY2LHMudDoyfHAuaDojMDA0NGZm!4e0!23i1301875&amp;token=23613" style="width: 256px; height: 256px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div><div style="position: absolute; left: 512px; top: -256px; width: 256px; height: 256px;"><img draggable="false" alt="" src="http://maps.google.com/maps/vt?pb=!1m5!1m4!1i14!2i8127!3i5306!4i256!2m3!1e0!2sm!3i411111651!3m14!2sfr-FR!3sUS!5e18!12m1!1e68!12m3!1e37!2m1!1ssmartmaps!12m4!1e26!2m2!1sstyles!2zcy50OjV8cC5jOiNmZmVlZGRlZSxwLmg6I2ZmMDAwMCxzLnQ6M3xwLmg6IzU1MDBhYXxwLnM6LTcwLHMuZTpsfHAuaDojMDAwMDY2LHMudDoyfHAuaDojMDA0NGZm!4e0!23i1301875&amp;token=73624" style="width: 256px; height: 256px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div><div style="position: absolute; left: 512px; top: 0px; width: 256px; height: 256px;"><img draggable="false" alt="" src="http://maps.google.com/maps/vt?pb=!1m5!1m4!1i14!2i8127!3i5307!4i256!2m3!1e0!2sm!3i411111651!3m14!2sfr-FR!3sUS!5e18!12m1!1e68!12m3!1e37!2m1!1ssmartmaps!12m4!1e26!2m2!1sstyles!2zcy50OjV8cC5jOiNmZmVlZGRlZSxwLmg6I2ZmMDAwMCxzLnQ6M3xwLmg6IzU1MDBhYXxwLnM6LTcwLHMuZTpsfHAuaDojMDAwMDY2LHMudDoyfHAuaDojMDA0NGZm!4e0!23i1301875&amp;token=42019" style="width: 256px; height: 256px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div><div style="position: absolute; left: 512px; top: 256px; width: 256px; height: 256px;"><img draggable="false" alt="" src="http://maps.google.com/maps/vt?pb=!1m5!1m4!1i14!2i8127!3i5308!4i256!2m3!1e0!2sm!3i411111614!3m14!2sfr-FR!3sUS!5e18!12m1!1e68!12m3!1e37!2m1!1ssmartmaps!12m4!1e26!2m2!1sstyles!2zcy50OjV8cC5jOiNmZmVlZGRlZSxwLmg6I2ZmMDAwMCxzLnQ6M3xwLmg6IzU1MDBhYXxwLnM6LTcwLHMuZTpsfHAuaDojMDAwMDY2LHMudDoyfHAuaDojMDA0NGZm!4e0!23i1301875&amp;token=89937" style="width: 256px; height: 256px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div><div style="position: absolute; left: -768px; top: 256px; width: 256px; height: 256px;"><img draggable="false" alt="" src="http://maps.google.com/maps/vt?pb=!1m5!1m4!1i14!2i8122!3i5308!4i256!2m3!1e0!2sm!3i411111651!3m14!2sfr-FR!3sUS!5e18!12m1!1e68!12m3!1e37!2m1!1ssmartmaps!12m4!1e26!2m2!1sstyles!2zcy50OjV8cC5jOiNmZmVlZGRlZSxwLmg6I2ZmMDAwMCxzLnQ6M3xwLmg6IzU1MDBhYXxwLnM6LTcwLHMuZTpsfHAuaDojMDAwMDY2LHMudDoyfHAuaDojMDA0NGZm!4e0!23i1301875&amp;token=111739" style="width: 256px; height: 256px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div><div style="position: absolute; left: -768px; top: 0px; width: 256px; height: 256px;"><img draggable="false" alt="" src="http://maps.google.com/maps/vt?pb=!1m5!1m4!1i14!2i8122!3i5307!4i256!2m3!1e0!2sm!3i411111651!3m14!2sfr-FR!3sUS!5e18!12m1!1e68!12m3!1e37!2m1!1ssmartmaps!12m4!1e26!2m2!1sstyles!2zcy50OjV8cC5jOiNmZmVlZGRlZSxwLmg6I2ZmMDAwMCxzLnQ6M3xwLmg6IzU1MDBhYXxwLnM6LTcwLHMuZTpsfHAuaDojMDAwMDY2LHMudDoyfHAuaDojMDA0NGZm!4e0!23i1301875&amp;token=12273" style="width: 256px; height: 256px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div><div style="position: absolute; left: -768px; top: -256px; width: 256px; height: 256px;"><img draggable="false" alt="" src="http://maps.google.com/maps/vt?pb=!1m5!1m4!1i14!2i8122!3i5306!4i256!2m3!1e0!2sm!3i411111651!3m14!2sfr-FR!3sUS!5e18!12m1!1e68!12m3!1e37!2m1!1ssmartmaps!12m4!1e26!2m2!1sstyles!2zcy50OjV8cC5jOiNmZmVlZGRlZSxwLmg6I2ZmMDAwMCxzLnQ6M3xwLmg6IzU1MDBhYXxwLnM6LTcwLHMuZTpsfHAuaDojMDAwMDY2LHMudDoyfHAuaDojMDA0NGZm!4e0!23i1301875&amp;token=43878" style="width: 256px; height: 256px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div></div></div></div><div class="gm-style-pbc" style="z-index: 2; position: absolute; height: 100%; width: 100%; padding: 0px; border-width: 0px; margin: 0px; left: 0px; top: 0px; opacity: 0; transition-duration: 0.8s;"><p class="gm-style-pbt"></p></div><div style="z-index: 3; position: absolute; height: 100%; width: 100%; padding: 0px; border-width: 0px; margin: 0px; left: 0px; top: 0px; touch-action: pan-x pan-y;"><div style="z-index: 1; position: absolute; height: 100%; width: 100%; padding: 0px; border-width: 0px; margin: 0px; left: 0px; top: 0px;"></div><div style="z-index: 4; position: absolute; left: 50%; top: 50%; transform: translate(0px, 0px);"><div style="position: absolute; left: 0px; top: 0px; z-index: 104; width: 100%;"></div><div style="position: absolute; left: 0px; top: 0px; z-index: 105; width: 100%;"></div><div style="position: absolute; left: 0px; top: 0px; z-index: 106; width: 100%;"></div><div style="position: absolute; left: 0px; top: 0px; z-index: 107; width: 100%;"></div></div></div></div><iframe frameborder="0" src="about:blank" style="z-index: -1; position: absolute; width: 100%; height: 100%; top: 0px; left: 0px; border: none;"></iframe><div style="margin-left: 5px; margin-right: 5px; z-index: 1000000; position: absolute; left: 0px; bottom: 0px;"><a target="_blank" href="https://maps.google.com/maps?ll=53.385822,-1.471471&amp;z=14&amp;t=m&amp;hl=fr-FR&amp;gl=US&amp;mapclient=apiv3" title="Cliquez ici pour afficher cette zone sur Google&nbsp;Maps" style="position: static; overflow: visible; float: none; display: inline;"><div style="width: 66px; height: 26px; cursor: pointer;"><img alt="" src="http://maps.gstatic.com/mapfiles/api-3/images/google_white5.png" draggable="false" style="position: absolute; left: 0px; top: 0px; width: 66px; height: 26px; user-select: none; border: 0px; padding: 0px; margin: 0px;"></div></a></div><div style="background-color: white; padding: 15px 21px; border: 1px solid rgb(171, 171, 171); font-family: Roboto, Arial, sans-serif; color: rgb(34, 34, 34); box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 16px; z-index: 10000002; display: none; width: 256px; height: 148px; position: absolute; left: 210px; top: 120px;"><div style="padding: 0px 0px 10px; font-size: 16px;">Données cartographiques</div><div style="font-size: 13px;">Données cartographiques ©2018 Google</div><div style="width: 13px; height: 13px; overflow: hidden; position: absolute; opacity: 0.7; right: 12px; top: 12px; z-index: 10000; cursor: pointer;"><img alt="" src="http://maps.gstatic.com/mapfiles/api-3/images/mapcnt6.png" draggable="false" style="position: absolute; left: -2px; top: -336px; width: 59px; height: 492px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div></div><div class="gmnoprint" style="z-index: 1000001; position: absolute; right: 278px; bottom: 0px; width: 193px;"><div draggable="false" class="gm-style-cc" style="user-select: none; height: 14px; line-height: 14px;"><div style="opacity: 0.7; width: 100%; height: 100%; position: absolute;"><div style="width: 1px;"></div><div style="background-color: rgb(245, 245, 245); width: auto; height: 100%; margin-left: 1px;"></div></div><div style="position: relative; padding-right: 6px; padding-left: 6px; font-family: Roboto, Arial, sans-serif; font-size: 10px; color: rgb(68, 68, 68); white-space: nowrap; direction: ltr; text-align: right; vertical-align: middle; display: inline-block;"><a style="text-decoration: none; cursor: pointer; display: none;">Données cartographiques</a><span>Données cartographiques ©2018 Google</span></div></div></div><div class="gmnoscreen" style="position: absolute; right: 0px; bottom: 0px;"><div style="font-family: Roboto, Arial, sans-serif; font-size: 11px; color: rgb(68, 68, 68); direction: ltr; text-align: right; background-color: rgb(245, 245, 245);">Données cartographiques ©2018 Google</div></div><div class="gmnoprint gm-style-cc" draggable="false" style="z-index: 1000001; user-select: none; height: 14px; line-height: 14px; position: absolute; right: 165px; bottom: 0px;"><div style="opacity: 0.7; width: 100%; height: 100%; position: absolute;"><div style="width: 1px;"></div><div style="background-color: rgb(245, 245, 245); width: auto; height: 100%; margin-left: 1px;"></div></div><div style="position: relative; padding-right: 6px; padding-left: 6px; font-family: Roboto, Arial, sans-serif; font-size: 10px; color: rgb(68, 68, 68); white-space: nowrap; direction: ltr; text-align: right; vertical-align: middle; display: inline-block;"><a href="https://www.google.com/intl/fr-FR_US/help/terms_maps.html" target="_blank" style="text-decoration: none; cursor: pointer; color: rgb(68, 68, 68);">Conditions d'utilisation</a></div></div><button draggable="false" title="Passer en plein écran" aria-label="Passer en plein écran" type="button" style="background: none; border: 0px; margin: 10px 14px; padding: 0px; position: absolute; cursor: pointer; user-select: none; display: none; top: 0px; right: 0px;"></button><div draggable="false" class="gm-style-cc" style="user-select: none; height: 14px; line-height: 14px; position: absolute; right: 0px; bottom: 0px;"><div style="opacity: 0.7; width: 100%; height: 100%; position: absolute;"><div style="width: 1px;"></div><div style="background-color: rgb(245, 245, 245); width: auto; height: 100%; margin-left: 1px;"></div></div><div style="position: relative; padding-right: 6px; padding-left: 6px; font-family: Roboto, Arial, sans-serif; font-size: 10px; color: rgb(68, 68, 68); white-space: nowrap; direction: ltr; text-align: right; vertical-align: middle; display: inline-block;"><a target="_blank" rel="noopener" title="Signaler à Google une erreur dans la carte routière ou les images" href="https://www.google.com/maps/@53.3858218,-1.471471,14z/data=!10m1!1e1!12b1?source=apiv3&amp;rapsrc=apiv3" style="font-family: Roboto, Arial, sans-serif; font-size: 10px; color: rgb(68, 68, 68); text-decoration: none; position: relative;">Signaler une erreur cartographique</a></div></div></div></div></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4 col-xs-12">
+                <div class="media addressContent">
+              <span class="media-left bg-color-1" href="#">
+                <i class="fa fa-map-marker" aria-hidden="true"></i>
+              </span>
+                    <div class="media-body">
+                        <h3 class="media-heading">Address:</h3>
+                        <p>9/4 C  Block, garden Street, Shyamoli, Dhaka.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 col-xs-12">
+                <div class="media addressContent">
+              <span class="media-left bg-color-2" href="#">
+                <i class="fa fa-phone" aria-hidden="true"></i>
+              </span>
+                    <div class="media-body">
+                        <h3 class="media-heading">Phone:</h3>
+                        <p>954 124 2542  Or  546 235 4478</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 col-xs-12">
+                <div class="media addressContent">
+              <span class="media-left bg-color-3" href="#">
+                <i class="fa fa-envelope-o" aria-hidden="true"></i>
+              </span>
+                    <div class="media-body">
+                        <h3 class="media-heading">Email:</h3>
+                        <p><a href="mailto:hello@example.com">hello@example.com</a>  Or
+                            <a href="mailto:hello1@example.com">hello1@example.com</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
             </div>
         </div>
     </section>
