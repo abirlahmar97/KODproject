@@ -57,7 +57,7 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <h2>Valider mon panier</h2>
+                    <h2>Valider ma commande</h2>
                     <table class="table table-striped table-hover">
                         <thead>
                         <tr>
@@ -68,14 +68,14 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% for product in order.order.product %}
+                        {% for po in products %}
                             <tr>
-                                <td>{{ product.reference }}</td>
+                                <td>{{ po.product.name }}</td>
                                 <td>
-                                    {{ product.quantity }}
+                                    {{ po.quantity }}
                                 </td>
-                                <td>{{ product.priceTF }} DT</td>
-                                <td>{{ product.priceTF * product.quantity }} DT</td>
+                                <td>{{ po.product.price }} DT</td>
+                                <td>{{ po.price }} DT</td>
                             </tr>
                         {% endfor %}
                         </tbody>
@@ -83,14 +83,14 @@
 
                     <dl class="dl-horizontal pull-right">
                         <dt>Total HT :</dt>
-                        <dd>{{ order.order.priceTF }} DT</dd>
+                        <dd>{{ order.total }} DT</dd>
                     </dl>
 
                     <div class="">
                         <dl class="">
                             <dt><h4>Adresse de livraison</h4></dt>
-                            <dt>{{ order.order.shipping_add.address }}</dt>
-                            <dt>{{ order.order.shipping_add.postalCode }} {{ order.order.shipping_add.region }}
+                            <dt>{{ order.shipAddr.address }}</dt>
+                            <dt>{{ order.shipAddr.postalCode }} {{ order.shipAddr.region }}
                             </dt>
                         </dl>
                     </div>
@@ -98,14 +98,14 @@
                     <div class="">
                         <dl class="pull-left">
                             <dt><h4>Adresse de facturation</h4></dt>
-                            <dt>{{ order.order.billing_add.address }}</dt>
-                            <dt>{{ order.order.billing_add.postalCode }} {{ order.order.billing_add.region }}</dt>
+                            <dt>{{ order.billAddr.address }}</dt>
+                            <dt>{{ order.billAddr.postalCode }} {{ order.billAddr.region }}</dt>
                         </dl>
                     </div>
 
                     <div class="clearfix"></div>
                         <form action="{{ path('api_order_confirm', { 'id' : order.id }) }}" method="POST" >
-                            <input name="token" type="hidden" value="{{ order.order.token }}"/>
+                            <input name="token" type="hidden" value="{{ order.token }}"/>
 
                             <input name="date" type="hidden" value="{{ order.date|date('dmyhms') }}"/>
                             <button type="submit" class="btn btn-success pull-right" href="{{ path('bills') }}">Payer</button>

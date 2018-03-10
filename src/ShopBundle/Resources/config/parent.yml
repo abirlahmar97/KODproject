@@ -37,3 +37,7 @@ cart_menu:
 add_coupon:
     path:     /cart/coupon
     defaults: { _controller: ShopBundle:Cart:applyCoupon }
+
+order_pdf:
+    path:     /parent/orders/{id}/pdf
+    defaults: { _controller: ShopBundle:Orders:billpdf }

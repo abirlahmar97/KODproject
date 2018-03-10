@@ -2,6 +2,8 @@
 
 namespace ShopBundle\Controller;
 
+use CMEN\GoogleChartsBundle\GoogleCharts\Charts\BarChart;
+use CMEN\GoogleChartsBundle\GoogleCharts\Charts\ColumnChart;
 use CMEN\GoogleChartsBundle\GoogleCharts\Charts\PieChart;
 use ShopBundle\Entity\Product;
 use ShopBundle\Form\ProductType;
@@ -14,50 +16,55 @@ class ProviderController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $produit1 = $em->getRepository('ShopBundle:Product')->findByCategory(4);
-        $v = 0;
-        foreach ($produit1 as $product) {
-                $v = $v + 1;
+        $data = $em->getRepository('ShopBundle:ProductOrder')->findProfit($this->getUser()->getId());
+        $piedata = [];
+        $piedata[] = ['Date', 'Produits vendus'];
+        foreach ($data as $item){
+            $piedata[] = [date_format($item['date'], 'F d, Y') , intval($item['products'])];
         }
-        $produit2 = $em->getRepository('ShopBundle:Product')->findByCategory(6);
-        $v = 0;
-        $cat2 = array();
-        $c = 0;
-        foreach ($produit2 as $prod2) {
-
-                $c = $c + 1;
-            }
-
-        $produit3 =  $em->getRepository('ShopBundle:Product')->findByCategory(5);
-        $cat3 = array();
-        $s = 0;
-        foreach ($produit3 as $prod3) {
-
-                $s = $s + 1;
-
-        }
-        $produit4 =  $em->getRepository('ShopBundle:Product')->findByCategory(7);
-        $cat4 = array();
-        $p = 0;
-        foreach ($produit4 as $prod4) {
-
-
-                $p = $p + 1;
-            }
-
-
-        $pieChart = new PieChart();
-        $pieChart->getData()->setArrayToDataTable(
-            [
-                ['categorie', 'nombre de produit'],
-                ['clothes', $v],
-                ['accessoires', $c],
-                ['schooluniform', $s],
-                ['Jouets', $p],
+        dump($piedata);
+//        $v = 0;
+//        foreach ($produit1 as $product) {
+//                $v = $v + 1;
+//        }
+//        $produit2 = $em->getRepository('ShopBundle:Product')->findByCategory(6);
+//        $v = 0;
+//        $cat2 = array();
+//        $c = 0;
+//        foreach ($produit2 as $prod2) {
+//
+//                $c = $c + 1;
+//            }
+//
+//        $produit3 =  $em->getRepository('ShopBundle:Product')->findByCategory(5);
+//        $cat3 = array();
+//        $s = 0;
+//        foreach ($produit3 as $prod3) {
+//
+//                $s = $s + 1;
+//
+//        }
+//        $produit4 =  $em->getRepository('ShopBundle:Product')->findByCategory(7);
+//        $cat4 = array();
+//        $p = 0;
+//        foreach ($produit4 as $prod4) {
+//
+//
+//                $p = $p + 1;
+//            }
 
 
-            ]
-        );
+        $pieChart = new ColumnChart();
+        $pieChart->getData()->setArrayToDataTable($piedata);
+//        $pieChart->getData()->setArrayToDataTable(
+//            [
+//                ['categorie', 'nombre de produit'],
+//                ['clothes', $v],
+//                ['accessoires', $c],
+//                ['schooluniform', $s],
+//                ['Jouets', $p],
+//            ]
+//        );
 
         $pieChart->getOptions()->setTitle('Nombre des produits selon les catégories');
         $pieChart->getOptions()->setHeight(500);
@@ -69,8 +76,7 @@ class ProviderController extends Controller
         $pieChart->getOptions()->getTitleTextStyle()->setFontSize(20);
 
 
-        $d = array(
-            'pieChart' => $pieChart);
+        $d = array( 'pieChart' => $pieChart);
         return $this->render('@Shop/Provider/Home/index.html.twig', array('pieChart' => $pieChart));
 
     }

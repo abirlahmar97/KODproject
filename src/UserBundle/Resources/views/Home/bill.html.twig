@@ -59,23 +59,24 @@
                             </tr>
                             </thead>
                             <tbody>
-                            {% if bills|length == 0 %}
+                            {% if orders|length == 0 %}
                                 <tr>
                                     <td colspan="4"><center>Ancunne facture actuellement.</center></td>
                                 </tr>
                             {% endif %}
-                            {% for bill in bills %}
+                            {% for order in orders %}
                                 <tr>
-                                    <td>ref : {{ bill.reference }}</td>
-                                    <td>{{ bill.date|date('d/m/Y') }}</td>
-                                    <td>{{ bill.order.priceTF }} DT </td>
-
+                                    <td>ref : {{ order.reference }}</td>
+                                    <td>{{ order.date|date('d/m/Y') }}</td>
+                                    <td>{{ order.total }} DT </td>
+                                    <td>
+                                        <a href="{{ path('order_pdf', {'id' : order.id}) }}" class="btn btn-primary pull-right">Imprimer</a>
+                                    </td>
                                 </tr>
                             {% endfor %}
                             </tbody>
                         </table>
                     </form>
-                 <a href="{{ path('pdf') }}" class="btn btn-primary pull-right">Imprimer ma Facture</a>
                 </div>
             </div>
         </div>

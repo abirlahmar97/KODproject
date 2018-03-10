@@ -26,8 +26,10 @@ class CartController extends Controller
 
 
         if (is_array($cart) && array_key_exists($id, $cart)) {
-            if ($request->query->get('qte') != null) $cart[$id] = $request->query->get('qte');
-            $this->get('session')->getFlashBag()->add('success', 'Quantité modifié avec succès');
+            if ($request->query->get('qte') != null) {
+                $cart[$id] = $request->query->get('qte');
+                $this->get('session')->getFlashBag()->add('success', 'Quantité modifié avec succès');
+            }
         } else {
             if ($request->query->get('qte') != null)
                 $cart[$id] = $request->query->get('qte');
@@ -104,6 +106,10 @@ class CartController extends Controller
         return $this->render('@Shop/Cart/show.html.twig');
     }
 
+    public function applyCouponAction()
+    {
+    }
+
     public function shippingAction(Request $request,SessionInterface $session)
     {
         if ($request->isMethod('GET'))
@@ -139,16 +145,16 @@ class CartController extends Controller
     public function setShippingOnSession(SessionInterface $session,Request $request)
     {
         if (!$session->has('address')) $session->set('address',array());
-            $address = $session->get('address');
+            $addresses = $session->get('addresses');
 
         if ($request->get('shipping_add') != null && $request->get('billing_add') != null)
         {
-            $address['shipping_add'] = $request->get('shipping_add');
-            $address['billing_add'] = $request->get('billing_add');
+            $addresses['shipping_add'] = $request->get('shipping_add');
+            $addresses['billing_add'] = $request->get('billing_add');
         } else {
             return $this->redirect($this->generateUrl('cart_confirmation'));
         }
-        $session->set('address',$address);
+        $session->set('addresses',$addresses);
         return $this->redirect($this->generateUrl('cart_confirmation'));
     }
 
@@ -160,9 +166,10 @@ class CartController extends Controller
         $em = $this->getDoctrine()->getManager();
         $prepareOrder = $this->forward('ShopBundle:Orders:prepareOrder');
         $order = $em->getRepository('ShopBundle:Order')->find($prepareOrder->getContent());
-        dump($order);
+        $pos = $em->getRepository("ShopBundle:ProductOrder")->findBy(["order" => $order]);
         return $this->render('ShopBundle:cart:confirmation.html.twig', array(
-            'order' => $order
+            'order' => $order,
+            'products' => $pos
         ));
     }
 

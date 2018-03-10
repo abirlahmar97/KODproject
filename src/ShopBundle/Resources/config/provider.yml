@@ -25,7 +25,3 @@ delete_product:
 product_blk_delete:
     path:     /provider/products/delete
     defaults: { _controller: ShopBundle:Provider:deleteProductBulk }
-
-pdf:
-    path:     /provider/pdf
-    defaults: { _controller: ShopBundle:Orders:billpdf }

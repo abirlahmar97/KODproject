@@ -3,6 +3,7 @@
 namespace ShopBundle\Controller;
 
 use ShopBundle\Entity\Order;
+use ShopBundle\Entity\ProductOrder;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -10,74 +11,97 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 class OrdersController extends Controller
 {
 
-    public function bill(SessionInterface $session)
+    public function bill()
     {
         $em = $this->getDoctrine()->getManager();
-        $address = $session->get('address');
+        $session = $this->get('session');
         $cart = $session->get('cart');
-        $order = array();
-        $totalTF = 0;
-
-        $billing_add = $em->getRepository('ShopBundle:UserAddress')->find($address['billing_add']);
-        $shipping_add = $em->getRepository('ShopBundle:UserAddress')->find($address['shipping_add']);
         $products = $em->getRepository('ShopBundle:Product')->findArray(array_keys($session->get('cart')));
-
+        $pos = [];
         foreach ($products as $product) {
-            $priceTF = ($product->getPrice() * $cart[$product->getId()]);
-            $totalTF += $priceTF;
-
-            $order['product'][$product->getId()] = array(
-                'reference' => $product->getName(),
-                'quantity' => $cart[$product->getId()],
-                'priceTF' => round($product->getPrice(), 2)
-            );
+            $po = new ProductOrder();
+            $provider = $em->getRepository("UserBundle:User")->find($product->getUser()->getId());
+            $user = $this->getUser();
+            $po->setProduct($product);
+            $po->setProvider($provider);
+            $po->setUser($user);
+            $po->setQuantity($product->getPrice() * $cart[$product->getId()]);
+            $price = ($product->getPrice() * $cart[$product->getId()]);
+            $po->setPrice($price);
+            $pos[] = $po;
+//            $order['product'][$product->getId()] = array(
+//                'reference' => $product->getName(),
+//                'quantity' => $cart[$product->getId()],
+//                'priceTF' => round($product->getPrice(), 2)
+//            );
         }
 
-        $order['shipping_add'] = array(
-            'address' => $shipping_add->getAddress(),
-            'postalCode' => $shipping_add->getPostalCode(),
-            'region' => $shipping_add->getRegion()
-        );
+//        $order['shipping_add'] = array(
+//            'address' => $shipping_add->getAddress(),
+//            'postalCode' => $shipping_add->getPostalCode(),
+//            'region' => $shipping_add->getRegion()
+//        );
+//
+//        $order['billing_add'] = array(
+//            'address' => $billing_add->getAddress(),
+//            'postalCode' => $billing_add->getPostalCode(),
+//            'region' => $billing_add->getRegion()
+//        );
+//        $order['priceTF'] = round($totalTF, 2);
+//        $order['token'] = bin2hex(random_bytes(20));
 
-        $order['billing_add'] = array(
-            'address' => $billing_add->getAddress(),
-            'postalCode' => $billing_add->getPostalCode(),
-            'region' => $billing_add->getRegion()
-        );
-
-        if ($session->get('coupon') ) {
-            $code = $session->get('coupon');
-            $coupon = $this->getDoctrine()->getRepository("ShopBundle:Coupons")->findOneBy(['code' => $code]);
-            if ($coupon != null)
-                $totalTF = $totalTF - ($totalTF * $coupon->getPercent() / 100);
-        }
-        $order['priceTF'] = round($totalTF, 2);
-        $order['token'] = bin2hex(random_bytes(20));
-
-        return $order;
+        return $pos;
     }
 
-    public function prepareOrderAction(SessionInterface $session)
+    public function prepareOrderAction()
     {
-        $em = $this->getDoctrine()->getManager();
-        if (!$session->has('order'))
+//        if (!$session->has('order'))
+//            $order = new Order();
+//        else
+//            $order = $em->getRepository('ShopBundle:Order')
+//                ->find($session->get('order')->getId());
+//        if (!$session->has('order')) {
+//            $em->persist($order);
+////            $session->set('order', $order);
+//        }
+        $session = $this->get('session');
+        if(!$session->has('order')){
+            $em = $this->getDoctrine()->getManager();
             $order = new Order();
-        else
-            $order = $em->getRepository('ShopBundle:Order')
-                ->find($session->get('order')->getId());
+            $addresses = $session->get('addresses');
+            $billing_add = $em->getRepository('ShopBundle:UserAddress')->find($addresses['billing_add']);
+            $shipping_add = $em->getRepository('ShopBundle:UserAddress')->find($addresses['shipping_add']);
 
-        $order->setDate(new \DateTime());
-        $order->setUser($this->getUser());
-        $order->setConfirmed(0);
-        $order->setReference(0);
-        $order->setOrder($this->bill($session));
+            $order->setUser($this->getUser());
+            $order->setBillAddr($billing_add);
+            $order->setShipAddr($shipping_add);
 
-        if (!$session->has('order')) {
+            $pos = $this->bill();
+
+            $totalTF = 0;
+            foreach ($pos as $po){
+                $totalTF += $po->getPrice();
+                $po->setOrder($order);
+            }
+
+            if ($session->get('coupon') ) {
+                $code = $session->get('coupon');
+                $coupon = $this->getDoctrine()->getRepository("ShopBundle:Coupons")->findOneBy(['code' => $code]);
+                if ($coupon != null)
+                    $totalTF = $totalTF - ($totalTF * $coupon->getPercent() / 100);
+            }
+
+            $order->setTotal($totalTF);
+            $order->setToken(bin2hex(random_bytes(20)));
             $em->persist($order);
-                $session->set('order', $order);
-//            die();
+            foreach ($pos as $po)
+                $em->persist($po);
+            $em->flush();
+            $session->set('order', $order->getId());
         }
-        $em->flush();
+        else
+            return new Response($session->get('order'));
+
         return new Response($order->getId());
     }
 
@@ -93,28 +117,32 @@ class OrdersController extends Controller
         $order->setReference($this->container->get('set.new.reference')->reference());
         $em->flush();
 
-        $session->remove('address');
+        $session->remove('addresses');
         $session->remove('cart');
         $session->remove('order');
 
-        $this->get('session')->getFlashBag()->add('success', 'Votre commande est validé avec succès');
+        $session->getFlashBag()->add('success', 'Votre commande est validé avec succès');
         return $this->redirect($this->generateUrl('bills'));
     }
 
 
-    public function billpdfAction()
+    public function billpdfAction($id)
     {
-        $em=$this->getDoctrine()->getManager();
-        $factures=$em->getRepository("ShopBundle:Order")->findAll($this->getUser());
+        $em = $this->getDoctrine()->getManager();
+        $order = $em->getRepository("ShopBundle:Order")->find($id);
+        $pos = $em->getRepository("ShopBundle:ProductOrder")->findBy(['order' => $order]);
 
-        $snappy = $this->get('knp_snappy.pdf');
-        if (!$factures) {
+        if (!$order) {
             $this->get('session')->getFlashBag()->add('error', 'Une erreur est survenue');
             return $this->redirect($this->generateUrl('bills'));
         }
-        $html = $this->renderView('UserBundle:Home:billpdf.html.twig', array('factures' => $factures));
+        $html = $this->renderView('UserBundle:Home:billpdf.html.twig', array(
+            'order' => $order,
+            'pos' => $pos
+        ));
 
-        $filename = 'Historique des factures';
+        $snappy = $this->get('knp_snappy.pdf');
+        $filename = 'Commande:' . $order->getReference();
 
         return new Response(
             $snappy->getOutputFromHtml($html),

@@ -203,52 +203,50 @@
     </style>
 </head>
 <body>
-<header class="clearfix">
-    <div id="logo">
-        {#<img src="logo.png">#}
-    </div>
-    <div id="company">
-        <h2 class="name">KODS project</h2>
-        <div>455 Foggy Heights, AZ 85004, US</div>
-        <div>(602) 519-0450</div>
-        <div><a href="mail:company@example.com">admin@kids.com</a></div>
-    </div>
-</header>
+    <header class="clearfix">
+        <div id="logo">
+            {#<img src="logo.png">#}
+        </div>
+        <div id="company">
+            <h2 class="name">Kids</h2>
+            <div>455 Foggy Heights, AZ 85004, US</div>
+            <div>(602) 519-0450</div>
+            <div><a href="mail:admin@kids.com">admin@kids.com</a></div>
+        </div>
+    </header>
 
-<main>
-    <table>
-    <thead border="0" cellspacing="0" cellpadding="0">
-
-        <th class="desc">Date de facture</th>
-        <th class="unit">Reference</th>
-        <th class="qty">total</th>
-
-    </thead>
-    {#<div id="details" class="clearfix">#}
-        {#<div id="client">#}
-            {#<div class="to">INVOICE TO:</div>#}
-            {#<h2 class="name">John Doe</h2>#}
-            {#<div class="address">796 Silver Harbour, TX 79273, US</div>#}
-            {#<div class="email"><a href="mailto:john@example.com">john@example.com</a></div>#}
-        {#</div>#}
-        {#<div id="invoice">#}
-            {#<h1>INVOICE 3-2-1</h1>#}
-            {#<div class="date">Date of Invoice: 01/06/2014</div>#}
-            {#<div class="date">Due Date: 30/06/2014</div>#}
-        {#</div>#}
-    {#</div>#}
-    {% for facture in factures %}
-        <tr>
-        <td class="no">{{ facture.date|date('d-m-Y') }}</td>
-        <td class="desc">{{ facture.reference }}</td>
-        <td class="unit">{{ facture.order.priceTF }}</td>
-
-        </tr>
-
-    {% endfor %}
-
-    </table>
-
-</main>
+    <main>
+        <h5><strong>Reférence :</strong> {{ order.reference }}</h5>
+        <h5><strong>Pour :</strong> {{ order.user.fullname }}</h5>
+        <h5><strong>Date :</strong> {{ order.date | date('F d, Y') }}</h5>
+        {% set rows = 10 - pos|length %}
+        <table>
+            <thead border="0" cellspacing="0" cellpadding="0">
+                <th class="desc">Article</th>
+                <th class="qty">Reference</th>
+                <th class="qty">Prix Unitaire</th>
+                <th class="qty">Quatité</th>
+                <th class="qty">Total</th>
+            </thead>
+            <tbody>
+                {% for po in pos %}
+                <tr>
+                    <td class="desc">{{ po.product.name }}</td>
+                    <td class="qty">{{ po.product.id }}</td>
+                    <td class="qty">{{ po.product.price }}</td>
+                    <td class="qty">{{ po.quantity }}</td>
+                    <td class="qty">{{ po.price }}</td>
+                </tr>
+                {% endfor %}
+                {% for i in 1..rows %}
+                    <tr><td colspan="5"></td></tr>
+                {% endfor %}
+                <tfoot>
+                    <td colspan="4" style="text-align: left" class="unit">Total</td>
+                    <td class="unit">{{ order.total }}</td>
+                </tfoot>
+            </tbody>
+        </table>
+    </main>
 </body>
 </html>

@@ -1,0 +1,90 @@
+<?php
+
+namespace ShopBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * UserOrder
+ *
+ * @ORM\Table(name="user_order")
+ * @ORM\Entity(repositoryClass="ShopBundle\Repository\UserOrderRepository")
+ */
+class UserOrder
+{
+
+    /**
+     * @ORM\ManyToOne(targetEntity="ShopBundle\Entity\Order")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $order;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="ShopBundle\Entity\Product")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $product;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $provider;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date", type="date")
+     */
+    private $date;
+
+
+    /**
+     * Get id.
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set date.
+     *
+     * @param \DateTime $date
+     *
+     * @return UserOrder
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * Get date.
+     *
+     * @return \DateTime
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+}

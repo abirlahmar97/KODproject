@@ -13,6 +13,24 @@ use UserBundle\Entity\User;
  */
 class Order
 {
+
+    public function __construct()
+    {
+        $this->date = new \DateTime();
+        $this->confirmed = false;
+        $this->reference = 0;
+    }
+
+    /**
+     * @ORM\ManyToOne(targetEntity="ShopBundle\Entity\UserAddress", cascade={"persist"})
+     */
+    private $shipAddr;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="ShopBundle\Entity\UserAddress", cascade={"persist"})
+     */
+    private $billAddr;
+
     /**
      * @var int
      *
@@ -44,6 +62,20 @@ class Order
     private $reference;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="total", type="integer")
+     */
+    private $total;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="token", type="string")
+     */
+    private $token;
+
+    /**
      * @var array
      *
      * @ORM\Column(name="orders", type="array")
@@ -56,8 +88,6 @@ class Order
      */
 
     private $user;
-
-
 
     /**
      * Get id
@@ -192,5 +222,99 @@ class Order
     public function getOrder()
     {
         return $this->order;
+    }
+
+    /**
+     * Get total
+     *
+     * @return integer
+     */
+    public function getTotal()
+    {
+        return $this->total;
+    }
+
+    /**
+     * Set total
+     *
+     * @param integer $total
+     *
+     * @return Order
+     */
+    public function setTotal($total)
+    {
+        $this->total = $total;
+        return $this;
+    }
+
+    /**
+     * Get token
+     *
+     * @return string
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * Set token
+     *
+     * @param string $token
+     *
+     * @return Order
+     */
+    public function setToken($token)
+    {
+        $this->token = $token;
+        return $this;
+    }
+
+    /**
+     * Set shipAddr.
+     *
+     * @param \ShopBundle\Entity\UserAddress|null $shipAddr
+     *
+     * @return Order
+     */
+    public function setShipAddr(\ShopBundle\Entity\UserAddress $shipAddr = null)
+    {
+        $this->shipAddr = $shipAddr;
+
+        return $this;
+    }
+
+    /**
+     * Get shipAddr.
+     *
+     * @return \ShopBundle\Entity\UserAddress|null
+     */
+    public function getShipAddr()
+    {
+        return $this->shipAddr;
+    }
+
+    /**
+     * Set billAddr.
+     *
+     * @param \ShopBundle\Entity\UserAddress|null $billAddr
+     *
+     * @return Order
+     */
+    public function setBillAddr(\ShopBundle\Entity\UserAddress $billAddr = null)
+    {
+        $this->billAddr = $billAddr;
+
+        return $this;
+    }
+
+    /**
+     * Get billAddr.
+     *
+     * @return \ShopBundle\Entity\UserAddress|null
+     */
+    public function getBillAddr()
+    {
+        return $this->billAddr;
     }
 }
