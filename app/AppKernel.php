@@ -28,6 +28,11 @@ class AppKernel extends Kernel
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new CMEN\GoogleChartsBundle\CMENGoogleChartsBundle(),
             new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
+            new Discutea\DForumBundle\DForumBundle(),
+            new FOS\MessageBundle\FOSMessageBundle(),
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+            new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+            new KMS\FroalaEditorBundle\KMSFroalaEditorBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

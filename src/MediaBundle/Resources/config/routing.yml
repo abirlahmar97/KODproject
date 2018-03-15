@@ -1,14 +1,3 @@
-media_homepage:
-    path:     /
-    defaults: { _controller: MediaBundle:Default:index }
-
-create:
-    path:     /Admin/Article/create
-    defaults: { _controller: MediaBundle:Article:create }
-read:
-    path:     /Admin/Article/read
-    defaults: { _controller: MediaBundle:Article:read }
-
 video_add:
     path:     admin/video/add
     defaults: { _controller: MediaBundle:video:createvideo}
@@ -16,23 +5,3 @@ video_add:
 video_read:
     path:     video/read
     defaults: { _controller: MediaBundle:video:readvid}
-
-update:
-    path:     /Admin/Article/update{id}
-    defaults: { _controller: MediaBundle:Article:update }
-
-delete:
-    path:     /Admin/Article/delete{id}
-    defaults: { _controller: MediaBundle:Article:delete }
-front_read:
-    path:     /Parent/Aide/Article/read
-    defaults: { _controller: MediaBundle:Article:front_read }
-more:
-    path:     /Parent/Aide/Article/more{id}
-    defaults: { _controller: MediaBundle:Article:more }
-recherche_front:
-    path:   /Parent/Aide/Article/recherche
-    defaults: { _controller: MediaBundle:Article:recherche }
-show_by_category:
-        path:   /Parent/Aide/Article/Category/show{category}
-        defaults: { _controller: MediaBundle:Article:showbyCategory }

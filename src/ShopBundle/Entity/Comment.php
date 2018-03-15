@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use FOS\CommentBundle\Entity\Comment as BaseComment;
 use FOS\CommentBundle\Model\SignedCommentInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use UserBundle\Entity\User;
+
 /**
  * Comment
  *
@@ -33,11 +35,12 @@ class Comment extends BaseComment implements SignedCommentInterface
     protected $thread;
 
     /**
-     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
+     * Author of the comment
      *
-     * @ORM\JoinColumn(name="idUser",referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="\UserBundle\Entity\User")
+     * @var User
      */
-    protected $idUser;
+    protected $author;
 
     /**
      * Get id
@@ -49,25 +52,14 @@ class Comment extends BaseComment implements SignedCommentInterface
         return $this->id;
     }
 
-
-    /**
-     * Sets the author of the Comment
-     *
-     * @param UserInterface $idUser
-     */
-    public function setAuthor(UserInterface $idUser)
+    public function setAuthor(UserInterface $author)
     {
-        $this->idUser = $idUser;
+        $this->author = $author;
     }
 
-    /**
-     * Gets the author of the Comment
-     *
-     * @return UserInterface
-     */
     public function getAuthor()
     {
-        return $this->idUser;
+        return $this->author;
     }
 
     public function getAuthorName()
@@ -77,30 +69,5 @@ class Comment extends BaseComment implements SignedCommentInterface
         }
 
         return $this->getAuthor()->getUsername();
-    }
-
-
-    /**
-     * Set idUser
-     *
-     * @param \UserBundle\Entity\User $idUser
-     *
-     * @return Comment
-     */
-    public function setIdUser(\UserBundle\Entity\User $idUser = null)
-    {
-        $this->idUser = $idUser;
-
-        return $this;
-    }
-
-    /**
-     * Get idUser
-     *
-     * @return \UserBundle\Entity\User
-     */
-    public function getIdUser()
-    {
-        return $this->idUser;
     }
 }

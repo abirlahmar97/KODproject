@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class BabysitterController extends Controller
 {
+
     public function createAction(Request $request)
     {
         $babysitter = new Babysitter();
@@ -24,8 +25,8 @@ class BabysitterController extends Controller
         return $this->render('@Parenting/Babysitter/create.html.twig', array(
             "form"=>$form->createView()
         ));
-
     }
+    
     public function readAction()
     {
         $em= $this->getDoctrine()->getManager();
@@ -58,8 +59,12 @@ class BabysitterController extends Controller
     {
         $em=$this->getDoctrine()->getManager();
         $babysitter=$em->getRepository("ParentingBundle:Babysitter")->find($id);
-        $em->remove($babysitter);
-        $em->flush();
+        if ($babysitter->getState() == 'Libre')
+        {
+            $em->remove($babysitter);
+            $em->flush();
+        }
+
         return $this->redirecttoRoute("read_babysitter");
     }
 
@@ -67,20 +72,22 @@ class BabysitterController extends Controller
     {
         $em= $this->getDoctrine()->getManager();
         $babysitters=$em->getRepository("ParentingBundle:Babysitter")->findAll();
-        return $this->render('@Parenting/Babysitter/frontread.html.twig', array( "babysitters" => $babysitters,'user' => $this->getUser()
-
+        return $this->render('@Parenting/Babysitter/frontread.html.twig', array(
+            "babysitters" => $babysitters,'user' => $this->getUser()
         ));
     }
-
 
     public function contactAction($id)
     {
         $em=$this->getDoctrine()->getManager();
         $babysitter=$em->getRepository("ParentingBundle:Babysitter")->find($id);
-        if ($babysitter->getState()=='Occupée')
+        if (!$babysitter->getState())
         {
-            return $this->render('@Parenting/Babysitter/warning.html.twig',array('babysitter'=>$babysitter,'user' => $this->getUser()));
+            return $this->render('@Parenting/Babysitter/warning.html.twig',array(
+                'babysitter'=>$babysitter,
+                'user' => $this->getUser()
+            ));
         }
 
-        return $this->render('@Parenting/Babysitter/contact.html.twig',array( 'babysitter'=>$babysitter,'user' => $this->getUser()));
+       return $this->redirectToRoute('fos_message_inbox');
     }}

@@ -1,0 +1,54 @@
+create_babysitter:
+    path:     /babysitter/create
+    defaults: { _controller: ParentingBundle:Babysitter:create }
+
+read_babysitter:
+    path:     /babysitter/read
+    defaults: { _controller: ParentingBundle:Babysitter:read }
+
+update_babysitter:
+    path:    /babysitter/update/{id}
+    defaults: { _controller: ParentingBundle:Babysitter:update }
+
+delete_babysitter:
+    path:    /babysitter/delete/{id}
+    defaults: { _controller: ParentingBundle:Babysitter:delete }
+
+create_address:
+    path:     /address/create
+    defaults: { _controller: ParentingBundle:Address:create }
+
+delete_address:
+    path:     /address/delete/{id}
+    defaults: { _controller: ParentingBundle:Address:delete }
+
+read_address:
+    path:     /address/read
+    defaults: { _controller: ParentingBundle:Address:read }
+
+update_address:
+    path:     /address/update/{id}
+    defaults: { _controller: ParentingBundle:Address:update }
+
+map_address:
+    path:     /address/map
+    defaults: { _controller: ParentingBundle:Address:map }
+
+map2_address:
+    path:     /address/map2
+    defaults: { _controller: ParentingBundle:Address:map2 }
+
+update:
+    path:     /article/update/{id}
+    defaults: { _controller: ParentingBundle:Article:update }
+
+delete:
+    path:     /article/delete/{id}
+    defaults: { _controller: ParentingBundle:Article:delete }
+read:
+    path:     /article/read
+    defaults: { _controller: ParentingBundle:Article:read }
+
+create:
+    path:     /article/create
+    defaults: { _controller: ParentingBundle:Article:create }

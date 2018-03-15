@@ -1,0 +1,155 @@
+{% extends 'layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/kmsfroalaeditor/froala_editor_2.7.5/css/froala_editor.min.css') }}" rel="stylesheet" type="text/css" />
+
+        <style>
+            #date {
+                font-size: x-small;
+
+            }
+            .star-rating {
+                line-height:32px;
+                font-size:1.25em;
+            }
+
+            .star-rating .fa-star{color: yellow;}
+</style>
+{% endblock %}
+{% block main %}
+
+    <!-- PAGE TITLE SECTION-->
+    <section class="pageTitleSection">
+        <div class="container">
+            <div class="pageTitleInfo">
+                <h2>Détails de l'article</h2>
+                <ol class="breadcrumb">
+                    <li><a href="#">Home</a></li>
+                    <li class="active">Détails de l'article</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN SECTION -->
+    <section class="mainContent full-width clearfix">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9 col-sm-8 col-xs-12 block">
+                    <div class="thumbnail thumbnailContent">
+                        <div class="caption border-color-1 singleBlog">
+                            <h3 class="color-1">{{ article.title }} <small>{{ article.subject }}</small></h3>
+                            <ul class="list-inline blogInfo">
+                                <li><i class="fa fa-user" aria-hidden="true"></i>{{ article.auteur }}</li>
+                                {#<li><i class="fa fa-comments-o" aria-hidden="true"></i>4 Comments </li>#}
+                            </ul>
+                            <p>{{ article.content | raw }}</p>
+                            <ul class="list-inline socailLink">
+                                <li><a href="#" class="bg-color-1"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                <li><a href="#" class="bg-color-2"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                <li><a href="#" class="bg-color-3"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                                <li><a href="#" class="bg-color-4"><i class="fa fa-pinterest-p" aria-hidden="true"></i></a></li>
+                                <li><a href="#" class="bg-color-5"><i class="fa fa-vimeo" aria-hidden="true"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    {#<div class="blogComments">#}
+                        {#<h3>3 Comments</h3>#}
+                        {#<ul class="media-list commentsList">#}
+                            {#<li class="media">#}
+                                {#<div class="media-left">#}
+                                    {#<img src="img/blog/blog-1.jpg" alt="image" class="img-circle">#}
+                                {#</div>#}
+                                {#<div class="media-body">#}
+                                    {#<h4 class="media-heading">Sarah Smith</h4>#}
+                                    {#<p>July 7, 2016</p>#}
+                                    {#<p>The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>#}
+                                    {#<a href="#" class="btn btn-primary"><i class="fa fa-reply-all" aria-hidden="true"></i>Reply</a>#}
+                                {#</div>#}
+                            {#</li>#}
+                        {#</ul>#}
+                    {#</div>#}
+                </div>
+                <div class="col-md-3 col-sm-4 col-xs-12">
+                    <aside>
+                        <div class="panel panel-default courseSidebar">
+                            <div class="panel-heading bg-color-2 border-color-2">
+                                <h3 class="panel-title">Categories</h3>
+                            </div>
+
+                            <div class="panel-body">
+                                <ul class="list-unstyled categoryItem">
+                                    {% for categorie in categories %}
+                                        <li><a href="{{ path('show_by_category',{'category':categorie.name}) }}" >{{ categorie.name }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="rightSidebar">
+                            <div class="panel panel-default">
+                                <div class="panel-heading bg-color-5 border-color-5">
+                                    <h3 class="panel-title">Article le plus lu</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <ul class="media-list blogListing">
+                                        <li class="media">
+                                            {% for m in max %}
+                                                <div class="media-left">
+                                                    {% if m.image != null %}
+                                                        <a href="#"><img src="{{ asset(m.image.webPath) }}" alt="image" height="20px" width="20px"></a>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="media-body">
+                                                    <h4 class="media-heading"><a href="{{ path('more', {'id': m.id}) }}">{{ m.title }}</a></h4>
+                                                    <p>{{ m.date|date('l F\n j\n Y  ')}}</p>
+                                                </div>
+                                            {% endfor %}
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/kmsfroalaeditor/froala_editor_2.7.5/js/froala_editor.min.js') }}"></script>
+    <script>
+        $(function() {
+            $('.fr-view input').froalaEditor({toolbarInline: true})
+        });
+    </script>
+    {#<script>#}
+        {#var $star_rating = $('.star-rating .fa');#}
+
+        {#var SetRatingStar = function() {#}
+            {#return $star_rating.each(function() {#}
+                {#if (parseInt($star_rating.siblings('input.rating-value').val()) >= parseInt($(this).data('rating'))) {#}
+                    {#return $(this).removeClass('fa-star-o').addClass('fa-star');#}
+                {#} else {#}
+                    {#return $(this).removeClass('fa-star').addClass('fa-star-o');#}
+                {#}#}
+            {#});#}
+        {#};#}
+
+        {#$star_rating.on('click', function() {#}
+            {#$star_rating.siblings('input.rating-value').val($(this).data('rating'));#}
+            {#return SetRatingStar();#}
+        {#});#}
+
+        {#SetRatingStar();#}
+        {#$(document).ready(function() {#}
+
+        {#});#}
+    {#</script>#}
+{% endblock %}

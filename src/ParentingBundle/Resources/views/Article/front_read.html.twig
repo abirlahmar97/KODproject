@@ -1,0 +1,86 @@
+{% extends 'layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    {% endblock %}
+{% block main %}
+<!-- PAGE TITLE SECTION-->
+<section class="pageTitleSection">
+    <div class="container">
+        <div class="pageTitleInfo">
+            <h2>Liste des articles</h2>
+            <ol class="breadcrumb">
+                <li><a href="#">Accueil</a></li>
+                <li class="active">Articles et conseils</li>
+            </ol>
+        </div>
+    </div>
+</section>
+
+<!-- MAIN SECTION -->
+<section class="mainContent full-width clearfix">
+    <div class="container">
+        <div class="input-group searchArea">
+            <span class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></span>
+            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="Search something..." id="recherche" name="article">
+            <button type="submit" class="input-group-addon button" id="basic-addon21">Search</button>
+        </div>
+        <div class="resultInfo">
+            {% if nombre is defined and search is defined %}
+            <h3> {{ nombre }} Search results for “{{ search }}”</h3>
+            {% endif %}
+
+        </div>
+        <div id="list" class="list">
+            <list>
+                <div class="row" >
+                    {% for article in articles %}
+                        <div class="col-md-3 col-sm-6 col-xs-12 block">
+                            <div class="thumbnail thumbnailContent">
+                                <a href="{{ path('more',{'id':article.id}) }}">
+                                    {% if article.image != null %}
+                                        <img style="height: 175px" src="{{ asset(article.image.webPath) }}" alt="image" class="media-object">
+                                    {% endif %}
+                                </a>
+                                <div class="sticker-round bg-color-1">
+                                    <a href="{{ path('show_by_category',{'category':article.category.name}) }}">{{ article.category.name}}</a>
+                                </div>
+                                <div class="caption border-color-1">
+                                    <h3><a href="{{ path('more',{'id':article.id}) }}" class="color-1">{{ article.title }}</a></h3>
+                                    <ul class="list-unstyled">
+                                        <li><i class="fa fa-calendar-o" aria-hidden="true"></i>{{ article.subject }}</li>
+                                        <li><i class="fa fa-clock-o" aria-hidden="true"></i>{{ article.auteur }}</li>
+                                    </ul>
+                                    <p></p>
+                                    <ul class="list-inline btn-yellow">
+                                        {#<li><a href="cart-page.html" class="btn btn-primary "><i class="fa fa-shopping-basket " aria-hidden="true"></i>Add to Cart</a></li>#}
+                                        <li><a href="{{ path('more',{'id':article.id}) }}" class="btn btn-link"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Continuer</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </list>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script >
+        $(function () {
+            $("#recherche").keyup(function () {
+                $.ajax({
+                    url : "{{ path('search_article') }}",
+                    data : { 'article' : $(this).val() }
+                }).done(function (response) {
+                    console.log(response);
+                    var list = $(response).find("list");
+                    $('.list').empty();
+                    $('.list').append(list);
+                });
+            });
+        })
+    </script>
+{% endblock %}

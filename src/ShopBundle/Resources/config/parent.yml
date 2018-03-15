@@ -39,5 +39,5 @@ add_coupon:
     defaults: { _controller: ShopBundle:Cart:applyCoupon }
 
 order_pdf:
-    path:     /parent/orders/{id}/pdf
+    path:     /orders/{id}/pdf
     defaults: { _controller: ShopBundle:Orders:billpdf }

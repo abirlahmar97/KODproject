@@ -47,42 +47,27 @@ class Babysitter
      *
      * @ORM\Column(name="price", type="integer", nullable=true)
      */
+    private $price;
+
     /**
      * @var string
      *
      * @ORM\Column(name="phone", type="string", length=8, nullable=true)
      */
     private $phone;
+
     /**
-     * @var string
+     * @var boolean
      *
-     * @ORM\Column(name="state", type="string", length=255, nullable=true)
+     * @ORM\Column(name="state",type="boolean")
      */
     private $state;
-
-    /**
-     * @var int
-     *
-     *
-     * @ORM\Column(name="price", type="integer",nullable=true)
-     */
-     private $price;
-
 
     /**
      * @ORM\OneToOne(targetEntity="MediaBundle\Entity\Photo", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true)
      */
     private $image;
-
-
-
-
-
-
-
-
-
 
     /**
      * Get id

@@ -1,0 +1,41 @@
+
+
+front_read_babysitter:
+    path:     /Babysitter/read
+    defaults: { _controller: ParentingBundle:Babysitter:front_read }
+
+contact_babysitter:
+    path:    /Babysitter/contact{id}
+    defaults: { _controller: ParentingBundle:Babysitter:contact }
+
+mail_babysitter:
+        path:    /Babysitter/Mail{name}
+        defaults: { _controller: ParentingBundle:Babysitter:Mail }
+
+front_addresses:
+    path:     /addresses/
+    defaults: { _controller: ParentingBundle:Address:front_read }
+
+more_addresses:
+    path:     /adresses/{id}
+    defaults: { _controller: ParentingBundle:Address:more }
+
+categories_addresses:
+    path:     /address/category/{category}
+    defaults: { _controller: ParentingBundle:Address:showbyCategory }
+
+front_read:
+    path:     /aide/article/read
+    defaults: { _controller: ParentingBundle:Article:frontRead }
+
+more:
+    path:     /aide/article/more/{id}
+    defaults: { _controller: ParentingBundle:Article:more }
+
+search_article:
+    path:   /aide/article/search
+    defaults: { _controller: ParentingBundle:Article:search }
+
+show_by_category:
+        path:   /aide/article/category/show/{category}
+        defaults: { _controller: ParentingBundle:Article:showbyCategory }

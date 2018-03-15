@@ -3,15 +3,9 @@
 namespace ShopBundle\Controller;
 
 use ShopBundle\Entity\Category;
-use ShopBundle\Repository\CategoryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Doctrine\ORM\Mapping as ORM;
-use FOS\CommentBundle\Entity\Comment as BaseComment;
-use FOS\CommentBundle\Model\SignedCommentInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class ProductsController extends Controller
 {

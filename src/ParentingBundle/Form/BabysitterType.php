@@ -20,8 +20,8 @@ class BabysitterType extends AbstractType
             ->add('phone')
             ->add('state',ChoiceType::class, array(
                 'choices' => array(
-                    'Occupée' => 'Occupée',
-                    'Libre' => 'Libre',
+                    'Occupée' => 0,
+                    'Libre' => 1,
                 )))
 
             ->add('address',ChoiceType::class, array(
@@ -35,7 +35,9 @@ class BabysitterType extends AbstractType
             ->add('image',PhotoType::class, [
                 'required' => false
             ]);
-    }/**
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)

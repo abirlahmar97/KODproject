@@ -6,11 +6,12 @@
                 <span>Parentalité</span>
             </a>
             <ul class="dropdown-menu dropdown-menu-left">
-                <li><a>Articles et conseils</a></li>
-                <li><a>Forum</a></li>
-                <li><a>Adresses utiles</a></li>
-                <li><a>Evénements</a></li>
+                <li><a href="{{ path('front_read') }}">Articles et conseils</a></li>
+                <li><a href="{{ path('front_read_babysitter') }}">Babysitters</a></li>
+                <li><a href="{{ path('discutea_forum_homepage') }}">Forum</a></li>
+                <li><a href="{{ path('front_addresses') }}">Adresses utiles</a></li>
             </ul>
+        </li>
         </li>
         <li class="dropdown singleDrop color-1">
             <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">

@@ -2,6 +2,8 @@
 
 namespace UserBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use FOS\MessageBundle\Model\ParticipantInterface;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use ShopBundle\Entity\Order;
@@ -14,13 +16,13 @@ use UserBundle\Entity\UserInfos;
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="UserBundle\Repository\UserRepository")
  */
-class User extends BaseUser
+class User extends BaseUser implements ParticipantInterface
 {
     public function __construct()
     {
         parent::__construct();
-        $this->orders = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->addresses = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->orders = new ArrayCollection();
+        $this->addresses = new ArrayCollection();
     }
     /**
      * @var UserInfos
