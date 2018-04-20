@@ -1,6 +1,6 @@
 <?php
 
-namespace parentiingBundle\Repository;
+namespace ParentingBundle\Repository;
 
 /**
  * SubjectRepository

@@ -91,6 +91,13 @@ class Product
     private $age;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="quantity", type="integer")
+     */
+    private $quantity;
+
+    /**
      * Get id
      *
      * @return int
@@ -314,5 +321,29 @@ class Product
     public function getAge()
     {
         return $this->age;
+    }
+
+    /**
+     * Set user.
+     *
+     * @param \UserBundle\Entity\User|null $user
+     *
+     * @return Product
+     */
+    public function setUser(\UserBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user.
+     *
+     * @return \UserBundle\Entity\User|null
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

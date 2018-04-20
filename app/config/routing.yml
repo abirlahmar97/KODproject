@@ -18,10 +18,6 @@ parenting:
     resource: "@ParentingBundle/Resources/config/routing.yml"
     prefix:   /
 
-parentiing:
-    resource: "@parentiingBundle/Resources/config/routing.yml"
-    prefix:   /
-
 shop:
     resource: "@ShopBundle/Resources/config/routing.yml"
     prefix:   /

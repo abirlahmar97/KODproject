@@ -2,16 +2,16 @@
 
 namespace MediaBundle\Controller;
 
-use MediaBundle\Entity\video;
-use MediaBundle\Form\videoType;
+use MediaBundle\Entity\Video;
+use MediaBundle\Form\VideoType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class videoController extends Controller
+class VideoController extends Controller
 {
     public function createvideoAction(\Symfony\Component\HttpFoundation\Request $request)
     {
 
-        $videos = new video();
+        $videos = new Video();
         $form = $this->createForm(videoType::class, $videos);
         $form->handleRequest($request);
         if ($form->isValid()) {
@@ -27,7 +27,7 @@ class videoController extends Controller
     public function readvidAction()
     {
         $em= $this->getDoctrine()->getManager();
-        $videos=$em->getRepository("MediaBundle:video")->findAll();
+        $videos=$em->getRepository("MediaBundle:Video")->findAll();
         return $this->render('@Media/video/readvideo.html.twig', array(
             "videos"=>$videos
         ));

@@ -25,9 +25,9 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
             ->select('p')
             ->where('p.category = :category')
             ->andWhere('p.available = 1')
+            ->andWhere('p.quantity > 0')
             ->orderBy('p.id')
-            ->setParameter('category', $category)
-            ->setMaxResults(4);
+            ->setParameter('category', $category);
         return $qb->getQuery()->getResult();
     }
 
@@ -60,6 +60,13 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter(':name',"%$name%");
         return $qb->getQuery()->getResult();
 
+    }
+
+    public function findAvailable(){
+        $qb = $this->createQueryBuilder("p")
+            ->where("p.available = 1")
+            ->andWhere("p.quantity > 0");
+        return $qb->getQuery()->getResult();
     }
 
 

@@ -8,13 +8,13 @@ use Doctrine\ORM\Mapping as ORM;
  * video
  *
  * @ORM\Table(name="video")
- * @ORM\Entity(repositoryClass="MediaBundle\Repository\videoRepository")
+ * @ORM\Entity(repositoryClass="MediaBundle\Repository\VideoRepository")
  */
 class video
 {
     /**
      *@var int
-     * @ORM\ManyToOne(targetEntity="parentiingBundle\Entity\Subject")
+     * @ORM\ManyToOne(targetEntity="ParentingBundle\Entity\Subject")
      */
     protected $Subject;
     /**
@@ -188,11 +188,11 @@ class video
     /**
      * Set subject
      *
-     * @param \parentiingBundle\Entity\Subject $subject
+     * @param \ParentingBundle\Entity\Subject $subject
      *
      * @return video
      */
-    public function setSubject(\parentiingBundle\Entity\Subject $subject = null)
+    public function setSubject(\ParentingBundle\Entity\Subject $subject = null)
     {
         $this->Subject = $subject;
 
@@ -202,7 +202,7 @@ class video
     /**
      * Get subject
      *
-     * @return \parentiingBundle\Entity\Subject
+     * @return \ParentingBundle\Entity\Subject
      */
     public function getSubject()
     {

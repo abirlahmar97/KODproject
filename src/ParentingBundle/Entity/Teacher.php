@@ -1,6 +1,6 @@
 <?php
 
-namespace parentiingBundle\Entity;
+namespace ParentingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -8,12 +8,12 @@ use Doctrine\ORM\Mapping as ORM;
  * Teacher
  *
  * @ORM\Table(name="teacher")
- * @ORM\Entity(repositoryClass="parentiingBundle\Repository\TeacherRepository")
+ * @ORM\Entity(repositoryClass="ParentingBundle\Repository\TeacherRepository")
  */
 class Teacher
 {
     /**
-     * @ORM\ManyToOne(targetEntity="parentiingBundle\Entity\Subject")
+     * @ORM\ManyToOne(targetEntity="ParentingBundle\Entity\Subject")
      */
     protected $Subject;
     /**
@@ -117,11 +117,11 @@ class Teacher
     /**
      * Add subject
      *
-     * @param \parentiingBundle\Entity\Subject $subject
+     * @param \ParentingBundle\Entity\Subject $subject
      *
      * @return Teacher
      */
-    public function addSubject(\parentiingBundle\Entity\Subject $subject)
+    public function addSubject(\ParentingBundle\Entity\Subject $subject)
     {
         $this->Subjects[] = $subject;
 
@@ -131,9 +131,9 @@ class Teacher
     /**
      * Remove subject
      *
-     * @param \parentiingBundle\Entity\Subject $subject
+     * @param \ParentingBundle\Entity\Subject $subject
      */
-    public function removeSubject(\parentiingBundle\Entity\Subject $subject)
+    public function removeSubject(\ParentingBundle\Entity\Subject $subject)
     {
         $this->Subjects->removeElement($subject);
     }
@@ -271,11 +271,11 @@ class Teacher
     /**
      * Set subject
      *
-     * @param \parentiingBundle\Entity\Subject $subject
+     * @param \ParentingBundle\Entity\Subject $subject
      *
      * @return Teacher
      */
-    public function setSubject(\parentiingBundle\Entity\Subject $subject = null)
+    public function setSubject(\ParentingBundle\Entity\Subject $subject = null)
     {
         $this->Subject = $subject;
 
@@ -285,7 +285,7 @@ class Teacher
     /**
      * Get subject
      *
-     * @return \parentiingBundle\Entity\Subject
+     * @return \ParentingBundle\Entity\Subject
      */
     public function getSubject()
     {

@@ -76,13 +76,6 @@ class Order
     private $token;
 
     /**
-     * @var array
-     *
-     * @ORM\Column(name="orders", type="array")
-     */
-    private $order;
-
-    /**
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User", inversedBy="orders")
      * @ORM\JoinColumn(nullable=true)
      */
@@ -196,32 +189,6 @@ class Order
     public function getUser()
     {
         return $this->user;
-    }
-
-
-
-    /**
-     * Set order
-     *
-     * @param array $order
-     *
-     * @return Order
-     */
-    public function setOrder($order)
-    {
-        $this->order = $order;
-
-        return $this;
-    }
-
-    /**
-     * Get order
-     *
-     * @return array
-     */
-    public function getOrder()
-    {
-        return $this->order;
     }
 
     /**

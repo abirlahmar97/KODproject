@@ -2,8 +2,8 @@
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('plugins/owl-carousel/owl.carousel.css') }}" media="screen">
-    <link rel="stylesheet" href="{{ asset('js/ion.rangeSlider-2.2.0/css/ion.rangeSlider.css') }}">
-    <link rel="stylesheet" href="{{ asset('js/ion.rangeSlider-2.2.0/css/ion.rangeSlider.skinFlat.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/ion.rangeSlider-2.2.0/css/ion.rangeSlider.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/ion.rangeSlider-2.2.0/css/ion.rangeSlider.skinFlat.css') }}">
 {% endblock %}
 {% block main %}
     <div class="modal fade quick-view" tabindex="-1" role="dialog">
@@ -171,7 +171,7 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('js/ion.rangeSlider-2.2.0/js/ion-rangeSlider/ion.rangeSlider.min.js') }}"></script>
+    <script src="{{ asset('plugins/ion.rangeSlider-2.2.0/js/ion-rangeSlider/ion.rangeSlider.js') }}"></script>
     <script>
         $(document).ready(function(){
             $("#price").ionRangeSlider(
@@ -184,18 +184,21 @@
                     suffix: "DT"
                 }
             );
+
             $('#filter').click(function (e) {
                 e.preventDefault();
-                $.get({
-                    url : "{{ path('search_product') }}",
-                    data : {
-                        "filters" : JSON.stringify($('#filter-form').serializeArray())
-                    }
-                }).done(function (response) {
-                    $("#list").empty();
-                    $("#list").append(response);
-                });
-            })
+                console.log(JSON.stringify($('#filter-form').serializeArray()));
+                {#$.get({#}
+                    {#url : "{{ path('search_product') }}",#}
+                    {#data : {#}
+                        {#"filters" : JSON.stringify($('#filter-form').serializeArray())#}
+                    {#}#}
+                {#}).done(function (response) {#}
+                    {#$("#list").empty();#}
+                    {#$("#list").append(response);#}
+                {#});#}
+            });
+
 //            $('#filter').click(function(){
 //                var prix=$("#example_id").val();
 //                var prix_min=prix.slice(0, prix.indexOf(";"));
@@ -217,19 +220,16 @@
 //
 //
 //            })
-
-            $(function () {
-                $("#recherche").keyup(function () {
-                    $.ajax({
-                        url : "{{ path('search_product') }}",
-                        data : { 'product' : $(this).val() }
-                    }).done(function (response) {
-                        var list = $(response).find('list');
-                        $('.list').empty();
-                        $('.list').append(list);
-                    });
+            $("#recherche").keyup(function () {
+                $.ajax({
+                    url : "{{ path('search_product') }}",
+                    data : { 'product' : $(this).val() }
+                }).done(function (response) {
+                    var list = $(response).find('list');
+                    $('.list').empty();
+                    $('.list').append(list);
                 });
-            })
+            });
         });
     </script>
 

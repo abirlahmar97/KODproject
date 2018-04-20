@@ -7,7 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class videoType extends AbstractType
+class VideoType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -17,7 +17,11 @@ class videoType extends AbstractType
         $builder
             ->add('url')
             ->add('type')
-            ->add('subject', EntityType::class, array('class' => 'parentiingBundle\Entity\Subject','choice_label' => 'name', 'multiple' => false))
+            ->add('subject', EntityType::class, array(
+                'class' => 'ParentingBundle\Entity\Subject',
+                'choice_label' => 'name',
+                'multiple' => false
+            ))
             ->add('date')
             ->add('views');
     }/**
@@ -26,7 +30,7 @@ class videoType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'MediaBundle\Entity\video'
+            'data_class' => 'MediaBundle\Entity\Video'
         ));
     }
 

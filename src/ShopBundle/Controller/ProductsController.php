@@ -77,7 +77,7 @@ class ProductsController extends Controller
         if ($category != null)
             $products = $em->getRepository('ShopBundle:Product')->byCategory($category);
         else
-            $products = $em->getRepository('ShopBundle:Product')->findBy(array('available' => 1));
+            $products = $em->getRepository('ShopBundle:Product')->findAvailable();
 
         if ($session->has('cart'))
             $cart = $session->get('cart');
@@ -86,7 +86,8 @@ class ProductsController extends Controller
 
         return $this->render('ShopBundle:Products:list.html.twig', array(
             'products' => $products,
-            'cart' => $cart));
+            'cart' => $cart
+        ));
     }
 
     public function relatedAction($category)
@@ -97,16 +98,6 @@ class ProductsController extends Controller
             "products" => $products
         ));
 
-    }
-
-    public function rechercheAction(Request $request)
-    {
-        $search =$request->query->get('product');
-        $en = $this->getDoctrine()->getManager();
-        $product=$en->getRepository("ShopBundle:Product")->searchProduct($search);
-        return $this->render("ShopBundle:Products:list.html.twig",array(
-            'products' => $product
-        ));
     }
 
 }
