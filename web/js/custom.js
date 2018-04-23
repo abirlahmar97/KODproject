@@ -18,7 +18,7 @@
         }, function () {
             $(this).removeClass("open")
         }), $(".cart-dropdown a").on("click", function () {
-            $("#cart-dropdown").toggleClass("display-block"), $(".cart-dropdown a i").toggleClass("fa-close").toggleClass("fa-shopping-basket"), $(".badge").toggleClass("display-none")
+            $(".dropdown-menu").toggleClass("display-block"), $(".cart-dropdown a i").toggleClass("fa-close").toggleClass("fa-shopping-basket"), $(".badge").toggleClass("display-none")
         }), jQuery(".bannercontainerV1 .fullscreenbanner").revolution({
             delay: 5e3,
             startwidth: 1170,

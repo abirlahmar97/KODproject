@@ -1,0 +1,165 @@
+{% extends "back-layout.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('plugins/datatables/css/jquery.dataTables.css') }}">
+    <link href="{{ asset('plugins/datatables/extensions/Buttons/css/buttons.dataTables.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block main %}
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb breadcrumb-2">
+        <li><a href="{{ path('admin_homepage') }}"><i class="fa fa-home"></i>Home</a></li>
+        <li class="active"><strong>Dessins animés</strong></li>
+    </ol>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading clearfix">
+                    <h4 class="panel-title">Liste des dessins animés</h4>
+                    <ul class="panel-tool-options">
+                        <li><a href="{{ path('cartoon_add') }}"><i class="fa fa-cartoon-plus"></i> Ajouter</a></li>
+                    </ul>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover dataTables" >
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th>Id</th>
+                                <th>Image</th>
+                                <th>Nom</th>
+                                <th>Episodes</th>
+                                <th>Age</th>
+                                <th>Sexe</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for cartoon in cartoons %}
+                                <tr class="gradeX">
+                                    <td><input type="checkbox" name="{{ cartoon.id }}"></td>
+                                    <td>{{ cartoon.id }}</td>
+                                     <td>
+                                        {% if cartoon.photo == null %}
+                                            Pas d'image
+                                        {% else %}
+                                            <img height="180" class="center-block" alt="image"
+                                                 src="{{ asset(cartoon.photo.webPath) }}">
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ cartoon.name }}</td>
+                                    <td>{{ cartoon.episodesCnt }}</td>
+                                    {% if cartoon.age == 1 %} <td>3 à 5</td>
+                                    {% elseif cartoon.age == 2 %} <td>inférieur à 8</td>
+                                    {% elseif cartoon.age == 3 %} <td>inférieur à 12</td>
+                                    {% endif %}
+                                    {% set gender = cartoon.gender %}
+                                    <td>
+                                        {% if cartoon.gender == 0 %} Fille{% endif %}
+                                        {% if cartoon.gender == 1 %} Garçon{% endif %}
+                                        {% if cartoon.gender == 2 %} Les deux<br>{% endif %}
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-primary" href="{{ path('episodes_add', { 'id' : cartoon.id }) }}">
+                                            <i class="fa fa-plus"></i>
+                                        </a>
+                                        <a class="btn btn-primary" href="{{ path('episodes_list', { 'id' : cartoon.id }) }}">
+                                            <i class="icon-menu"></i>
+                                        </a>
+                                        {#<a class="btn btn-default" href="{{ path('cartoons_edit', { 'id' : cartoon.id }) }}"><i class="fa fa-edit"></i></a>#}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <div class="row" style="margin-bottom: 0">
+                        <div class="form-inline col-md-12">
+                            <select class="form-control" id="action_blk">
+                                <option selected value="-1">Actions</option>
+                                <option value="0">Supprimer</option>
+                                <option value="1">Désactiver</option>
+                                <option value="2">Activer</option>
+                            </select>
+                            <button class="btn btn-blue" id="action_ok">OK</button>
+                            <label class="control-label" id="cartoon_count" style="padding-left: 10px;"></label>
+                        </div>
+                    </div>
+                </div>
+                {#<form action="{{ path('cartoons_blk_delete') }}" id="del_form" method="post">#}
+                    {#<input type="hidden" class="cartoons" name="cartoons">#}
+                {#</form>#}
+                {#<form action="{{ path('cartoons_blk_disable') }}" id="dis_form" method="post">#}
+                    {#<input type="hidden" class="cartoons" name="cartoons">#}
+                {#</form>#}
+                {#<form action="{{ path('cartoons_blk_enable') }}" id="en_form" method="post">#}
+                    {#<input type="hidden" class="cartoons" name="cartoons">#}
+                {#</form>#}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('plugins/datatables/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables/extensions/Buttons/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables/extensions/Buttons/js/buttons.html5.js') }}"></script>
+    <script src="{{ asset('plugins/datatables/extensions/Buttons/js/buttons.colVis.js') }}"></script>
+    <script>
+        $(function () {
+            $('table').DataTable({
+                language : {
+                    url : "{{ asset('plugins/datatables/extensions/french.json') }}"
+                },
+                dom: '<"html5buttons" B>lTfgitp',
+                buttons: [
+                    {
+                        extend: 'copyHtml5',
+                        exportOptions: {
+                            columns: [ 0, ':visible' ]
+                        }
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, 4 ]
+                        }
+                    },
+                    'colvis'
+                ]
+            });
+            var cartoons = [];
+            $(':checkbox').change(function () {
+                cartoons = [];
+                $(':checkbox:checked').each(function (i) {
+                    cartoons[i] = $(this).attr('name');
+                });
+                if(cartoons.length > 0)
+                    $('#cartoon_count').text(cartoons.length + " élément(s) sélectionné(s)");
+                else
+                    $('#cartoon_count').text("");
+            });
+
+            $('#action_ok').click(function () {
+                $('.cartoons').val(cartoons);
+                if($('#action_blk').val() === '0')
+                    $('#del_form').submit();
+                else if ($('#action_blk').val() === '1')
+                    $('#dis_form').submit();
+                else if ($('#action_blk').val() === '2')
+                    $('#en_form').submit();
+            })
+        })
+    </script>
+{% endblock %}

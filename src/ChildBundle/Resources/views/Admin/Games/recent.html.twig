@@ -1,0 +1,10 @@
+{% for item in games %}
+    <div class="side-games">
+        {% if item.game.icon != null %}
+        <img width="150" src="{{ asset(item.game.icon.webPath) }}">
+            {% else  %}
+        <img width="150" src="{{ asset('img/default_game.png') }}">
+                {% endif %}
+        <div class="title">{{ item.game.name }}</div>
+    </div>
+{% endfor %}

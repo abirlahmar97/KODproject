@@ -1,9 +1,9 @@
 <?php
 
-namespace parentiingBundle\Controller;
+namespace ParentingBundle\Controller;
 
-use parentiingBundle\Entity\Subject;
-use parentiingBundle\Form\SubjectType;
+use ParentingBundle\Form\SubjectType;
+use ParentingBundle\Entity\Subject;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class SubjectController extends Controller

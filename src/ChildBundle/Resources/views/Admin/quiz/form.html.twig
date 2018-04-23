@@ -1,0 +1,48 @@
+{% extends 'back-layout.html.twig' %}
+
+{% block main %}
+    <div class="panel panel-default">
+        <div class="panel-heading clearfix">
+            <h4 class="panel-title">{{ title }}</h4>
+        </div>
+        <div class="panel-body">
+            {{ form_start(form) }}
+            {{ form_errors(form) }}
+            <div class="form-group row">
+                <div class="col-sm-2 control-label">
+                    {{ form_label(form.name, 'Titre du Quiz') }}
+                </div>
+                <div class="col-sm-10">
+                    {{ form_widget(form.name, { 'attr' : { 'class' : 'form-control' } }) }}
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-2 control-label">
+                    {{ form_label(form.category, 'Catégorie') }}
+                </div>
+                <div class="col-sm-10">
+                    {{ form_widget(form.category, { 'attr' : { 'class' : 'form-control' } }) }}
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-2 control-label">
+                    {{ form_label(form.difficulty, "Difficulté") }}
+                </div>
+                <div class="col-sm-10">
+                    {{ form_widget(form.difficulty) }}
+                </div>
+            </div
+            <div class="form-group row">
+                <div class="col-sm-2 control-label">
+                    {{ form_label(form.photo, "Image") }}
+                </div>
+                <div class="col-sm-10">
+                    {{ form_widget(form.photo.file) }}
+                </div>
+            </div>
+            <button class="btn btn-success">{{ btn }}</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
+

@@ -2,6 +2,7 @@
 
 namespace ChildBundle\Form;
 
+use Doctrine\DBAL\Types\ArrayType;
 use MediaBundle\Form\PhotoType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -26,7 +27,7 @@ class GameType extends AbstractType
                 ],
                 'multiple' => false
             ])
-            ->add('device', ChoiceType::class, [
+            ->add('devices', ChoiceType::class, [
                 'choices' => [
                     'Smartphone' => '1',
                     'Tablette' => '2',
@@ -35,7 +36,9 @@ class GameType extends AbstractType
                 'multiple' => true,
                 'expanded' => true
             ])
-            ->add('icon', PhotoType::class);
+            ->add('icon', PhotoType::class, [
+                'required' => false
+            ]);
     }/**
      * {@inheritdoc}
      */

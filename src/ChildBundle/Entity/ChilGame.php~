@@ -1,0 +1,108 @@
+<?php
+
+namespace ChildBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * ChilGame
+ *
+ * @ORM\Table(name="chil_game")
+ * @ORM\Entity(repositoryClass="ChildBundle\Repository\ChilGameRepository")
+ */
+class ChilGame
+{
+
+    /**
+     * @ORM\ManyToOne(targetEntity="ChildBundle\Entity\Child", cascade={"persist"})
+     */
+    private $child;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="ChildBundle\Entity\Game", cascade={"persist"})
+     */
+    private $game;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date", type="datetime")
+     */
+    private $date;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="duration", type="time")
+     */
+    private $duration;
+
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set date
+     *
+     * @param \DateTime $date
+     *
+     * @return ChilGame
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * Get date
+     *
+     * @return \DateTime
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * Set duration
+     *
+     * @param \DateTime $duration
+     *
+     * @return ChilGame
+     */
+    public function setDuration($duration)
+    {
+        $this->duration = $duration;
+
+        return $this;
+    }
+
+    /**
+     * Get duration
+     *
+     * @return \DateTime
+     */
+    public function getDuration()
+    {
+        return $this->duration;
+    }
+}
+

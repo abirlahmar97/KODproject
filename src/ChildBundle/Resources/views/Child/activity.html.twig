@@ -1,0 +1,75 @@
+{% extends "layout.html.twig" %}
+
+{% block main %}
+    <section class="mainContent full-width clearfix">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="sectionTitle text-center">
+                        <h2>
+                            <span class="shape shape-left bg-color-4"></span>
+                            <span>Tab Style 1</span>
+                            <span class="shape shape-right bg-color-4"></span>
+                        </h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="tabCommon">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" href="#menu1">Jeux</a></li>
+                            <li><a data-toggle="tab" href="#menu2">Musique</a></li>
+                            <li><a data-toggle="tab" href="#menu3">Dessins Animés</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div id="home" class="tab-pane fade in active" style="border: none">
+                                {% for play in plays %}
+                                    <div class="media courseList couresListPage">
+                                        <a class="media-left">
+                                            {% if play.game.icon != null %}
+                                                <img height="177" style="max-width: 177px" class="media-object" src="{{ asset(play.game.icon.webPath) }}">
+                                            {% else %}
+                                                <img height="177" style="max-width: 177px" src="{{ asset('img/default_game.png') }}">
+                                            {% endif %}
+                                        </a>
+                                        <div class="media-body">
+                                            <div class="col-md-9" style="padding: 20px;">
+                                                <h3 class="media-heading color-1" style="padding-top: 15px">{{ play.game.name }}</h3>
+                                                <ul class="list-inline">
+                                                    <li><i class="fa fa-calendar" aria-hidden="true"></i>Joué le :  {{ play.date | date('y F d') }}</li>
+                                                    <li><i class="fa fa-clock-o" aria-hidden="true"></i>Duration :  {{ play.duration | date('i:s') }}</li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-md-3 text-center" style="padding: 50px 0;">
+                                                {% if play.game.id in child.blockedG  %}
+                                                    <button disabled class="btn btn-outline-primary"><i class="fa fa-ban"></i></button>
+                                                {% else %}
+                                                    <a href="{{ path('block_game', {'cid' : child.id, 'gid' : play.game.id }) }}" style="background: white" class="btn btn-outline-primary"><i class="fa fa-ban"></i></a>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <div id="menu1" class="tab-pane fade">
+                                <div class="media">
+                                    <a class="media-left" href="#">
+                                        <img height="150" class="media-object img-rounded" src="img/home/about-school.png" alt="Image">
+                                    </a>
+                                    <div class="media-body">
+                                        <p></p>
+                                        <p></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="menu2" class="tab-pane fade">
+                            </div>
+                            <div id="menu3" class="tab-pane fade">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+{% endblock %}

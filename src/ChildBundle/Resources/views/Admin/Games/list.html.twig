@@ -10,7 +10,7 @@
     <!-- Breadcrumb -->
     <ol class="breadcrumb breadcrumb-2">
         <li><a href="{{ path('admin_homepage') }}"><i class="fa fa-home"></i>Home</a></li>
-        <li class="active"><strong>Utilisateurs</strong></li>
+        <li class="active"><strong>Jeux</strong></li>
     </ol>
     <div class="row">
         <div class="col-lg-12">
@@ -33,6 +33,7 @@
                                 <th>url</th>
                                 <th>Age</th>
                                 <th>Appareils</th>
+                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -40,19 +41,28 @@
                                 <tr class="gradeX">
                                     <td><input type="checkbox" name="{{ game.id }}"></td>
                                     <td>{{ game.id }}</td>
-                                    <td><img src="{{ asset( game.icon.webPath ) }}" height="80" alt=""></td>
+                                    <td>
+                                        {% if game.icon != null %}
+                                            <img class="img-responsive" alt="image"
+                                                 src="{{ asset(game.icon.webPath) }}">
+                                        {% else %}
+                                            <img class="img-responsive" alt="image"
+                                                 src="{{ asset('img/default_game.png') }}">
+                                        {% endif %}
+                                    </td>
                                     <td>{{ game.name }}</td>
                                     <td>{{ game.url }}</td>
                                     {% if game.age == 1 %} <td>3 à 5</td>
                                     {% elseif game.age == 2 %} <td>inférieur à 8</td>
                                     {% elseif game.age == 3 %} <td>inférieur à 12</td>
                                     {% endif %}
-                                    {% set devices = game.device | split(',') %}
+                                    {% set devices = game.devices %}
                                     <td>
                                         {% if devices[0] == 1 %} Mobile<br>{% endif %}
                                         {% if devices[1] == 2 %} Tablette<br>{% endif %}
-                                        {% if devices[2] == 3 %} Pc<br>{% endif %}
+                                        {% if devices[2] is defined and devices[2]  == 3 %} Pc<br>{% endif %}
                                     </td>
+                                    <td><a class="btn btn-default" href="{{ path('games_edit', { 'id' : game.id }) }}"><i class="fa fa-edit"></i></a></td>
                                 </tr>
                                 {% endfor %}
                             </tbody>

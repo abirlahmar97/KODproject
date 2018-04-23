@@ -6,12 +6,22 @@ use ChildBundle\Entity\Child;
 use ChildBundle\Form\ChildType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class ParentController extends Controller
 {
     public function indexAction($name)
     {
         return $this->render('', array('name' => $name));
+    }
+
+    public function listKidsAPIAction()
+    {
+        $kids = $this->getDoctrine()->getRepository("ChildBundle:Child")
+            ->findMyKids(10);
+
+        $data = $this->get('jms_serializer')->serialize($kids, 'json');
+        return new Response($data);
     }
 
     public function addKidAction(Request $request)

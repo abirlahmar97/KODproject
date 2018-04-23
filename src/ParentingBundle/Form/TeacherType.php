@@ -1,6 +1,6 @@
 <?php
 
-namespace parentiingBundle\Form;
+namespace ParentingBundle\Form;
 
 use MediaBundle\Form\PhotoType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -35,7 +35,7 @@ class TeacherType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'parentiingBundle\Entity\Teacher'
+            'data_class' => 'ParentingBundle\Entity\Teacher'
         ));
     }
 
@@ -44,7 +44,7 @@ class TeacherType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'parentiingbundle_teacher';
+        return 'parentingbundle_teacher';
     }
 
 

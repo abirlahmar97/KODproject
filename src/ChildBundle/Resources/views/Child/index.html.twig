@@ -3,19 +3,35 @@
 {% block stylesheets %}
 
     {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('plugins/owl-carousel/owl.carousel.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('plugins/fullSlider/css/demo.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('plugins/fullSlider/css/styleslider.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('plugins/fullSlider/css/customslider.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('plugins/musicplayer/musicplayer.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('plugins/Formslider/formslider.min.css') }}" />
+    <script type="text/javascript" src="{{ asset('plugins/fullSlider/modernizr.custom.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset("plugins/Formslider/formslider.min.css") }}">
+    <link rel="stylesheet" href="{{ asset("plugins/Formslider/style.css") }}">
     <style>
-        #wrapper {
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            background-size: cover;
-            background-position-y: center;
+         .quiz-slider .text{
+            height: 300px;
+            font-size: 50px;
+            line-height: 150px;
+            font-weight: 600;
+         }
+        {% if child.gender == 0 %}
+        #wrapper .main, #wrapper .whiteSection{
+            background: url("{{ asset('img/patterns/003.png') }}") repeat fixed center;
         }
+        {% else %}
+        #wrapper .main, #wrapper .whiteSection{
+            background: url("{{ asset('img/patterns/004.png') }}") repeat fixed center;
+        }
+        {% endif %}
 
-        #wrapper:-webkit-full-screen { opacity: 1}
-        #wrapper:-moz-full-screen { opacity: 1}
-        #wrapper:-ms-fullscreen { opacity: 1}
-        #wrapper:fullscreen { opacity: 1}
+        .modal, .modal-backdrop {
+            position: absolute !important;
+        }
     </style>
 {% endblock %}
 
@@ -25,21 +41,305 @@
             <div class="sectionTitle text-center">
                 <h2>
                     <span class="shape shape-left bg-color-4"></span>
-                    <span>L'enfant ne pourras pas quitter l'espace sans votre permission</span>
+                    <span>L'enfant ne pourra pas quitter l'espace sans votre permission</span>
                     <span class="shape shape-right bg-color-4"></span>
                 </h2>
             </div>
             <div class="sectionTitle text-center">
                 <h2>
                     <span class="shape shape-left bg-color-4"></span>
-                    <span>Cliquer pour commencer</span>
+                    <span>Cliquez pour commencer</span>
                     <span class="shape shape-right bg-color-4"></span>
                 </h2>
             </div>
         </div>
     </section>
-    <div  id="wrapper" style="background-image: url('{{ asset('img/kid_space.jpg') }}')"></div>
+    {% if child.gender == 0 %}
+    <div id="wrapper" style="background-image: url('{{ asset('img/girl_space.jpg') }}')">
+        <img height="280" src="{{ asset('img/girl.png') }}" style="margin: 400px 560px">
+    {% else %}
+    <div id="wrapper" style="background-image: url('{{ asset('img/kidspace.jpg') }}')">
+        <img height="380" src="{{ asset('boy.gif') }}" style="margin: 320px 400px">
+    {% endif %}
+        <nav class="menu buttons">
+            <input type="checkbox" href="#" class="menu-open" name="menu-open" id="menu-open" />
+            <label class="menu-open-button" for="menu-open"
+                {% if child.gender == 0 %} style="background-color: #e91e63"
+                {% elseif child.gender == 1 %} style="background-color: #3b8bdd" {% endif %}>
+                <span class="hamburger hamburger-1"></span>
+                <span class="hamburger hamburger-2"></span>
+                <span class="hamburger hamburger-3"></span>
+            </label>
+            <a class="menu-item btn-slider" data-slider="1">
+                <img src="{{ asset('img/games.png') }}">
+            </a>
+            <a class="menu-item btn-slider" data-slider="2">
+                <img src="{{ asset('img/books.png') }}">
+            </a>
+            <a class="menu-item btn-slider" data-slider="3">
+                <img src="{{ asset('img/music.png') }}">
+            </a>
+            <a class="menu-item btn-slider" data-slider="4">
+                <img src="{{ asset('img/art.png') }}">
+            </a>
 
+
+        </nav>
+        <div class="activities demo-1">
+            <a class="cross"><span class="fa fa-close fa-4x text-primary"></span></a>
+            <div id="slider-1" class="sl-slider-wrapper" >
+                <div class="sl-slider">
+                    <div class="sl-slide bg-1" data-orientation="vertical" data-slice1-rotation="0"
+                         data-slice2-rotation="0" data-slice1-scale="2" data-slice2-scale="2">
+                        <div class="sl-slide-inner" style="background-image: url('{{ asset('img/games.jpg') }}')">
+                            <div class="deco" style="font-size: 30pt; padding: 40px 50px">
+                                <i class="fa fa-gamepad fa-4x"></i>
+                            </div>
+                            <div class="sectionTitle">
+                                <h2>Le monde des jeux</h2>
+                            </div>
+                            <blockquote>
+                                <h4>Ce monde est plein de joix et de divertissement</h4>
+                                <h4>Vous y trouvez une centaine de jeux de toutes les catégories </h4>
+                                <button class="btn btn-info not-rounded" id="enter-game">Entrez ce monde</button>
+                            </blockquote>
+                        </div>
+                    </div>
+                    {% if allowed > 0 %}
+                        <div id="gamesSlider" class="sl-slide bg-4" data-orientation="vertical" data-slice1-rotation="-25"
+                             data-slice2-rotation="-25" data-slice1-scale="2" data-slice2-scale="2" >
+                            <div class="games-sidebar">
+                            </div>
+                            <div class="main " style="width: 100%; padding-left: 320px;">
+                                <div class="sectionTitle">
+                                    <h2 style="position: relative;color: black">Liste des jeux</h2>
+                                </div>
+                                <div class="whiteSection" id="whiteSection" style="padding: 100px 50px; height: 100%;">
+                                    {% for row in games | batch(4) %}
+                                        <div class="row games-rows">
+                                            {% for game in row %}
+                                                {% set color = random(5) + 1 %}
+                                                <div class="games col-md-3">
+                                                    <div class="box bg-color-{{ color }}" style="overflow: hidden;">
+                                                        <div class="box-img border-color-{{ color }} text-center" style="padding: 0;">
+
+                                                            {% if game.icon != null %}
+                                                                <img class="img-responsive" alt="image" style="max-height: none"
+                                                                     src="{{ asset(game.icon.webPath) }}">
+                                                            {% else %}
+                                                                <img class="img-responsive" alt="image" style="max-height: none"
+                                                                     src="{{ asset('img/default_game.png') }}">
+                                                            {% endif %}
+                                                            <a class="btn-block bg-color-2" href=".quick-view" data-toggle="modal"><i class="fa fa-eye" aria-hidden="true"></i>Ouvrir</a>
+                                                        </div>
+                                                        <div class="game-id" style="display: none;">
+                                                            {{ game.id }}
+                                                        </div>
+                                                        <div class="link" style="display: none;">
+                                                            {{ game.url }}
+                                                        </div>
+                                                        <div class="game-cat" style="display: none;">
+                                                            {{ game.category.name }}
+                                                        </div>
+                                                        <div class="box-info">
+                                                            <h4>{{ game.name }}</h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sl-slide bg-2" data-orientation="vertical" data-slice1-rotation="-25"
+                             data-slice2-rotation="-25" data-slice1-scale="2" data-slice2-scale="2">
+                            <div>
+                                <div id="game-wrapper" style="height: 80%">
+                                    <iframe frameborder='0' scrolling='no' src=''></iframe>
+                                </div>
+                                <div id="related-games" style="position: fixed; height: 20%; bottom: 0; background: #0a9fe2">
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="sl-slide bg-2" data-orientation="vertical" data-slice1-rotation="-25"
+                             data-slice2-rotation="-25" data-slice1-scale="2" data-slice2-scale="2">
+
+                            <div class="sectionTitle">
+                                <h2 class="color-4">Vous avez dépassé le temps limite de jeux</h2>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div><!-- /sl-slider -->
+            <div id="slider-3" class="sl-slider-wrapper">
+                <div class="sl-slider">
+                    <div class="sl-slide" data-orientation="vertical" data-slice1-rotation="0"
+                         data-slice2-rotation="0" data-slice1-scale="2" data-slice2-scale="2">
+                        <div class="sl-slide-inner" style="background-image: url('{{ asset('img/music.jpg') }}')">
+                            <div class="deco"></div>
+                            <div class="schoolInfo">
+                                <h2>Le monde de la musique</h2>
+                            </div>
+                            <blockquote>
+                                <h4>Ce monde ²est plein d'energie</h4>
+                                <h4>Vous y trouvez une centaine de jeux de toutes les catégories</h4>
+                                <button class="btn btn-info not-rounded" id="enter-music">Entrez ce monde</button>
+                            </blockquote>
+                        </div>
+                    </div>
+
+                    <div class="sl-slide bg-2" data-orientation="vertical" data-slice1-rotation="-25"
+                         data-slice2-rotation="-25" data-slice1-scale="2" data-slice2-scale="2">
+                        <ul style="display: none;">
+                            {% for song in songs %}
+                                <li class="song">
+                                    <span class="title">{{ song.title }}</span>
+                                    <span class="singer">{{ song.singer }}</span>
+                                    {% if song.photo != null %}
+                                        <span class="thumb">{{ asset(song.photo.webPath) }}</span>
+                                    {% else  %}
+                                        <span class="thumb">{{ asset('img/music_default.jpg') }}</span>
+                                    {% endif %}
+                                    {#<span class="singer">{{ song.singer }}</span>#}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        <div class="row" id="playerwrapper">
+                            <div id="title">
+                                <div>
+                                    <div id="thumbholder"></div>
+                                </div>
+                                <span id="track"></span>
+                                <div id="timer">0:00</div>
+                                <div id="duration">0:00</div>
+                            </div>
+
+                            <!-- Controls -->
+                            <div class="controlsOuter">
+                                <div class="controlsInner">
+                                    <div id="loading"></div>
+                                    <div class="btn-music" id="playBtn"></div>
+                                    <div class="btn-music" id="pauseBtn"></div>
+                                    <div class="btn-music" id="prevBtn"></div>
+                                    <div class="btn-music" id="nextBtn"></div>
+                                </div>
+                                <div class="btn-music" id="playlistBtn"></div>
+                                <div class="btn-music" id="volumeBtn"></div>
+                            </div>
+
+                            <!-- Progress -->
+                            <div id="waveform" style="top: calc(50% + 75px);"></div>
+                            <div id="bar"></div>
+                            <div id="progress"></div>
+
+                            <!-- Playlist -->
+                            <div id="playlist">
+                                <div id="list"></div>
+                            </div>
+
+                            <!-- Volume -->
+                            <div id="volume" class="fadeout">
+                                <div id="barFull" class="bar"></div>
+                                <div id="barEmpty" class="bar"></div>
+                                <div id="sliderBtn"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /sl-slider -->
+            <div id="slider-4" class="sl-slider-wrapper">
+                <div class="sl-slider">
+                    <div class="sl-slide bg-5" data-orientation="vertical" data-slice1-rotation="0"
+                         data-slice2-rotation="0" data-slice1-scale="2" data-slice2-scale="2">
+                        <div class="sl-slide-inner">
+                            <div class="deco" data-icon="H"></div>
+                            <h2>Testez votre intelligence</h2>
+                            <blockquote>
+                                <h4>Dans ce monde vous allez apprendre beacoup de choses</h4>
+                                <h4>Passez des Quizs en math, histoire , anglais ...</h4>
+                                <button class="btn btn-outline-info not-rounded" id="enter-paint">Entrez ce monde</button>
+                            </blockquote>
+                        </div>
+                    </div>
+
+                    <div class="sl-slide" data-orientation="vertical" data-slice1-rotation="-25"
+                         data-slice2-rotation="-25" data-slice1-scale="2" data-slice2-scale="2">
+                        <div class="whiteSection" id="quizes" style="padding: 100px 50px;">
+                            {{ render(controller('ChildBundle:Quizes:listQuizes')) }}
+                        </div>
+                    </div>
+                    <div class="sl-slide" data-orientation="vertical" data-slice1-rotation="-25"
+                         data-slice2-rotation="-25" data-slice1-scale="2" data-slice2-scale="2">
+                        <div class="whiteSection" id="quiz" style="padding: 100px 50px; height: 100%;">
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /sl-slider -->
+            <div id="slider-2" class="sl-slider-wrapper">
+                <div class="sl-slider">
+                <div class="sl-slide bg-2" data-orientation="vertical" data-slice1-rotation="0"
+                     data-slice2-rotation="0" data-slice1-scale="2" data-slice2-scale="2">
+                    <div class="sl-slide-inner">
+                        <div class="deco" style="font-size: 100pt; padding: 60px; color: white">
+                            <i class="glyphicon glyphicon-book"></i>
+                        </div>
+                        <div class="schoolInfo">
+                            <h2>Le monde de dessins animés</h2>
+                        </div>
+                        <blockquote>
+                            <h4>Ce monde est plein de joix et de divertissement</h4>
+                            <h4>Vous y trouvez une centaine de jeux de toutes les catégories </h4>
+                            <button class="btn btn-info not-rounded" id="enter-science">Entrez ce monde</button>
+                        </blockquote>
+                    </div>
+                </div>
+                <div class="sl-slide bg-2" data-orientation="vertical" data-slice1-rotation="-25"
+                     data-slice2-rotation="-25" data-slice1-scale="2" data-slice2-scale="2">
+
+                    <div class="whiteSection" id="whiteSection" style="padding: 100px 50px; height: 100%;">
+                        {% for row in cartoons | batch(4) %}
+                            <div class="row cartoons-rows">
+                                {% for cartoon in row %}
+                                    <div class="cartoons col-md-3">
+                                        {% set color = random(5) + 1 %}
+                                        <div class="box bg-color-{{ color }}" style="overflow: hidden;">
+                                            <div class="box-img border-color-{{ color }} text-center" style="padding: 0;">
+                                                {% if cartoon.photo != null %}
+                                                    <img class="img-responsive" alt="image" style="max-height: none"
+                                                         src="{{ asset(cartoon.photo.webPath) }}">
+                                                {% else %}
+                                                    <img class="img-responsive" alt="image" style="max-height: none"
+                                                         src="{{ asset('img/default_game.png') }}">
+                                                {% endif %}
+                                                <a class="btn-block bg-color-2" href=".quick-view" data-toggle="modal"><i class="fa fa-eye" aria-hidden="true"></i>Ouvrir</a>
+                                            </div>
+                                            <div class="cartoon-id" style="display: none;">
+                                                {{ cartoon.id }}
+                                            </div>
+                                            <div class="box-info">
+                                                <h5>{{ cartoon.name }}</h5>
+                                                <h5>{{ cartoon.episodesCnt }} episodes</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="sl-slide" data-orientation="vertical" data-slice1-rotation="-25"
+                     data-slice2-rotation="-25" data-slice1-scale="2" data-slice2-scale="2">
+
+                    <div class="whiteSection" id="cartoon-wrapper" style="padding: 100px 50px; height: 100%;">
+
+                    </div>
+                </div>
+            </div>
+            </div><!-- /sl-slider -->
+        </div>
+    </div>
     <div tabindex="-1" class="modal fade customModal " id="loginModal" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -56,7 +356,8 @@
                                 <input class="form-control" type="password" placeholder="Password">
                             </div>
                             <div class="form-group formField">
-                                <input class="btn btn-primary btn-block bg-color-3 border-color-3" type="submit" value="Log in">
+                                <input class="btn btn-primary btn-block bg-color-3 border-color-3" type="submit"
+                                       value="Log in">
                             </div>
                             <div class="form-group formField">
                                 <p class="help-block"><a href="#">Forgot password?</a></p>
@@ -72,29 +373,383 @@
 {% block javascripts %}
 
     {{ parent() }}
+    <script src="{{ asset('plugins/sidebar.min.js') }}"></script>
+    <script src="{{ asset('plugins/musicplayer/howler.core.js') }}"></script>
+    <script src="{{ asset('plugins/musicplayer/player.js') }}"></script>
+    <script src="{{ asset('plugins/musicplayer/siriwave.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('plugins/fullSlider/jquery.ba-cond.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('plugins/fullSlider/jquery.slitslider.js') }}"></script>
+    <script src="https://unpkg.com/scrollreveal/dist/scrollreveal.min.js"></script>
+    <script src="{{ asset('plugins/owl-carousel/owl.carousel.js') }}"></script>
+    <script src="{{ asset('plugins/Formslider/formslider.min.js') }}"></script>
+    <script src="{{ asset('plugins/Formslider/jquery.formslider.dependencies.min.js') }}"></script>
+    <script src="{{ asset('plugins/Formslider/jquery.formslider.min.js') }}"></script>
     <script>
+        window.sr = new ScrollReveal({ reset : true });
+        var slitslider1, slitslider2, slitslider3, slitslider4;
+        // Customizing a reveal set
+        function add() {
+            if(current_game != -1){
+                seconds++;
+                timer();
+            }
+        }
+
+        function timer() {
+            t = setTimeout(add, 1000);
+        }
+    </script>
+
+    <!-- Music script -->
+    <script>
+        $(function () {
+            var songs = [];
+            $.each($('.song'), function (i, val) {
+                songs[i] = {
+                    title : $(val).children('.title').text(),
+                    file : $(val).children('.title').text().replace(/\s+/g, '')
+                };
+            });
+
+            player = new Player(songs);
+
+            playBtn.addEventListener('click', function() {
+                player.play();
+            });
+            pauseBtn.addEventListener('click', function() {
+                player.pause();
+            });
+            prevBtn.addEventListener('click', function() {
+                player.skip('prev');
+            });
+            nextBtn.addEventListener('click', function() {
+                player.skip('next');
+            });
+            waveform.addEventListener('click', function(event) {
+                player.seek(event.clientX / window.innerWidth);
+            });
+            playlistBtn.addEventListener('click', function() {
+                player.togglePlaylist();
+            });
+            playlist.addEventListener('click', function() {
+                player.togglePlaylist();
+            });
+            volumeBtn.addEventListener('click', function() {
+                player.toggleVolume();
+            });
+            volume.addEventListener('click', function() {
+                player.toggleVolume();
+            });
+
+            // Setup the event listeners to enable dragging of volume slider.
+            barEmpty.addEventListener('click', function(event) {
+                var per = event.layerX / parseFloat(barEmpty.scrollWidth);
+                player.volume(per);
+            });
+            sliderBtn.addEventListener('mousedown', function() {
+                window.sliderDown = true;
+            });
+            sliderBtn.addEventListener('touchstart', function() {
+                window.sliderDown = true;
+            });
+            volume.addEventListener('mouseup', function() {
+                window.sliderDown = false;
+            });
+            volume.addEventListener('touchend', function() {
+                window.sliderDown = false;
+            });
+
+            var move = function(event) {
+                if (window.sliderDown) {
+                    var x = event.clientX || event.touches[0].clientX;
+                    var startX = window.innerWidth * 0.05;
+                    var layerX = x - startX;
+                    var per = Math.min(1, Math.max(0, layerX / parseFloat(barEmpty.scrollWidth)));
+                    player.volume(per);
+                }
+            };
+
+            volume.addEventListener('mousemove', move);
+            volume.addEventListener('touchmove', move);
+
+// Setup the "waveform" animation.
+            wave = new SiriWave({
+                container: waveform,
+                width: window.innerWidth,
+                height: window.innerHeight * 0.3,
+                cover: true,
+                speed: 0.03,
+                amplitude: 0.7,
+                frequency: 2
+            });
+            wave.start();
+
+            // Update the height of the wave animation.
+            // These are basically some hacks to get SiriWave.js to do what we want.
+            var resize = function() {
+                var height = window.innerHeight * 0.3;
+                var width = window.innerWidth;
+                wave.height = height;
+                wave.height_2 = height / 2;
+                wave.MAX = wave.height_2 - 4;
+                wave.width = width;
+                wave.width_2 = width / 2;
+                wave.width_4 = width / 4;
+                wave.canvas.height = height;
+                wave.canvas.width = width;
+                wave.container.style.margin = -(height / 2) + 'px auto';
+
+                // Update the position of the slider.
+                var sound = player.playlist[player.index].howl;
+                if (sound) {
+                    var vol = sound.volume();
+                    var barWidth = (vol * 0.9);
+                    sliderBtn.style.left = (window.innerWidth * barWidth + window.innerWidth * 0.05 - 25) + 'px';
+                }
+            };
+        })
+    </script>
+
+    <!-- SLIDER script -->
+    <script type="text/javascript">
+        var seconds = 0, t ;
+        var current_game = -1;
+        $(function () {
+
+            var Page = (function () {
+
+                var $navArrows = $('#nav-arrows'),
+                    $nav = $('#nav-dots > span'),
+                    slitslider1 = $('#slider-1').slitslider({
+                        onBeforeChange: function (slide, pos) {
+                            $nav.removeClass('nav-dot-current');
+                            $nav.eq(pos).addClass('nav-dot-current');
+                        }
+                    }),
+                    slitslider2 = $('#slider-2').slitslider({
+                        onBeforeChange: function (slide, pos) {
+                            $nav.removeClass('nav-dot-current');
+                            $nav.eq(pos).addClass('nav-dot-current');
+                        }
+                    }),
+                    slitslider3 = $('#slider-3').slitslider({
+                        onBeforeChange: function (slide, pos) {
+                            $nav.removeClass('nav-dot-current');
+                            $nav.eq(pos).addClass('nav-dot-current');
+                        }
+                    }),
+                    slitslider4 = $('#slider-4').slitslider({
+                        onBeforeChange: function (slide, pos) {
+                            $nav.removeClass('nav-dot-current');
+                            $nav.eq(pos).addClass('nav-dot-current');
+                        }
+                    }),
+                    init = function () {
+                        initEvents();
+                    },
+                    initEvents = function () {
+                        $('#enter-game').click(function () {
+                            slitslider1.jump(2);
+                            sr.reveal('.games', {
+                                duration : 2000
+                            }, 100);
+                        });
+                        $('#enter-science').click(function () {
+                            slitslider2.jump(2);
+                        });
+                        $('#enter-music').click(function () {
+                            slitslider3.jump(2);
+                        });
+                        $('#enter-paint').click(function () {
+                            slitslider4.jump(2);
+                        });
+                        $('.games').click(function (e) {
+                            e.preventDefault();
+                            var link = $(this).find('.link').text();
+                            $('#game-wrapper iframe').attr('src', link);
+                            $('#game-wrapper iframe').attr('width', $('.sl-slider-wrapper').width()+60);
+                            $('#game-wrapper iframe').attr('height', $('.activities').height()*0.8);
+                            slitslider1.next();
+                            current_game = $(this).find('.game-id').text();
+                            timer();
+                            $.get(
+                                "{{ path('related_games') }}",{
+                                    "category" : $(this).find('.game-cat').text().trim()
+                                }
+                            ).done(function (response) {
+                                $('#related-games').append( response );
+                                $(".owl-carousel").owlCarousel({ items : 7, loop : true});
+                            });
+                        });
+
+                        $('.cartoons').click(function (e) {
+                            e.preventDefault();
+                            var cartoon = $(this).find('.cartoon-id').text();
+                            $.get({
+                                url : "/PIDEV/web/app_dev.php/episodes/cartoon/" + cartoon.trim()
+                            }).done(function(data) {
+                              $('#cartoon-wrapper').empty();
+                              $('#cartoon-wrapper').append(data);
+                              slitslider2.next()
+                            }) ;
+                        });
+
+                        $('.buttons a').click(function () {
+                            slitslider1.jump(1);
+                            slitslider2.jump(1);
+                            slitslider3.jump(1);
+                            slitslider4.jump(1);
+                            $('iframe').attr('src', "");
+                            if(current_game != -1){
+                                console.log(current_game);
+                                $.post({
+                                    url : "{{ path('save_activity', { 'activity' : 'Game' }) }}?cid={{ child.id }}&aid=" + current_game,
+                                    data : {
+                                        game : current_game,
+                                        child : localStorage.getItem('child'),
+                                        duration : seconds
+                                    }
+                                }).done(function () {
+                                    seconds = 0; t = null;
+                                    current_game = -1;
+                                });
+                            }
+                        });
+
+                        $('.cross').click(function () {
+                            slitslider1.jump(1);
+                            slitslider2.jump(1);
+                            slitslider3.jump(1);
+                            slitslider4.jump(1);
+                        });
+
+                        $(".quiz-btn").click(function () {
+                            $.get({
+                                url : "{{ path('show_quiz') }}",
+                                data : {
+                                    'id' : $(this).attr('data-id')
+                                }
+                            }).done(function (response) {
+                                $('#quiz').empty();
+                                $("#quiz").append(response);
+                                $('.quiz-slider').formslider();
+                                slitslider4.next();
+                                var reponses = [];
+                                $('#quiz-form :radio').change(function () {
+                                    reponses = [];
+                                    $('#quiz-form :radio:checked').each(function (i) {
+                                        reponses[i] = {
+                                            answer : $(this).attr('data-answ'),
+                                            question : $(this).attr('data-qt')
+                                        };
+                                    });
+                                });
+                                $('#finish-quiz').click(function(){
+                                    $.post({
+                                        url : "{{ path('answer_quiz', { 'id' : child.id }) }}",
+                                        data : {
+                                            'answers' : JSON.stringify(reponses)
+                                        }
+                                    }).done(function(response) {
+                                       $('h1.resultat').text(response);
+                                    });
+                                });
+                                $('#quit-quiz').click(function() {
+                                  slitslider4.jump(2);
+                                })
+                            })
+                        });
+                    };
+                return {init: init};
+            })();
+            Page.init();
+
+        });
+    </script>
+    <script>
+        $(function () {
+
+            $(document).on('click', '.play-episode' , function () {
+                var id = $(this).attr('data-id');
+                $('#video-wrapper').modal({
+                    keyboard : false
+                });
+                $.get({
+                    url : "{{ path('episodes_watch') }}",
+                    data : { 'id' : id }
+                }).done(function(response) {
+                    var data = JSON.parse(response);
+                    $('#video-wrapper .panel-title').text(data.name);
+                    $('#video-wrapper iframe').attr('src', data.url);
+                    $('#video-wrapper iframe').attr('width', $('.modal-dialog').width()*0.9);
+                    $('#video-wrapper iframe').attr('height', $('.modal-dialog').width()*0.6);
+                    $('#video-wrapper').modal({ keyboard : false });
+                    $('.modal-backdrop').appendTo('#cartoon-wrapper');
+                    $('body').removeClass();
+                });
+            });
+
+            $('.btn-slider').click(function () {
+                $('.sl-slider-wrapper').hide();
+                $('#slider-' + $(this).attr('data-slider')).slideDown();
+            });
+
+            // $('button').click(function (e) {
+            //     e.preventDefault();
+            //     $('#reponses').val(JSON.stringify(reponses));
+            //     // console.log(reponses);
+            //     // $('form').submit();
+            // });
+            $.get({
+                url : "{{ path('recent_games', { 'id' : child.id }) }}"
+            }).done(function (response) {
+                $('.games-sidebar').append( response );
+            });
+
+            $('.activities').sidebar({side: "right"});
+
+            $('.cross').click(function () {
+                $('.activities').trigger("sidebar:close");
+                $('.buttons a').removeClass('active');
+            });
+
+            $('.buttons a').click(function () {
+                $('#menu-open').prop('checked', false);
+                if ($(this).hasClass('active')) {
+                    $('.activities').trigger("sidebar:close");
+                    $(this).removeClass('active');
+                }
+                else {
+                    $('.buttons a').removeClass('active');
+                    $(this).addClass('active');
+                    $('.activities').trigger("sidebar:open");
+                }
+            })
+
+        });
+
         function goFullscreen() {
             // Must be called as a result of user interaction to work
             mf = document.getElementById("wrapper");
             mf.webkitRequestFullscreen();
-            mf.style.display="";
+            mf.style.display = "";
         }
+
         function fullscreenChanged() {
             if (document.webkitFullscreenElement == null) {
                 mf = document.getElementById("wrapper");
-                mf.style.display="none";
+                mf.style.display = "none";
             }
         }
+
         document.onwebkitfullscreenchange = fullscreenChanged;
         document.getElementById("home").onclick = goFullscreen;
-        // document.onkeydown = goFullscreen;
 
-        $(document).keydown(function(e) {
+        $(document).keydown(function (e) {
             if (e.keyCode === 122) {
                 e.preventDefault();
                 alert('Quitter');
             }
-            // e.trigger();
         });
     </script>
 

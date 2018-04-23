@@ -5,18 +5,24 @@ namespace MediaBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * video
+ * Video
  *
- * @ORM\Table(name="video")
+ * @ORM\Table(name="Video")
  * @ORM\Entity(repositoryClass="MediaBundle\Repository\VideoRepository")
  */
-class video
+class Video
 {
     /**
-     *@var int
      * @ORM\ManyToOne(targetEntity="ParentingBundle\Entity\Subject")
      */
-    protected $Subject;
+    private $subject;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="ChildBundle\Entity\Cartoon")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $cartoon;
+
     /**
      * @var int
      *
@@ -32,6 +38,7 @@ class video
      * @ORM\Column(name="url", type="string",length=255)
      */
     private $url;
+
     /**
      * @var int
      *
@@ -69,7 +76,7 @@ class video
      *
      * @param integer $type
      *
-     * @return video
+     * @return Video
      */
     public function setType($type)
     {
@@ -94,7 +101,7 @@ class video
      *
      * @param integer $views
      *
-     * @return video
+     * @return Video
      */
     public function setViews($views)
     {
@@ -118,7 +125,7 @@ class video
      *
      * @param string $url
      *
-     * @return video
+     * @return Video
      */
     public function setUrl($url)
     {
@@ -138,35 +145,11 @@ class video
     }
 
     /**
-     * Set date1
-     *
-     * @param \DateTime $date1
-     *
-     * @return video
-     */
-    public function setDate1($date1)
-    {
-        $this->date1 = $date1;
-
-        return $this;
-    }
-
-    /**
-     * Get date1
-     *
-     * @return \DateTime
-     */
-    public function getDate1()
-    {
-        return $this->date1;
-    }
-
-    /**
      * Set date
      *
      * @param \DateTime $date
      *
-     * @return video
+     * @return Video
      */
     public function setDate($date)
     {
@@ -190,11 +173,11 @@ class video
      *
      * @param \ParentingBundle\Entity\Subject $subject
      *
-     * @return video
+     * @return Video
      */
     public function setSubject(\ParentingBundle\Entity\Subject $subject = null)
     {
-        $this->Subject = $subject;
+        $this->subject = $subject;
 
         return $this;
     }
@@ -206,6 +189,30 @@ class video
      */
     public function getSubject()
     {
-        return $this->Subject;
+        return $this->subject;
+    }
+
+    /**
+     * Set cartoon.
+     *
+     * @param \ChildBundle\Entity\Cartoon|null $cartoon
+     *
+     * @return Video
+     */
+    public function setCartoon(\ChildBundle\Entity\Cartoon $cartoon = null)
+    {
+        $this->cartoon = $cartoon;
+
+        return $this;
+    }
+
+    /**
+     * Get cartoon.
+     *
+     * @return \ChildBundle\Entity\Cartoon|null
+     */
+    public function getCartoon()
+    {
+        return $this->cartoon;
     }
 }

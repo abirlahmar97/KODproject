@@ -1,6 +1,6 @@
 <?php
 
-namespace parentiingBundle\Controller;
+namespace ParentingBundle\Controller;
 
 use parentiingBundle\Entity\Teacher;
 use parentiingBundle\Form\TeacherType;

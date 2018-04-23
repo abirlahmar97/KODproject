@@ -14,6 +14,10 @@ child:
     resource: "@ChildBundle/Resources/config/routing.yml"
     prefix:   /
 
+api_child:
+    resource: "@ChildBundle/Resources/config/api-routes.yml"
+    prefix:   /api
+
 parenting:
     resource: "@ParentingBundle/Resources/config/routing.yml"
     prefix:   /
@@ -28,3 +32,7 @@ media:
 
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+kms_froala_editor:
+  resource: "@KMSFroalaEditorBundle/Resources/config/routing.yml"
+  prefix:   /froalaeditor

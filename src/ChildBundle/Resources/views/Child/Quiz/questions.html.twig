@@ -1,0 +1,56 @@
+<div class="content-wrapper" id="quiz-form">
+    <div class="content-inner-wrapper">
+        <main>
+            <article class="fade-in-on-load teaser" data-wait="3000">
+            </article>
+            <form>
+                <div class="formslider-wrapper loading quiz-slider">
+                    <div class="formslider">
+                        {% for question in quiz.questions %}
+                            <div class="slide" data-role="question" data-id="{{ loop.index }}">
+                                <div class="headline" style="font-size: 70px; font-weight: 600">
+                                    {{ question.content }} ?
+                                </div>
+                                <div class="answers">
+                                    {% for answer in question.answers %}
+                                        <div class="answer" data-next-id="2">
+                                            <label class="inner-answer" for="{{ answer.id }}">
+                                                <div class="image" draggable="false" style="background: white; display: inline;height: 100px">
+
+                                                </div>
+                                                <input type="radio" id="{{ answer.id }}" name="{{ question.id }}" data-answ="{{ answer.id }}" data-qt="{{ question.id }}">
+                                                <div class="text">
+                                                    {{ answer.content }}</div>
+                                            </label>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <div class="slide">
+                            <button id="finish-quiz" class="btn btn-id">Terminer</button>
+                        </div>
+                        <div class="slide">
+                            <h1 class="resultat"></h1>
+                            <button id="quit-quiz" class="btn btn-primary">Quitter</button>
+                        </div>
+                        <div class="slide" data-role="loader" data-id="loader">
+                            <div class="bounce-out-on-half headline">Please wait!</div>
+                            <div class="sub-headline">I will calculate your yearly sun hours.</div>
+                            <!--  -->
+                            <div class="finish show-on-half" style="display:none">
+                                <div class="text">Yay, it worked!</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="loading progressbar-wrapper">
+                <div class="progress-text">0%</div>
+                <div class="progress-bar">
+                    <div class="progress" style="width:0"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>

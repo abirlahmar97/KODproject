@@ -79,7 +79,7 @@ class Product
     /**
      * @var string
      *
-     * @ORM\Column(name="gender", type="string", length=100)
+     * @ORM\Column(name="gender", type="integer")
      */
     private $gender;
 
@@ -89,7 +89,6 @@ class Product
      * @ORM\Column(name="age", type="integer")
      */
     private $age;
-
     /**
      * @var integer
      *

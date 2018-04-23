@@ -1,0 +1,26 @@
+{% for category in categories %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="formPanel panel panel-default">
+                {% set color = random(5) + 1  %}
+                <div class="panel-heading bg-color-{{ color }}">
+                    <h3 class="panel-title">{{ category.name }}</h3>
+                </div>
+                <div class="panel-body" style="padding: 50px">
+                    {% for row in quizes | batch(4) %}
+                        <div class="row quizes-rows">
+                            {% for quiz in row %}
+                                {% if quiz.category.id == category.id %}
+                                    <div class="col-md-3">
+                                        <button class="quiz-btn btn btn-success" data-id="{{ quiz.id }}">{{ quiz.name }}</button>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+

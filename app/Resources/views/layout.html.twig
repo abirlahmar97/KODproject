@@ -94,8 +94,6 @@
                             </li>
                         </ul>
                     </div>
-
-
                     <div class="col-sm-5">
                         <ul class="list-inline functionList">
                             <li class="LanguageList">
@@ -113,15 +111,17 @@
                                         {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
                                     </a>
                                 </li>
-                                <li class="cart-dropdown">
-                                        {{ render(controller('ShopBundle:Cart:dropdown')) }}
-                                </li>
                             {% else %}
                                 <li>
                                     <i class="fa fa-sign-in bg-color-5" aria-hidden="true"></i>
                                     <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
                                 </li>
                             {% endif %}
+
+
+                            <li class="cart-dropdown">
+                                {{ render(controller('ShopBundle:Cart:dropdown')) }}
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -259,15 +259,15 @@
     <script src="{{ asset('plugins/jquery-ui/jquery-ui.js') }}"></script>
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('plugins/selectbox/jquery.selectbox-0.1.3.min.js') }}"></script>
-    <script src="{{ asset('plugins/isotope/isotope.min.js')}}"></script>
-    <script src="{{ asset('plugins/isotope/jquery.fancybox.pack.js')}}"></script>
-    <script src="{{ asset('plugins/isotope/isotope-triger.js')}}"></script>
-    <script src="{{ asset('plugins/countdown/jquery.syotimer.js' )}}"></script>
-    <script src="{{ asset('plugins/velocity/velocity.min.js')}}"></script>
-    <script src="{{ asset('plugins/smoothscroll/SmoothScroll.js')}}"></script>
+    {#<script src="{{ asset('plugins/isotope/isotope.min.js')}}"></script>#}
+    {#<script src="{{ asset('plugins/isotope/jquery.fancybox.pack.js')}}"></script>#}
+    {#<script src="{{ asset('plugins/isotope/isotope-triger.js')}}"></script>#}
+    {#<script src="{{ asset('plugins/countdown/jquery.syotimer.js' )}}"></script>#}
+    {#<script src="{{ asset('plugins/velocity/velocity.min.js')}}"></script>#}
+    {#<script src="{{ asset('plugins/smoothscroll/SmoothScroll.js')}}"></script>#}
     <script src="{{ asset('js/custom.js') }}"></script>
     <script src="{{ asset('js/script.js') }}"></script>
-    <script src="{{ asset('options/optionswitcher.js')}}"></script>
+    {#<script src="{{ asset('options/optionswitcher.js')}}"></script>#}
     <script src="{{ asset('plugins/menu/menu.min.js') }}"></script>
 {% endblock %}
 </body>

@@ -1,6 +1,18 @@
-child_homepage:
-    path:     /child
-    defaults: { _controller: ChildBundle:Child:index }
+kid_space:
+    path:     /parent/kid/space/{id}
+    defaults: { _controller: ChildBundle:Child:space }
+
+kid_activity:
+    path:   /parent/kid/activity/{id}
+    defaults: { _controller: ChildBundle:Child:activity }
+
+kids_add:
+    path:     /parent/kids/add
+    defaults: { _controller: ChildBundle:Parent:addKid }
+
+kids_list:
+    path:     /parent/kids
+    defaults: { _controller: ChildBundle:Parent:listKids }
 
 games_list:
     path:     /admin/games/list
@@ -10,13 +22,76 @@ games_add:
     path:     /admin/games/add
     defaults: { _controller: ChildBundle:Admin:addGames }
 
-kids_add:
-    path:     /parent/kids/add
-    defaults: { _controller: ChildBundle:Parent:addKid }
+games_edit:
+    path:     /admin/games/edit/{id}
+    defaults: { _controller: ChildBundle:Admin:editGames }
 
-kids_list:
-    path:     /parent/kids
-    defaults: { _controller: ChildBundle:Parent:listKids }
+games_add_blk:
+    path:     /games/bulk
+    defaults: { _controller: ChildBundle:Game:bulkAdd }
+
+save_activity:
+    path:   /parent/kid/save/{activity}
+    defaults: { _controller: ChildBundle:Child:saveActivity }
+    methods : POST
+
+recent_games:
+    path:   /games/recent/{id}
+    defaults: { _controller: ChildBundle:Game:recentGames }
+    methods : GET
+
+related_games:
+    path:   /games/related
+    defaults: { _controller: ChildBundle:Game:relatedGames }
+    methods : GET
+
+cartoon_add:
+    path:     /admin/cartoon/add
+    defaults: { _controller: ChildBundle:Admin:addCartoon }
+
+cartoon_list:
+    path:     /admin/cartoon/list
+    defaults: { _controller: ChildBundle:Admin:listCartoon }
+
+episodes_add:
+    path:     /admin/episodes/cartoon/{id}/add
+    defaults: { _controller: ChildBundle:Admin:addEpisodes }
+
+episodes_list:
+    path:     /episodes/cartoon/{id}
+    defaults: { _controller: ChildBundle:Cartoon:listEpisodes }
+
+episodes_watch:
+    path:     /episodes/{id}
+    defaults: { _controller: ChildBundle:Cartoon:episodeWatch, id : 1 }
+
+quizes_add:
+    path:     /admin/quiz/add
+    defaults: { _controller: ChildBundle:Quizes:addQuiz }
+
+quizes_list:
+    path:     /admin/quiz/list
+    defaults: { _controller: ChildBundle:Quizes:listQuizes }
+
+questions_add:
+    path:     /admin/questions/quiz/{id}/add
+    defaults: { _controller: ChildBundle:Quizes:addQuestions }
+
+questions_list:
+    path:     /questions/quiz/{id}
+    defaults: { _controller: ChildBundle:Quizes:listQuestions }
+
+answer_quiz:
+    path:   /parent/quiz/answer/{id}
+    defaults: { _controller: ChildBundle:Quizes:answerQuiz }
+
+show_quiz:
+    path:   /parent/quiz/show
+    defaults: { _controller: ChildBundle:Quizes:showQuiz }
+
+block_game:
+    path:   /parent/block?child:{cid},game:{gid}
+    defaults: { _controller: ChildBundle:Game:blockGame }
 
 #games_del:
 #    path:     /games/del/{id}

@@ -3,6 +3,7 @@
 namespace MediaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Music
@@ -12,6 +13,13 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Music
 {
+
+    /**
+     * @ORM\ManyToOne(targetEntity="MediaBundle\Entity\Photo", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $photo;
+
     /**
      * @var int
      *
@@ -31,9 +39,9 @@ class Music
     /**
      * @var string
      *
-     * @ORM\Column(name="src", type="string", length=255)
+     * @ORM\Column(name="singer", type="string", length=255)
      */
-    private $src;
+    private $singer;
 
     /**
      * @var \DateTime
@@ -42,6 +50,19 @@ class Music
      */
     private $duration;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="url", type="string", length=255)
+     */
+    private $url;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="alt", type="string", length=255)
+     */
+    private $alt;
 
     /**
      * Get id
@@ -51,6 +72,16 @@ class Music
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
     }
 
     /**
@@ -68,37 +99,13 @@ class Music
     }
 
     /**
-     * Get src
+     * Get url
      *
      * @return string
      */
-    public function getSrc()
+    public function getUrl()
     {
         return $this->title;
-    }
-
-    /**
-     * Set src
-     *
-     * @param string $src
-     *
-     * @return Music
-     */
-    public function setSrc($src)
-    {
-        $this->src = $src;
-
-        return $this;
-    }
-
-    /**
-     * Get title
-     *
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->src;
     }
 
     /**
@@ -124,5 +131,127 @@ class Music
     {
         return $this->duration;
     }
-}
 
+    /**
+     * Get alt
+     *
+     * @return string
+     */
+    public function getAlt()
+    {
+        return $this->alt;
+    }
+
+    /**
+     * @var UploadedFile
+     */
+
+    private $file;
+
+    private $tempFilename;
+
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    public function setFile(UploadedFile $file)
+    {
+        $this->file = $file;
+//        if ($this->url !== null) {
+//            $this->tempFilename = $this->url;
+//            $this->url = null;
+//            $this->alt = null;
+//        }
+    }
+
+
+    public function upload()
+    {
+        if (null === $this->file) {
+            return;
+        }
+        $name = $this->file->getClientOriginalName();
+        $this->file->move($this->getUploadRootDir(), str_replace(' ', '', $this->title) . '.mp3');
+        $this->url = $name;
+        $this->alt = $name;
+    }
+
+    public function getUploadDir()
+    {
+        return 'uploads/music';
+    }
+
+    protected function getUploadRootDir()
+    {
+        return __DIR__ . '/../../../web/'.$this->getUploadDir();
+    }
+
+    public function getWebPath()
+    {
+        return $this->getUploadDir().'/'.$this->getId().'.'.$this->getUrl();
+    }
+
+
+    /**
+     * Set singer
+     *
+     * @param string $singer
+     *
+     * @return Music
+     */
+    public function setSinger($singer)
+    {
+        $this->singer = $singer;
+
+        return $this;
+    }
+
+    /**
+     * Get singer
+     *
+     * @return string
+     */
+    public function getSinger()
+    {
+        return $this->singer;
+    }
+
+    /**
+     * Set alt
+     *
+     * @param string $alt
+     *
+     * @return Music
+     */
+    public function setAlt($alt)
+    {
+        $this->alt = $alt;
+
+        return $this;
+    }
+
+    /**
+     * Set photo
+     *
+     * @param \MediaBundle\Entity\Photo $photo
+     *
+     * @return Music
+     */
+    public function setPhoto(\MediaBundle\Entity\Photo $photo = null)
+    {
+        $this->photo = $photo;
+
+        return $this;
+    }
+
+    /**
+     * Get photo
+     *
+     * @return \MediaBundle\Entity\Photo
+     */
+    public function getPhoto()
+    {
+        return $this->photo;
+    }
+}

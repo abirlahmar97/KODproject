@@ -3,32 +3,57 @@
 {% block main %}
     <section class="mainContent full-width clearfix coursesSection">
         <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-right" style="padding-bottom: 50px ;">
+                    <a href="{{ path('kids_add') }}" class="btn btn-success">Nouvel espace</a>
+                </div>
+            </div>
             {% for row in kids | batch(2) %}
             <div class="row">
                 {% for kid in row %}
                 <div class="col-sm-6 col-xs-12 block">
+                    {% if kid.gender == 1 %}
                     <div class="media eventContent bg-color-4">
-                        <a class="media-left" href="single-event-left-sidebar.html">
-                            <img height="268" alt="Image" src="{{ asset(kid.photo.webPath) }}">
-                        </a>
-                        <div class="media-body">
-                            <h3 class="media-heading"><a href="single-event-left-sidebar.html">{{ kid.name }}</a></h3>
-                            <ul class="list-unstyled">
-                                <li><i class="fa fa-calendar-o" aria-hidden="true"></i>{{ kid.age }} ans</li>
-                                <li><i class="fa fa-clock-o" aria-hidden="true"></i>2 Heures restants pour aujourd'hui</li>
-                            </ul>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor </p>
-                            <ul class="list-inline btn-yellow">
-                                <li><a class="btn btn-primary" href="single-event-left-sidebar.html">Voir plus</a></li>
-                                <li><a class="btn btn-primary" href="{{ path('child_homepage') }}">Son espace</a></li>
-                            </ul>
+                        {% else %}
+                        <div class="media eventContent bg-color-6">
+                            {% endif %}
+                            <a class="media-left" href="single-event-left-sidebar.html">
+                                <img height="268" alt="Image" src="{{ asset(kid.photo.webPath) }}">
+                            </a>
+                            <div class="media-body">
+                                <h3 class="media-heading">{{ kid.name }}</h3>
+                                <ul class="list-unstyled">
+                                    <li><i class="fa fa-calendar-o" aria-hidden="true"></i>{{ kid.age }} ans</li>
+                                    <li><i class="fa fa-clock-o" aria-hidden="true"></i>2 Heures restants pour aujourd'hui</li>
+                                </ul>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor </p>
+                                <ul class="list-inline btn-yellow">
+                                    <li><a class="btn btn-primary" href="{{ path('kid_activity', { 'id' : kid.id }) }}">Activité</a></li>
+                                    <li><a class="btn btn-primary space-open" data-child="{{ kid.id }}" href="{{ path('kid_space', { 'id' : kid.id }) }}">Son espace</a></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
+                    {% endfor %}
                 </div>
                 {% endfor %}
             </div>
-            {% endfor %}
         </div>
     </section>
 {% endblock %}
 
+
+{% block javascripts %}
+
+    {{ parent() }}
+    <script>
+        $(function () {
+            $('.space-open').click(function (e) {
+                e.preventDefault();
+                localStorage.setItem('child', '' + $(this).attr('data-child'));
+                window.location.href = $(this).attr('href');
+            });
+        })
+    </script>
+
+{% endblock %}

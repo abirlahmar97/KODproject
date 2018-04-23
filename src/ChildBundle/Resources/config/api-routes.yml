@@ -1,0 +1,123 @@
+##kid_space:
+##    path:     /parent/kid/space/{id}
+##    defaults: { _controller: ChildBundle:Child:space }
+##
+##kid_activity:
+##    path:   /parent/kid/activity/{id}
+##    defaults: { _controller: ChildBundle:Child:activity }
+##
+#
+api_kids_list:
+    path:     /parent/kids
+    defaults: { _controller: ChildBundle:Parent:listKidsAPI }
+    methods : GET
+#kids_add:
+#    path:     /parent/kids/add
+#    defaults: { _controller: ChildBundle:Parent:addKid }
+#    methods : POST
+#
+#games_list:
+#    path:     /admin/games/list
+#    defaults: { _controller: ChildBundle:Admin:listGames }
+#    methods : GET
+#
+#games_add:
+#    path:     /admin/games/add
+#    defaults: { _controller: ChildBundle:Admin:addGames }
+#    methods : POST
+#
+#games_edit:
+#    path:     /admin/games/edit/{id}
+#    defaults: { _controller: ChildBundle:Admin:editGames }
+#    methods : PUT
+##
+##games_add_blk:
+##    path:     /games/bulk
+##    defaults: { _controller: ChildBundle:Game:bulkAdd }
+#
+#save_game:
+#    path:   /parent/kid/save
+#    defaults: { _controller: ChildBundle:Child:saveGame }
+#    methods : POST
+#
+#recent_games:
+#    path:   /games/recent/{id}
+#    defaults: { _controller: ChildBundle:Game:recentGames }
+#    methods : GET
+#
+#related_games:
+#    path:   /games/related
+#    defaults: { _controller: ChildBundle:Game:relatedGames }
+#    methods : GET
+#
+#cartoon_add:
+#    path:     /admin/cartoon/add
+#    defaults: { _controller: ChildBundle:Admin:addCartoon }
+#
+#cartoon_list:
+#    path:     /admin/cartoon/list
+#    defaults: { _controller: ChildBundle:Admin:listCartoon }
+#
+#episodes_add:
+#    path:     /admin/episodes/cartoon/{id}/add
+#    defaults: { _controller: ChildBundle:Admin:addEpisodes }
+#
+#episodes_list:
+#    path:     /episodes/cartoon/{id}
+#    defaults: { _controller: ChildBundle:Cartoon:listEpisodes }
+#
+#episodes_watch:
+#    path:     /episodes/{id}
+#    defaults: { _controller: ChildBundle:Cartoon:episodeWatch, id : 1 }
+#
+#quizes_add:
+#    path:     /admin/quiz/add
+#    defaults: { _controller: ChildBundle:Quizes:addQuiz }
+#
+#quizes_list:
+#    path:     /admin/quiz/list
+#    defaults: { _controller: ChildBundle:Quizes:listQuizes }
+#
+#questions_add:
+#    path:     /admin/questions/quiz/{id}/add
+#    defaults: { _controller: ChildBundle:Quizes:addQuestions }
+#
+#questions_list:
+#    path:     /questions/quiz/{id}
+#    defaults: { _controller: ChildBundle:Quizes:listQuestions }
+#
+#answer_quiz:
+#    path:   /parent/quiz/answer/{id}
+#    defaults: { _controller: ChildBundle:Quizes:answerQuiz }
+#
+#show_quiz:
+#    path:   /parent/quiz/show
+#    defaults: { _controller: ChildBundle:Quizes:showQuiz }
+#
+#block_game:
+#    path:   /parent/block?child:{cid},game:{gid}
+#    defaults: { _controller: ChildBundle:Game:blockGame }
+#
+##games_del:
+##    path:     /games/del/{id}
+##    defaults: { _controller: UserBundle:Admin:deleteUser }
+##    requirements :
+##        id : /d{1,5}
+##
+##games_disable:
+##    path:     /games/del/{id}
+##    defaults: { _controller: UserBundle:Admin:disableUser }
+##    requirements :
+##        id : /d{1,5}
+##
+##games_blk_delete:
+##    path:     /games/del
+##    defaults: { _controller: UserBundle:Admin:deleteUsersBulk }
+##
+##games_blk_disable:
+##    path:     /games/disable
+##    defaults: { _controller: UserBundle:Admin:disableUsersBulk }
+##
+##games_blk_enable:
+##    path:     /games/enable
+##    defaults: { _controller: UserBundle:Admin:enableUsersBulk }

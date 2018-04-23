@@ -1,6 +1,6 @@
 <?php
 
-namespace parentiingBundle\Form;
+namespace ParentingBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -22,7 +22,7 @@ class SubjectType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'parentiingBundle\Entity\Subject'
+            'data_class' => 'ParentingBundle\Entity\Subject'
         ));
     }
 
@@ -31,7 +31,7 @@ class SubjectType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'parentiingbundle_subject';
+        return 'parentingbundle_subject';
     }
 
 

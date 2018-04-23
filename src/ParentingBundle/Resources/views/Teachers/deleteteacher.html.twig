@@ -1,0 +1,57 @@
+{% extends 'back-layout.html.twig' %}
+
+{% block kd_body %}
+
+    <h>teachers</h>
+
+{% endblock %}
+
+{% block main %}
+    <section class="mainContent full-width clearfix">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="sectionTitle text-center">
+                        <h2>
+                            <span class="shape shape-left bg-color-4"></span>
+                            <span>liste des prof </span>
+                            <span class="shape shape-right bg-color-4"></span>
+                        </h2>
+                    </div>
+                </div>
+            </div>
+            {% for row in teachers | batch(3)  %}
+                <div class="row">
+                    {% for teacher in row %}
+                        <div class="col-sm-4 col-xs-1">
+                            <div class="teamContent teamAdjust">
+                                <div class="teamImage">
+                                    <img src="{{ asset(teacher.photo.webpath)}}" class="img-thumbnail img-responsive">
+                                    <div class="maskingContent">
+                                        <ul class="list-inline">
+                                            <li></li><li></li><li></li><li></li><li></li><li></li>
+                                            <li><button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Tooltip on top"><a href="{{ path('delete_prof',{'id':teacher.id}) }}">delete</a></button></button>
+                                            </li>
+                                            <li></li><li></li><li></li><li></li><li></li>
+                                            <li><button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Tooltip on top"> <a href="{{ path('update_teacher',{'id':teacher.id}) }}">update</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="teamInfo teamTeacher">
+
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+{% endblock %}
