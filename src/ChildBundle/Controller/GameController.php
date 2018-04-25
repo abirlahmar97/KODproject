@@ -16,7 +16,6 @@ class GameController extends Controller
         foreach ($games as $game){
             $newGame = new Game();
             $newGame->setName($game->title);
-//            $newGame->setIcon($game->thumbnailUrl);
             $category = $em->getRepository("ShopBundle:Category")
                 ->findOneBy(['name' => 'Any']);
             $newGame->setCategory($category);
@@ -28,6 +27,13 @@ class GameController extends Controller
         }
         $em->flush();
         return new Response();
+    }
+
+    public function listGamesAPIAction()
+    {
+        $games = $this->getDoctrine()->getRepository("ChildBundle:Game")->findBy([], null,20);
+        $data = $this->get("jms_serializer")->serialize($games, "json");
+        return new Response($data);
     }
 
     public function recentGamesAction(Request $request){

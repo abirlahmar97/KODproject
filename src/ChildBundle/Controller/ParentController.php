@@ -15,15 +15,6 @@ class ParentController extends Controller
         return $this->render('', array('name' => $name));
     }
 
-    public function listKidsAPIAction()
-    {
-        $kids = $this->getDoctrine()->getRepository("ChildBundle:Child")
-            ->findMyKids(10);
-
-        $data = $this->get('jms_serializer')->serialize($kids, 'json');
-        return new Response($data);
-    }
-
     public function addKidAction(Request $request)
     {
         $child = new Child();
@@ -47,6 +38,15 @@ class ParentController extends Controller
         return $this->render('ChildBundle:Parent:kids.html.twig', [
             'kids' => $kids
         ]);
+    }
+
+    public function listKidsApiAction()
+    {
+        $kids = $this->getDoctrine()->getRepository("ChildBundle:Child")
+            ->findMyKids($this->getUser());
+
+        $data = $this->get("jms_serializer")->serialize($kids, 'json');
+        return new Response($data);
     }
 
 }

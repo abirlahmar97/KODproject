@@ -3,7 +3,6 @@
 namespace ChildBundle\Controller;
 
 use ChildBundle\Entity\ChildGame;
-//use ChildBundle\Entity\ChildMusic;
 use ChildBundle\Entity\ChildVideo;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;

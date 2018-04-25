@@ -7,9 +7,14 @@
 ##    defaults: { _controller: ChildBundle:Child:activity }
 ##
 #
+
 api_kids_list:
     path:     /parent/kids
-    defaults: { _controller: ChildBundle:Parent:listKidsAPI }
+    defaults: { _controller: ChildBundle:Parent:listKidsApi }
+
+api_games_list:
+    path:     /games
+    defaults: { _controller: ChildBundle:Game:listGamesAPI }
     methods : GET
 #kids_add:
 #    path:     /parent/kids/add

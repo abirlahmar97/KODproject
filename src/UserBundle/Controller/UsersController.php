@@ -3,6 +3,7 @@
 namespace UserBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
 class UsersController extends Controller
 {
@@ -14,5 +15,12 @@ class UsersController extends Controller
         return $this->render('UserBundle:Home:bill.html.twig', array(
             'orders' => $orders
         ));
+    }
+
+    public function getUser()
+    {
+        $user = $this->get("jms_serializer")->serialize($this->getUser(), 'json');
+        return new Response(^$user)
+
     }
 }
