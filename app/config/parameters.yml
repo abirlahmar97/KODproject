@@ -1,0 +1,17 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_host: 127.0.0.1
+    database_port: 3306
+    database_name: kidz
+    database_user: root
+    database_password: null
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: admin@kidz.tn
+    mailer_password: admin
+    secret: ThisTokenIsNotSoSecretChangeIt
+
+    jwt_private_key_path: '%kernel.root_dir%/../var/keys/private.pem'
+    jwt_public_key_path: '%kernel.root_dir%/../var/keys/public.pem'
+    jwt_key_pass_phrase: kodteam
+    jwt_token_ttl: 3600
