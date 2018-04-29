@@ -1,0 +1,92 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %} Modifier l'évènement n°{% endblock %}
+
+{% block main %}
+    <center><h1></h1>
+        <fieldset style="width: 50%">
+            {{ form_start(form) }}
+            {{ form_errors(form) }}
+            <div class="form-group row">
+                <div class="col-sm-2 control-label">
+                    {{ form_label(form.photo, 'photo') }}
+                </div>
+                <div class="col-sm-10">
+                    {{ form_widget(form.photo) }}
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-2 control-label">
+                    {{ form_label(form.type, 'type:') }}
+                </div>
+                <div class="col-sm-10">
+                    {{ form_widget(form.type, { 'attr' : { 'class' : 'form-control' } }) }}
+                </div>
+            </div>
+
+
+            <div class="form-group row">
+                <div class="col-sm-2 control-label">
+                    {{ form_label(form.location, 'Adresse:') }}
+                </div>
+                <div class="col-sm-10">
+                    {{ form_widget(form.location, { 'attr' : { 'class' : 'form-control' } }) }}
+                </div>
+            </div>
+
+
+            <div class="form-group row">
+                <div class="col-sm-2 control-label">
+                    {{ form_label(form.subject, 'description:') }}
+                </div>
+                <div class="col-sm-10">
+                    {{ form_widget(form.subject, { 'attr' : { 'class' : 'form-control' } }) }}
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-2 control-label">
+                    {{ form_label(form.age, 'age:') }}
+                </div>
+                <div class="col-sm-10">
+                    {{ form_widget(form.age, { 'attr' : { 'class' : 'form-control' } }) }}
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-2 control-label">
+                    {{ form_label(form.availablePlaces, 'places disponibles:') }}
+                </div>
+                <div class="col-sm-10">
+                    {{ form_widget(form.availablePlaces, { 'attr' : { 'class' : 'form-control' } }) }}
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-2 control-label">
+                    {{ form_label(form.startDate, 'de:') }}
+                </div>
+                <div class="col-sm-10">
+                    {{ form_widget(form.startDate) }}
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-2 control-label">
+                    {{ form_label(form.endDate, 'à:') }}
+                </div>
+                <div class="col-sm-10">
+                    {{ form_widget(form.endDate) }}
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-2 control-label">
+                    <input type="submit" value="ajouter" class="form-control">
+                </div>
+            </div>
+
+            {{ form_end(form) }}
+        </fieldset>
+    </center>
+{% endblock %}
+

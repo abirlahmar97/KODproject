@@ -1,0 +1,4 @@
+api_add_event:
+    path:     /events/add
+    defaults: { _controller: EventsBundle:Events:createEventApi }
+    methods: POST

@@ -34,4 +34,8 @@ bills:
     path: /profile/bills
     defaults: { _controller: UserBundle:Users:bills }
 
+api_user_get:
+    path: /api/user/get
+    defaults : { _controller: UserBundle:Users:getUser }
+
 

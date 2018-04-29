@@ -26,10 +26,9 @@
                 <span>éducation</span>
             </a>
             <ul class="dropdown-menu dropdown-menu-left">
-                <li><a href="{{ path('read_teachers') }}">PROF</a></li>
-                {#<li><a href=" {{ path('map') }}">Ecole</a></li>#}
-                {#<li><a href="{{ path('quiz_list') }}" >QUIZ</a></li>#}
-                <li><a href="{{ path('video_read') }}">Video</a></li>
+                <li><a href="{{ path('read_teachers') }}">Enseignants</a></li>
+                <li><a href=" {{ path('map') }}">Ecoles</a></li>
+                <li><a href="{{ path('video_read') }}">Videos</a></li>
             </ul>
         </li>
         <li class="dropdown singleDrop color-5">
@@ -38,6 +37,8 @@
                 <span>Evenements</span>
             </a>
             <ul class="dropdown-menu dropdown-menu-left">
+                <li><a href="{{ path('events_list') }}">Evenements</a></li>
+                <li><a href=" {{ path('map') }}">Ecoles</a></li>
             </ul>
         </li>
         <li class="dropdown singleDrop color-4">

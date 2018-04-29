@@ -10,6 +10,10 @@ events:
     resource: "@EventsBundle/Resources/config/routing.yml"
     prefix:   /
 
+api_events:
+    resource: "@EventsBundle/Resources/config/api-routes.yml"
+    prefix:   /api
+
 child:
     resource: "@ChildBundle/Resources/config/routing.yml"
     prefix:   /

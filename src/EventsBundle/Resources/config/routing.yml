@@ -1,3 +1,32 @@
-events_homepage:
-    path:     /
-    defaults: { _controller: EventsBundle:Default:index }
+add_event:
+    path:     /admin/events/add
+    defaults: { _controller: EventsBundle:Events:createEvent }
+
+
+delete_event:
+    path:     /events/delete/{id}
+    defaults: { _controller: EventsBundle:Events:deleteEvent }
+
+
+events_list:
+    path:     /parent/events/list
+    defaults: { _controller: EventsBundle:Events:list }
+
+
+update_event:
+    path:     /admin/events/update/{id}
+    defaults: { _controller: EventsBundle:Events:updateEvent }
+
+
+reservation:
+    path:   /parent/reservation
+    defaults: { _controller: EventsBundle:Events:Reserv}
+
+
+event_details:
+    path:    /events/details/{id}
+    defaults: { _controller: EventsBundle:Events:details }
+
+stat_event:
+    path:    /stat/event
+    defaults: { _controller: EventsBundle:Events:stat }

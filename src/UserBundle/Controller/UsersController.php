@@ -17,10 +17,9 @@ class UsersController extends Controller
         ));
     }
 
-    public function getUser()
+    public function getUserAction()
     {
         $user = $this->get("jms_serializer")->serialize($this->getUser(), 'json');
-        return new Response(^$user)
-
+        return new Response($user);
     }
 }
