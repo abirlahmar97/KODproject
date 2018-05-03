@@ -16,6 +16,12 @@ class CategoryRepository extends \Doctrine\ORM\EntityRepository
             ->where("c.type='Article'");
         return $q->getQuery()->getResult();
     }
+    public function findComplaint()
+    {
+        $q=$this->createQueryBuilder('c')
+            ->where("c.type='Complaint'");
+        return $q->getQuery()->getResult();
+    }
 
     public function findTypeProduct(){
         $q=$this->createQueryBuilder('c')
