@@ -3,6 +3,7 @@
 namespace ParentingBundle\Controller;
 
 use CMEN\GoogleChartsBundle\GoogleCharts\Charts\BarChart;
+use GuzzleHttp\Message\Response;
 use ParentingBundle\Entity\Article;
 use ParentingBundle\Entity\Rating;
 use ParentingBundle\Form\ArticleType;
@@ -87,13 +88,21 @@ class ArticleController extends Controller
         ));
     }
 
-    public function moreAction($id)
+    public function frontReadApiAction()
+    {
+        $em= $this->getDoctrine()->getManager();
+        $articles=$em->getRepository("ParentingBundle:Article")->findAll();
+        $data= $this->get("jms_serializer")->serialize($articles,'json');
+        return new \Symfony\Component\HttpFoundation\Response($data);
+
+    }
+
+
+    public function moreApiAction($id)
     {
         $em= $this->getDoctrine()->getManager();
         $article=$em->getRepository("ParentingBundle:Article")->find($id);
-        $rating= new Rating();
-        $rating->setParent($this->getUser());
-        $rating->setArticle($article);
+
         //incrémenter le nombre de vues
         $article->setViews($article->getViews()+1);
         $em->persist($article);
@@ -102,11 +111,10 @@ class ArticleController extends Controller
         $max=$em->getRepository('ParentingBundle:Article')->findPlusVu();
         //Afficher les catégories d'articles disponibles
         $categories=$em->getRepository("ShopBundle:Category")->findBy(['type' => 'Articles']);
-        return $this->render('@Parenting/Article/more.html.twig', array(
-            "article" => $article,
-            "categories"=>$categories,
-            'max'=>$max
-        ));
+        $data= $this->get("jms_serializer")->serialize($article,'json');
+
+        return new \Symfony\Component\HttpFoundation\Response($data);
+
 
     }
 

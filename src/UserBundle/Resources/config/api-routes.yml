@@ -1,0 +1,24 @@
+api_complaint:
+    path:     /Complaint/read
+    defaults: { _controller: UserBundle:Complaint:api_read }
+api_create_complaint:
+    path:     /Parent/Complaint/create
+    defaults: { _controller: UserBundle:Complaint:api_create }
+api_complaint_categories:
+    path:     /complaint/category
+    defaults: { _controller: UserBundle:Complaint:api_category }
+api_complaint_notifications:
+    path:     /complaint/notification
+    defaults: { _controller: UserBundle:Notification:api_complaint_notification }
+api_notification:
+    path:     /Notification/update
+    defaults: { _controller: UserBundle:Notification:api_update }
+api_delete_notification:
+    path:     /Notification/delete/{id}
+    defaults: { _controller: UserBundle:Notification:api_delete }
+
+
+
+
+
+
