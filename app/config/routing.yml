@@ -10,6 +10,13 @@ events:
     resource: "@EventsBundle/Resources/config/routing.yml"
     prefix:   /
 
+api_articles:
+    resource: "@ParentingBundle/Resources/config/api-routes-mariem.yml"
+    prefix:   /api
+api_complaints:
+    resource: "@UserBundle/Resources/config/api-routes.yml"
+    prefix:   /api
+
 api_events:
     resource: "@EventsBundle/Resources/config/api-routes.yml"
     prefix:   /api
