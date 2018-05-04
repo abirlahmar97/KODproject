@@ -34,25 +34,24 @@ class EventsController extends Controller
         ));
     }
 
-    public function createEventApiAction(Request $request)
+    public function createApiEventAction(Request $request)
     {
-        $event = $this->get("jms_serializer")->deserialize(
-            $request->getContent(), "EventsBundle\Entity\Event", "json");
-        dump($event);
-//        $form = $this->createForm(EventType::class, $event);
-//        if ($request->getMethod() == 'POST' && $form->isValid()) {
-//
-//            $em = $this->getDoctrine()->getManager();
-//            $event = $form->getData();
-//            $user = $this->getDoctrine()->getRepository('UserBundle:User')->find($this->getUser()->getId());
-//            $event->setUser($user);
-//            $em->persist($event);
-//            $em->flush();
-//            return $this->redirectToRoute('add_event');
-//        }
-//        $data = $this->get("jms_serializer")->serialize($event, 'json');
-        return new Response();
+        $event = new Event();
+        $form = $this->createForm(EventType::class, $event);
+        $form = $form->handleRequest($request);
+        if ($request->getMethod() == 'POST' && $form->isValid()) {
 
+            $em = $this->getDoctrine()->getManager();
+            $event = $form->getData();
+            $user = $this->getDoctrine()->getRepository('UserBundle:User')->find($this->getUser()->getId());
+            $event->setUser($user);
+            $em->persist($event);
+            $em->flush();
+            return $this->redirectToRoute('add_event');
+        }
+        $data = $this->get("jms_serializer")->serialize($event, "json");
+        return new Response($data);
+        ;
     }
 
     public function ReservAction(Request $request)
@@ -74,6 +73,28 @@ class EventsController extends Controller
         return $this->redirectToRoute('events_list');
     }
 
+    public function ReservActionApi(Request $request)
+    {
+        $eid= $request->get("id");
+        $places = $request->get("places");
+
+        $em = $this->getDoctrine()->getManager();
+
+        $event = $em->getRepository("EventsBundle:Event")->find($eid);
+        $event->setPlaces($event->getPlaces() + $places);
+        $event->setLeftPlaces($event->getLeftPlaces() - $places);
+        $resv = new Reservation();
+        dump($places);
+        $resv->setEvent($event);
+        $resv->setParticipants($places);
+        $resv->setUser($this->getUser());
+        $em->persist($resv);
+        $em->persist($event);
+        $em->flush();
+        return new Response();
+    }
+
+
     public function deleteEventAction($id)
     {
         $em = $this->getDoctrine()->getManager();
@@ -82,6 +103,18 @@ class EventsController extends Controller
         $em->flush();
         return $this->redirectToRoute("events_list");
     }
+
+    public function deleteApiEventAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $event = $em->getRepository("EventsBundle:Event")->find($id);
+        $em->remove($event);
+        $em->flush();
+        $data = $this->get("jms_serializer")->serialize($event, "json");
+        return new Response($data);
+
+    }
+
 
     public function updateEventAction(Request $request, $id)
     {
@@ -100,6 +133,21 @@ class EventsController extends Controller
         ));
     }
 
+    public function updateApiEventAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $event = $em->getRepository("EventsBundle:Event")->find($id);
+        $form = $this->createForm(EventType::class, $event);
+        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+            $em->persist($event);
+            $em->flush();
+            return $this->redirectToRoute('events_list');
+
+        }
+        $data = $this->get("jms_serializer")->serialize($event, "json");
+        return new Response($data);
+        ;
+    }
     public function listAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
@@ -114,6 +162,21 @@ class EventsController extends Controller
         ));
     }
 
+    public function listApiAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $event = $em->getRepository(Event::class)->findAll();
+        $data = $this->get("jms_serializer")->serialize($event, "json");
+        return new Response($data);
+    }
+
+    public function readmoreApiAction($id)
+    {
+        $event = $this->getDoctrine()->getRepository("EventsBundle:Event")->find($id);
+        $data = $this->get("jms_serializer")->serialize($event, "json");
+        return new Response($data);
+    }
+
     public function detailsAction($id)
     {
         $em = $this->getDoctrine()->getManager();
@@ -121,6 +184,15 @@ class EventsController extends Controller
         return $this->render('EventsBundle:Event:details.html.twig', array(
             'event' => $parent
         ));
+    }
+
+    public function detailsApiAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $parent = $em->getRepository("EventsBundle:Event")->find($id);
+        $data = $this->get("jms_serializer")->serialize($parent, "json");
+        return new Response($data);
+        ;
     }
 
     public function statAction()

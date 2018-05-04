@@ -1,4 +1,28 @@
+api_list_event:
+    path:     /parent/events/list
+    defaults: { _controller: EventsBundle:Events:listApi }
+
+api_event_details:
+    path:    /events/details/{id}
+    defaults: { _controller: EventsBundle:Events:detailsApi }
+
+api_update_event:
+    path:     /admin/events/update/{id}
+    defaults: { _controller: EventsBundle:Events:updateEventApi }
+
+api_delete_event:
+    path:     /events/delete/{id}
+    defaults: { _controller: EventsBundle:Events:deleteEventApi }
+
 api_add_event:
-    path:     /events/add
+    path:     /admin/events/add
     defaults: { _controller: EventsBundle:Events:createEventApi }
-    methods: POST
+
+api_reserv_event:
+    path:     /parent/events/reserver
+    defaults:  { _controller: EventsBundle:Events:ReservActionApi}
+
+api_read_more:
+    path:     /parent/events/{id}
+    defaults:  { _controller: EventsBundle:Events:readmoreApi }
+
