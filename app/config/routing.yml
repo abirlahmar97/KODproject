@@ -41,6 +41,22 @@ media:
     resource: "@MediaBundle/Resources/config/routing.yml"
     prefix:   /
 
+api_parent_routes :
+    resource: "@ParentingBundle/Resources/config/api-routes.yml"
+    prefix: /api
+
+api_read_videos:
+    resource: "@MediaBundle/Resources/config/api-routes.yml"
+    prefix: /api
+
+api_map:
+    resource: "@ParentingBundle/Resources/config/api-routes.yml"
+    prefix: /api
+
+api_more:
+    resource: "@ParentingBundle/Resources/config/api-routes.yml"
+    prefix: /api
+
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
 

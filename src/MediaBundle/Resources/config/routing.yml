@@ -1,7 +1,7 @@
 video_add:
-    path:     admin/video/add
+    path:     /admin/video/add
     defaults: { _controller: MediaBundle:Video:createvideo}
 
 video_read:
-    path:     video/read
+    path:     /video/read
     defaults: { _controller: MediaBundle:Video:readvid}

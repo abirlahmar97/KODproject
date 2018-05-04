@@ -28,7 +28,9 @@
                                 <div class="slide">
                                 <div class="teamContent">
                                     <div class="teamImage">
+                                        {% if teacher.photo != null %}
                                         <img src="{{ asset(teacher.photo.webpath)}}" class="img-circle img-responsive">
+                                        {% endif %}
                                         <div class="maskingContent">
                                             <ul class="list-inline">
                                                 <li><a href="{{ asset(teacher.linefb)}}"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>

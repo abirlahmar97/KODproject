@@ -5,6 +5,7 @@ namespace MediaBundle\Controller;
 use MediaBundle\Entity\Video;
 use MediaBundle\Form\VideoType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
 class VideoController extends Controller
 {
@@ -31,5 +32,13 @@ class VideoController extends Controller
         return $this->render('@Media/video/readvideo.html.twig', array(
             "videos"=>$videos
         ));
+    }
+
+    public function readvideoapiAction()
+    {
+        $em= $this->getDoctrine()->getManager();
+        $teachers=$em->getRepository("MediaBundle:Video")->findAll();
+        $data=$this->get("jms_serializer")->serialize($teachers,'json');
+        return new Response($data);
     }
 }

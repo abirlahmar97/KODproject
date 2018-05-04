@@ -7,6 +7,7 @@ use ParentingBundle\Form\SchoolType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
@@ -51,7 +52,6 @@ class SchoolController extends Controller
         $school=$em->getRepository('ParentingBundle:School')->findAll();
 
         return $this->render('@Parenting/school/index.html.twig',array('name'=>$name,'school'=>$school));
-
     }
 
     public function RechercheAction(Request $request)
@@ -62,6 +62,14 @@ class SchoolController extends Controller
         return $this->render("ParentingBundle:school:search.html.twig",array(
             'schoolnames' => $schoolname
         ));
+    }
+    public function mapapiAction()
+    {
+        $em=$this->getDoctrine()->getManager();
+
+        $school=$em->getRepository('ParentingBundle:School')->findAll();
+        $data=$this->get("jms_serializer")->serialize($school,'json');
+        return new Response($data);
     }
 
 

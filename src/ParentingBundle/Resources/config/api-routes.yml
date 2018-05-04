@@ -1,0 +1,11 @@
+api_read_teachers:
+    path:     /teachers/read
+    defaults: { _controller: ParentingBundle:Teacher:readteachersapi }
+
+api_more:
+    path:     /more/{id}
+    defaults: { _controller: ParentingBundle:Teacher:moreApiteacher }
+
+api_map:
+    path:     /map
+    defaults: { _controller: ParentingBundle:School:mapapi }

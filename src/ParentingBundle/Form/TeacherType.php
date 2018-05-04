@@ -21,7 +21,7 @@ class TeacherType extends AbstractType
 
          ->add('name')
         ->add('lastname')
-            ->add('subject', EntityType::class, array('class' => 'parentiingBundle\Entity\Subject','choice_label' => 'name', 'multiple' => false))
+            ->add('subject', EntityType::class, array('class' => 'parentingBundle\Entity\Subject','choice_label' => 'name', 'multiple' => false))
             ->add('price')
             ->add('linefb')
             ->add('phone')

@@ -39,6 +39,22 @@ class Video
      */
     private $url;
 
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="titre", type="string",length=50)
+     */
+    private $titre;
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="urlyout", type="string",length=255)
+     */
+    private $urlyout;
+
     /**
      * @var int
      *
@@ -121,6 +137,29 @@ class Video
     }
 
     /**
+     * Set Urlyout
+     *
+     * @param string $Urlyout
+     *
+     * @return Video
+     */
+    public function setUrlyout($Urlyout)
+    {
+        $this->Urlyout = $Urlyout;
+
+        return $this;
+    }
+
+    /**
+     * Get Urlyout
+     *
+     * @return string
+     */
+    public function getUrlyout()
+    {
+        return $this->Urlyout;
+    }
+    /**
      * Set url
      *
      * @param string $url
@@ -175,6 +214,36 @@ class Video
      *
      * @return Video
      */
+
+
+
+
+    ////
+    ///
+    ///
+    /**
+     * Set titre
+     *
+     * @param string $titre
+     *
+     * @return Video
+     */
+    public function settitre($titre)
+    {
+        $this->titre = $titre;
+
+        return $this;
+    }
+
+    /**
+     * Get titre
+     *
+     * @return string
+     */
+    public function gettitre()
+    {
+        return $this->titre;
+    }
     public function setSubject(\ParentingBundle\Entity\Subject $subject = null)
     {
         $this->subject = $subject;

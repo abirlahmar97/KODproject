@@ -1,0 +1,3 @@
+api_read_videos:
+    path:     /video/read
+    defaults: { _controller: MediaBundle:Video:readvideoapi }
