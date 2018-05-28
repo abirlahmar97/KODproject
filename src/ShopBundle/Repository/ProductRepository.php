@@ -31,33 +31,43 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function search($age, $gender, $pmin, $pmax)
+    public function search($category,$age, $gender, $pmin, $pmax)
     {
-        $qb = $this->createQueryBuilder('p');
+        $qb = $this->createQueryBuilder('p')
+            ->leftJoin('p.category', 'c');
         if ($age != 0)
             $qb->where("p.age = :age")
                 ->setParameter("age", $age);
         else
             $qb->where("p.age LIKE :age ")
                 ->setParameter('age', "_");
-        if ($gender != 0)
+        if ($gender != 2)
             $qb->andWhere("p.gender = :gender")
                 ->setParameter("gender", $gender);
         else
             $qb->andWhere("p.gender LIKE :gender")
-                ->setParameter('gender', "%");
+                ->setParameter('gender', "_");
         $qb->andWhere("p.price >= :pmin")
             ->andWhere("p.price <= :pmax")
+            ->andWhere('p.available = 1')
+            ->andWhere('p.quantity > 0')
+            ->andWhere('c.id = :id')
             ->setParameter("pmax", (int)$pmax)
-            ->setParameter("pmin", (int)$pmin);
+            ->setParameter("pmin", (int)$pmin)
+            ->setParameter('id', $category);
         return $qb->getQuery()->getResult();
 
     }
 
-    public function searchProduct($name){
-        $qb = $this->createQueryBuilder('l')
-            ->where('l.name like :name')
-            ->setParameter(':name',"%$name%");
+    public function searchProduct($name, $category){
+        $qb = $this->createQueryBuilder('p')
+            ->leftJoin('p.category', 'c')
+            ->where('p.name like :name')
+            ->setParameter(':name',"%$name%")
+            ->andWhere('p.available = 1')
+            ->andWhere('p.quantity > 0')
+            ->andWhere('c.id = :id')
+            ->setParameter('id', $category);
         return $qb->getQuery()->getResult();
 
     }
@@ -69,5 +79,11 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
         return $qb->getQuery()->getResult();
     }
 
-
+    public function findForProvider($id){
+        $qb = $this->createQueryBuilder('p')
+            ->leftJoin('p.user', 'u')
+            ->where('u.id = :id')
+            ->setParameter('id', $id);
+        return $qb->getQuery()->getResult();
+    }
 }

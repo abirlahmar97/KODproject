@@ -6,8 +6,8 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class ShopBundle extends Bundle
 {
-//    public function getParent()
-//    {
-//        return 'fosCommentBundle';
-//    }
+    public function getParent()
+    {
+        return 'FOSCommentBundle';
+    }
 }

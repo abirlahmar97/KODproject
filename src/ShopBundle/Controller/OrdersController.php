@@ -5,6 +5,7 @@ namespace ShopBundle\Controller;
 use ShopBundle\Entity\Order;
 use ShopBundle\Entity\ProductOrder;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -16,16 +17,16 @@ class OrdersController extends Controller
         $em = $this->getDoctrine()->getManager();
         $session = $this->get('session');
         $cart = $session->get('cart');
-        $products = $em->getRepository('ShopBundle:Product')->findArray(array_keys($session->get('cart')));
         $pos = [];
-        foreach ($products as $product) {
+        foreach ($cart as $id => $quantity ) {
+            $product = $em->getRepository("ShopBundle:Product")->find($id);
             $po = new ProductOrder();
             $provider = $em->getRepository("UserBundle:User")->find($product->getUser()->getId());
             $user = $this->getUser();
             $po->setProduct($product);
             $po->setProvider($provider);
             $po->setUser($user);
-            $po->setQuantity($product->getPrice() * $cart[$product->getId()]);
+            $po->setQuantity($quantity);
             $price = ($product->getPrice() * $cart[$product->getId()]);
             $po->setPrice($price);
             $pos[] = $po;
@@ -65,7 +66,7 @@ class OrdersController extends Controller
 ////            $session->set('order', $order);
 //        }
         $session = $this->get('session');
-        if(!$session->has('order')){
+        if (!$session->has('order')) {
             $em = $this->getDoctrine()->getManager();
             $order = new Order();
             $addresses = $session->get('addresses');
@@ -79,12 +80,13 @@ class OrdersController extends Controller
             $pos = $this->bill();
 
             $totalTF = 0;
-            foreach ($pos as $po){
+            foreach ($pos as $po) {
                 $totalTF += $po->getPrice();
                 $po->setOrder($order);
             }
 
-            if ($session->get('coupon') ) {
+            if ($session->get('coupon')) {
+
                 $code = $session->get('coupon');
                 $coupon = $this->getDoctrine()->getRepository("ShopBundle:Coupons")->findOneBy(['code' => $code]);
                 if ($coupon != null)
@@ -98,11 +100,49 @@ class OrdersController extends Controller
                 $em->persist($po);
             $em->flush();
             $session->set('order', $order->getId());
-        }
-        else
+        } else
             return new Response($session->get('order'));
 
         return new Response($order->getId());
+    }
+
+    public function createOrderApiAction(Request $request)
+    {
+        $data = $request->getContent();
+        $pos = $this->get("jms_serializer")->deserialize($data, "array<ShopBundle\Entity\ProductOrder>", "json");
+        $em = $this->getDoctrine()->getManager();
+        $order = new Order();
+        $order->setUser($this->getUser());
+        $npos = [];
+        $totalTF = 0;
+        foreach ($pos as $po) {
+            $npo = new ProductOrder();
+            $product = $this->getDoctrine()->getRepository("ShopBundle:Product")->find($po->getProduct()->getId());
+            $category = $this->getDoctrine()->getRepository("ShopBundle:Category")->find($product->getCategory()->getId());
+            $product->setCategory($category);
+            $npo->setProduct($product);
+            $npo->setUser($this->getUser());
+            $npo->setPrice($product->getPrice() * $po->getQuantity());
+            $npo->setProvider($product->getUser());
+            $npo->setQuantity($po->getQuantity());
+            $npo->setOrder($order);
+            $totalTF += $po->getQuantity();
+            $npos[] = $npo;
+        }
+        $order->setTotal($totalTF);
+        $order->setToken(bin2hex(random_bytes(20)));
+        $em->persist($order);
+        foreach ($npos as $npo)
+            $em->persist($npo);
+        $em->flush();
+        return new Response();
+    }
+    public function confirmationapiAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $orders = $em->getRepository('ShopBundle:Order')->findByUserId($this->getUser()->getId());
+        $data = $this->get("jms_serializer")->serialize($orders, 'json');
+        return new Response($data);
     }
 
     public function confirmationAction($id, SessionInterface $session)
@@ -148,8 +188,8 @@ class OrdersController extends Controller
             $snappy->getOutputFromHtml($html),
             200,
             array(
-                'Content-Type'          => 'application/pdf',
-                'Content-Disposition'   => 'inline; filename="'.$filename.'.pdf"'
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="' . $filename . '.pdf"'
             )
         );
     }

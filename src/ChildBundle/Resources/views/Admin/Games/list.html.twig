@@ -26,8 +26,7 @@
                         <table class="table table-striped table-bordered table-hover dataTables" >
                             <thead>
                             <tr>
-                                <th></th>
-                                <th>Id</th>
+                                <th>ID</th>
                                 <th>Icone</th>
                                 <th>Nom du jeu</th>
                                 <th>url</th>
@@ -39,7 +38,6 @@
                             <tbody>
                                 {% for game in games %}
                                 <tr class="gradeX">
-                                    <td><input type="checkbox" name="{{ game.id }}"></td>
                                     <td>{{ game.id }}</td>
                                     <td>
                                         {% if game.icon != null %}
@@ -56,13 +54,18 @@
                                     {% elseif game.age == 2 %} <td>inférieur à 8</td>
                                     {% elseif game.age == 3 %} <td>inférieur à 12</td>
                                     {% endif %}
-                                    {% set devices = game.devices %}
                                     <td>
+                                    {% if game.device | length > 0 %}
+                                    {% set devices = game.device %}
                                         {% if devices[0] == 1 %} Mobile<br>{% endif %}
                                         {% if devices[1] == 2 %} Tablette<br>{% endif %}
                                         {% if devices[2] is defined and devices[2]  == 3 %} Pc<br>{% endif %}
+                                    {% endif %}
                                     </td>
-                                    <td><a class="btn btn-default" href="{{ path('games_edit', { 'id' : game.id }) }}"><i class="fa fa-edit"></i></a></td>
+                                    <td>
+                                        <a class="btn btn-default" href="{{ path('games_edit', { 'id' : game.id }) }}"><i class="fa fa-edit"></i></a>
+                                        <a class="btn btn-primary" href="{{ path('games_delete', { 'id' : game.id }) }}"><i class="fa fa-remove"></i></a>
+                                    </td>
                                 </tr>
                                 {% endfor %}
                             </tbody>

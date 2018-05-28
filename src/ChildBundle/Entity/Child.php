@@ -47,9 +47,14 @@ class Child
     private $age;
 
     /**
-     * @ORM\Column(name="blocked_g", type="simple_array")
+     * @ORM\Column(name="blocked_g", type="simple_array", nullable=true)
      */
     private $blockedG;
+
+    /**
+     * @ORM\Column(name="blocked_m", type="simple_array", nullable=true)
+     */
+    private $blockedM;
 
     /**
      * @var bool
@@ -211,5 +216,29 @@ class Child
     public function getBlockedG()
     {
         return $this->blockedG;
+    }
+
+    /**
+     * Set blockedM
+     *
+     * @param array $blockedM
+     *
+     * @return Child
+     */
+    public function setBlockedM($blockedM)
+    {
+        $this->blockedM = $blockedM;
+
+        return $this;
+    }
+
+    /**
+     * Get blockedM
+     *
+     * @return array
+     */
+    public function getBlockedM()
+    {
+        return $this->blockedM;
     }
 }

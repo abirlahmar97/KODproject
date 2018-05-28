@@ -5,3 +5,7 @@ video_add:
 video_read:
     path:     /video/read
     defaults: { _controller: MediaBundle:Video:readvid}
+
+save_photo :
+    path:   /photo/save
+    defaults: { _controller:  MediaBundle:Photo:savePhoto }

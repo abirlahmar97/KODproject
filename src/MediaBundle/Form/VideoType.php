@@ -16,14 +16,11 @@ class VideoType extends AbstractType
     {
         $builder
             ->add('url')
-            ->add('type')
             ->add('subject', EntityType::class, array(
                 'class' => 'ParentingBundle\Entity\Subject',
                 'choice_label' => 'name',
                 'multiple' => false
-            ))
-            ->add('date')
-            ->add('views');
+            ));
     }/**
      * {@inheritdoc}
      */

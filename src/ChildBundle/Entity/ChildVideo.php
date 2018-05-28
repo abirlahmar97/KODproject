@@ -9,7 +9,7 @@ use MediaBundle\Entity\Video;
  * ChilGame
  *
  * @ORM\Table(name="child_video")
- * @ORM\Entity(repositoryClass="ChildBundle\Repository\ChildGameRepository")
+ * @ORM\Entity(repositoryClass="ChildBundle\Repository\ChildVideoRepository")
  */
 class ChildVideo
 {
@@ -137,7 +137,7 @@ class ChildVideo
      *
      * @return ChildVideo
      */
-    public function setGame(Video $video = null)
+    public function setVideo(Video $video = null)
     {
         $this->video = $video;
 

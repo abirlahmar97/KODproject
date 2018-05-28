@@ -10,4 +10,11 @@ namespace ChildBundle\Repository;
  */
 class QuestionRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findQuiz($id){
+        $qb = $this->createQueryBuilder('qs')
+            ->leftJoin('qs.quiz', "qz")
+            ->where("qz.id = :id")
+            ->setParameter('id', $id);
+        return $qb->getQuery()->getResult();
+    }
 }

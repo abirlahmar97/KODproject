@@ -17,4 +17,27 @@ parent_routes :
     resource: "@ParentingBundle/Resources/config/parent.yml"
     prefix: /parent
 
+#--------------Babysitters
+list_babysitters:
+    path:     /babysitters
+    defaults: { _controller: ParentingBundle:Babysitter:list }
+
+#-------------Articles
+
+view_article:
+    path:     /aide/article/more/{id}
+    defaults: { _controller: ParentingBundle:Article:view }
+
+list_articles:
+    path:     /aide/articles
+    defaults: { _controller: ParentingBundle:Article:list }
+
+search_article:
+    path:   /aide/article/search
+    defaults: { _controller: ParentingBundle:Article:search }
+
+show_by_category:
+    path:   /aide/article/category/{id}
+    defaults: { _controller: ParentingBundle:Article:showbyCategory }
+
 

@@ -3,8 +3,10 @@
 namespace ShopBundle\Controller;
 
 use ShopBundle\Entity\Category;
+use ShopBundle\Entity\Product;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class ProductsController extends Controller
@@ -14,9 +16,9 @@ class ProductsController extends Controller
         $em = $this->getDoctrine()->getManager();
         $products = $em->getRepository('ShopBundle:Product')->byCategory($category);
         return $this->render('ShopBundle:Products:list.html.twig', array(
-            "products" => $products
+            "products" => $products,
+            'category' => $category
         ));
-
     }
 
     public function detailsAction(Request $request, $id, SessionInterface $session)
@@ -48,14 +50,20 @@ class ProductsController extends Controller
     }
 
     public function searchAction(Request $request){
-        $data = $request->get('filters');
-        $filters = json_decode($data);
-        $gender = $filters[0]->value;
-        $age = $filters[1]->value;
-        $price = explode(';', $filters[2]->value);
-        $pricemin = $price[0];
-        $pricemax = $price[1];
-        $products = $this->getDoctrine()->getRepository("ShopBundle:Product")->search($age,$gender,$pricemin,$pricemax);
+        $category = $request->get('category');
+        if($request->get('filters')){
+            $data = $request->get('filters');
+            $filters = json_decode($data);
+            $gender = $filters[0]->value;
+            $age = $filters[1]->value;
+            $price = explode(';', $filters[2]->value);
+            $pricemin = $price[0];
+            $pricemax = $price[1];
+            $products = $this->getDoctrine()->getRepository("ShopBundle:Product")->search($category,$age,$gender,$pricemin,$pricemax);
+        } else {
+            $data = $request->get('name');
+            $products = $this->getDoctrine()->getRepository("ShopBundle:Product")->searchProduct($data, $category);
+        }
         return $this->render('ShopBundle:Products:search.html.twig', [
             'products' => $products
         ]);
@@ -83,9 +91,10 @@ class ProductsController extends Controller
             $cart = $session->get('cart');
         else
             $cart = false;
-
+        dump($category);
         return $this->render('ShopBundle:Products:list.html.twig', array(
             'products' => $products,
+            'category' => $category,
             'cart' => $cart
         ));
     }
@@ -99,5 +108,57 @@ class ProductsController extends Controller
         ));
 
     }
+    public function listProductsapiAction()
+    {
+        $products = $this->getDoctrine()->getRepository("ShopBundle:Product")->findAll();
+        $data=$this->get("jms_serializer")->serialize($products,'json');
+        return new Response($data);
+    }
+
+    public function listCategoriesApiAction(){
+        $categories = $this->getDoctrine()->getRepository("ShopBundle:Category")->findAll();
+        $data = $this->get("jms_serializer")->serialize($categories, 'json');
+        return new Response($data);
+    }
+
+
+    public function listCommentapiAction($id){
+        $thread = $this->getDoctrine()->getRepository("ShopBundle:Thread")->find($id);
+        $commentaires = $this->getDoctrine()->getRepository("ShopBundle:Comment")->findByUserProduct($thread);
+        $data = $this->get("jms_serializer")->serialize($commentaires, 'json');
+        return new Response($data);
+    }
+
+
+    public function api_createAction(Request $request)
+    {   $data = $request->getContent();
+        $em = $this->getDoctrine()->getManager();
+        $pos = $this->get("jms_serializer")->deserialize($data, "UserBundle\Entity\Complaint", "json");
+        $complaint = new Complaint();
+        $em = $this->getDoctrine()->getManager();
+
+        $complaint->setParent($this->getUser());
+        $complaint->setDate($pos->getDate());
+        $complaint->setState($pos->getState());
+        $category= $em->getRepository("ShopBundle:Category")->find($pos->getCategory()->getId());
+        $complaint->setCategory($category);
+        $complaint->setSubject($pos->getSubject());
+        $complaint->setDescription($pos->getDescription());
+
+        $em->persist($complaint);
+        $em->flush();
+
+        return new Response();
+
+
+    }
+
+    public function countCommentairesApiAction($id){
+        $product= $this->getDoctrine()->getRepository("ShopBundle:Product")->find($id);
+        $nbre = $this->getDoctrine()->getRepository("ShopBundle:Thread")->find($product);
+        $data = $this->get("jms_serializer")->serialize($nbre, 'json');
+        return new Response($data);
+    }
+
 
 }

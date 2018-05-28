@@ -37,13 +37,16 @@ class ProductType extends AbstractType
             ])
             ->add('tva')
             ->add('gender', ChoiceType::class, array('choices' =>array(
-                'Garçon' => '0',
-                'Fille' => '1',
+                'Fille' => '0',
+                'Garçon' => '1',
                 'Les deux' => '2',
             )))
-            ->add('age');
+            ->add('age')
+            ->add('quantity');
 
-    }/**
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)

@@ -41,11 +41,11 @@
                                 <tr class="gradeX">
                                     <td><input type="checkbox" name="{{ cartoon.id }}"></td>
                                     <td>{{ cartoon.id }}</td>
-                                     <td>
+                                    <td class="text-center">
                                         {% if cartoon.photo == null %}
                                             Pas d'image
                                         {% else %}
-                                            <img height="180" class="center-block" alt="image"
+                                            <img height="120" class="center-block" alt="image"
                                                  src="{{ asset(cartoon.photo.webPath) }}">
                                         {% endif %}
                                     </td>
@@ -61,7 +61,7 @@
                                         {% if cartoon.gender == 1 %} Garçon{% endif %}
                                         {% if cartoon.gender == 2 %} Les deux<br>{% endif %}
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         <a class="btn btn-primary" href="{{ path('episodes_add', { 'id' : cartoon.id }) }}">
                                             <i class="fa fa-plus"></i>
                                         </a>

@@ -1,84 +1,145 @@
 {% extends 'layout.html.twig' %}
 {% block stylesheets %}
     {{ parent() }}
-    {% endblock %}
+{% endblock %}
 {% block main %}
-<!-- PAGE TITLE SECTION-->
-<section class="pageTitleSection">
-    <div class="container">
-        <div class="pageTitleInfo">
-            <h2>Liste des articles</h2>
-            <ol class="breadcrumb">
-                <li><a href="#">Accueil</a></li>
-                <li class="active">Articles et conseils</li>
-            </ol>
+    <!-- PAGE TITLE SECTION-->
+    <section class="pageTitleSection">
+        <div class="container">
+            <div class="pageTitleInfo">
+                <h2>Liste des articles</h2>
+                <ol class="breadcrumb">
+                    <li><a href="#">Accueil</a></li>
+                    <li class="active">Articles et conseils</li>
+                </ol>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- MAIN SECTION -->
-<section class="mainContent full-width clearfix">
-    <div class="container">
-        <div class="input-group searchArea">
-            <span class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></span>
-            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="Search something..." id="recherche" name="article">
-            <button type="submit" class="input-group-addon button" id="basic-addon21">Search</button>
-        </div>
-        <div class="resultInfo">
-            {% if nombre is defined and search is defined %}
-            <h3> {{ nombre }} Search results for “{{ search }}”</h3>
-            {% endif %}
+    <!-- MAIN SECTION -->
+    <section class="mainContent full-width clearfix">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="panel panel-default courseSidebar">
+                        <div class="panel-heading bg-color-1 border-color-1">
+                            <h3 class="panel-title">Search</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="input-group">
+                                <input id="search-in" type="text" class="form-control" placeholder="Mots clés"
+                                       aria-describedby="basic-addon2">
+                                <span class="input-group-addon" id="basic-addon2">
+                                    <button id="search-btn" class="btn btn-primary bg-color-1"><i
+                                                class="fa fa-search"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default courseSidebar">
+                        <div class="panel-heading bg-color-2 border-color-2">
+                            <h3 class="panel-title">Categories</h3>
+                        </div>
 
-        </div>
-        <div id="list" class="list">
-            <list>
-                <div class="row" >
-                    {% for article in articles %}
-                        <div class="col-md-3 col-sm-6 col-xs-12 block">
-                            <div class="thumbnail thumbnailContent">
-                                <a href="{{ path('more',{'id':article.id}) }}">
+                        <div class="panel-body">
+                            <ul class="list-unstyled categoryItem">
+                                {% for category in categories %}
+                                    <li>
+                                        <a href="{{ path('show_by_category',{'id': category.id}) }}">{{ category.name }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div id="placeholder">
+                        {% for article in articles %}
+                            {% set color = random(5) + 1  %}
+                            <div class="media courseList couresListPage">
+                                <a class="media-left border-color-1"
+                                   href="{{ path('view_article', { 'id' : article.id }) }}">
                                     {% if article.image != null %}
-                                        <img style="height: 175px" src="{{ asset(article.image.webPath) }}" alt="image" class="media-object">
+                                        <img style="width: 270px" class="media-object" src="{{ asset(article.image.webPath) }}"
+                                             alt="Image">
                                     {% endif %}
                                 </a>
-                                <div class="sticker-round bg-color-1">
-                                    <a href="{{ path('show_by_category',{'category':article.category.name}) }}">{{ article.category.name}}</a>
-                                </div>
-                                <div class="caption border-color-1">
-                                    <h3><a href="{{ path('more',{'id':article.id}) }}" class="color-1">{{ article.title }}</a></h3>
-                                    <ul class="list-unstyled">
-                                        <li><i class="fa fa-calendar-o" aria-hidden="true"></i>{{ article.subject }}</li>
-                                        <li><i class="fa fa-clock-o" aria-hidden="true"></i>{{ article.auteur }}</li>
+                                <div class="media-body">
+                                    <h3 class="media-heading">
+                                        <a href="{{ path('view_article', { 'id' : article.id }) }}"
+                                           class="color-{{ color }}">{{ article.title }}</a>
+                                    </h3>
+                                    <ul class="list-inline">
+                                        <li><i class="fa fa-calendar-o"
+                                               aria-hidden="true"></i>{{ article.date | date('d F, Y') }}</li>
+                                        <li><i class="fa fa-file-o"
+                                               aria-hidden="true"></i>{{ article.category.name }}</li>
                                     </ul>
-                                    <p></p>
-                                    <ul class="list-inline btn-yellow">
-                                        {#<li><a href="cart-page.html" class="btn btn-primary "><i class="fa fa-shopping-basket " aria-hidden="true"></i>Add to Cart</a></li>#}
-                                        <li><a href="{{ path('more',{'id':article.id}) }}" class="btn btn-link"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Continuer</a></li>
+                                    <p>{{ article.subject }}</p>
+                                    <ul class="list-inline btn-yellow btnPart">
+                                        <li>
+                                            <a href="{{ path('view_article', { 'id' : article.id }) }}"
+                                               class="btn btn-link">
+                                                <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                                                Continuer la lecture
+                                            </a>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
-                        </div>
-                    {% endfor %}
+                            {#<div class="col-md-3 col-sm-6 col-xs-12 block">#}
+                            {#<div class="thumbnail thumbnailContent">#}
+                            {#<a href="{{ path('view_article',{'id':article.id}) }}">#}
+                            {#{% if article.image != null %}#}
+                            {#<img style="height: 175px" src="{{ asset(article.image.webPath) }}"#}
+                            {#alt="image"#}
+                            {#class="media-object">#}
+                            {#{% endif %}#}
+                            {#</a>#}
+                            {#<div class="caption border-color-1">#}
+                            {#<h3><a href="{{ path('view_article',{'id':article.id}) }}"#}
+                            {#class="color-1">{{ article.title }}</a></h3>#}
+                            {#<ul class="list-unstyled">#}
+                            {#<li><i class="fa fa-calendar-o"#}
+                            {#aria-hidden="true"></i>{{ article.subject }}#}
+                            {#</li>#}
+                            {#<li><i class="fa fa-clock-o"#}
+                            {#aria-hidden="true"></i>{{ article.auteur }}</li>#}
+                            {#</ul>#}
+                            {#<p></p>#}
+                            {#<ul class="list-inline btn-yellow">#}
+                            {#<li><a href="cart-page.html" class="btn btn-primary "><i class="fa fa-shopping-basket " aria-hidden="true"></i>Add to Cart</a></li>#}
+                            {#<li><a href="{{ path('view_article',{'id':article.id}) }}"#}
+                            {#class="btn btn-link"><i#}
+                            {#class="fa fa-angle-double-right"#}
+                            {#aria-hidden="true"></i>#}
+                            {#Continuer</a></li>#}
+                            {#</ul>#}
+                            {#</div>#}
+                            {#</div>#}
+                            {#</div>#}
+                        {% endfor %}
+                    </div>
                 </div>
-            </list>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    <script >
+    <script>
         $(function () {
-            $("#recherche").keyup(function () {
+            $("#search-btn").click(function () {
                 $.ajax({
-                    url : "{{ path('search_article') }}",
-                    data : { 'article' : $(this).val() }
+                    url: "{{ path('search_article') }}",
+                    data: {
+                        'article': $("#search-in").val()
+                    }
                 }).done(function (response) {
-                    console.log(response);
-                    var list = $(response).find("list");
-                    $('.list').empty();
-                    $('.list').append(list);
+                    var list = $(response);
+                    $("#placeholder").empty();
+                    $('#placeholder').append(list);
                 });
             });
         })

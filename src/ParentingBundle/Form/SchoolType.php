@@ -16,8 +16,8 @@ class SchoolType extends AbstractType
         $builder
             ->add('name')
             ->add('address')
-            ->add('Xschool')
-            ->add('Yschool')
+            ->add('lat')
+            ->add('lng')
             ->add('phone')
             ->add('mail');
     }/**

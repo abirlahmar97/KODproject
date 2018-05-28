@@ -4952,10 +4952,9 @@ footer .color-bar {
 
 @media (min-width: 1200px) {
     .eventContent .media-body {
-        width: auto;
+        width : 50%;
+        padding: 20px;
         display: table-cell;
-        padding: 20px 10px 0 20px;
-        width: 50%
     }
 }
 

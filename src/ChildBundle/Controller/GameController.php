@@ -19,7 +19,7 @@ class GameController extends Controller
             $category = $em->getRepository("ShopBundle:Category")
                 ->findOneBy(['name' => 'Any']);
             $newGame->setCategory($category);
-            $newGame->setDevice('1,2,3');
+            $newGame->setDevice([1,2,3]);
             $newGame->setAge(2);
             $newGame->setGender(2);
             $newGame->setUrl($game->url);
@@ -59,9 +59,36 @@ class GameController extends Controller
     {
         $child = $this->getDoctrine()->getRepository("ChildBundle:Child")->find($cid);
         $blockedg = $child->getBlockedG();
-        $blockedg[] = $gid;
+        if(($key = array_search($gid, $blockedg))!== false)
+            unset($blockedg[$key]);
+        else
+            $blockedg[] = $gid;
+        $child->setBlockedG($blockedg);
         $em = $this->getDoctrine()->getManager();
         $em->persist($child);
-        return $this->redirectToRoute('kid_activity');
+        $em->flush();
+        return $this->redirectToRoute('kid_activity', ['id'=> $cid]);
+    }
+
+    public function blockGameApiAction(Request $request)
+    {
+        $cid = $request->get("child");
+        $gid = $request->get("game");
+        $child = $this->getDoctrine()->getRepository("ChildBundle:Child")->find($cid);
+        if ($child == null)
+            return new Response("Child not found",400);
+        $game = $this->getDoctrine()->getRepository("ChildBundle:Game")->find($gid);
+        if ($game == null)
+            return new Response("Game not found",400);
+        $blockedg = $child->getBlockedG();
+        if(($key = array_search($gid, $blockedg)))
+            unset($blockedg[$key]);
+        else
+            $blockedg[] = $gid;
+        $child->setBlockedG($blockedg);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($child);
+        $em->flush();
+        return new Response("");
     }
 }

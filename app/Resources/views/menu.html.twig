@@ -6,10 +6,13 @@
                 <span>Parentalité</span>
             </a>
             <ul class="dropdown-menu dropdown-menu-left">
-                <li><a href="{{ path('front_read') }}">Articles et conseils</a></li>
-                <li><a href="{{ path('front_read_babysitter') }}">Babysitters</a></li>
-                <li><a href="{{ path('discutea_forum_homepage') }}">Forum</a></li>
-                <li><a>Adresses utiles</a></li>
+                <li><a href="{{ path('list_articles') }}">Articles et conseils</a></li>
+                <li><a href="{{ path('list_babysitters') }}">Babysitters</a></li>
+                {#<li><a href="{{ path('discutea_forum_homepage') }}">Forum</a></li>#}
+                <li><a href="{{ path('front_addresses') }}">Adresses utiles</a></li>
+                {% if is_granted("IS_AUTHENTICATED_FULLY") %}
+                <li><a href="{{ path('list_complaints') }}">Réclamations</a></li>
+                {% endif %}
             </ul>
         </li>
         <li class="dropdown singleDrop color-1">
@@ -22,7 +25,7 @@
         </li>
         <li class="dropdown singleDrop color-5">
             <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                <i class="fa fa-pencil bg-color-4" aria-hidden="true"></i>
+                <i class="fa fa-pencil bg-color-5" aria-hidden="true"></i>
                 <span>éducation</span>
             </a>
             <ul class="dropdown-menu dropdown-menu-left">
@@ -31,14 +34,14 @@
                 <li><a href="{{ path('video_read') }}">Videos</a></li>
             </ul>
         </li>
-        <li class="dropdown singleDrop color-5">
+        <li class="dropdown singleDrop color-6">
             <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                <i class="fa fa-pencil bg-color-4" aria-hidden="true"></i>
+                <i class="fa fa-pencil bg-color-6" aria-hidden="true"></i>
                 <span>Evenements</span>
             </a>
             <ul class="dropdown-menu dropdown-menu-left">
-                <li><a href="{{ path('events_list') }}">Evenements</a></li>
-                <li><a href=" {{ path('map') }}">Ecoles</a></li>
+                <li><a href="{{ path('events_list') }}">Evénements</a></li>
+                <li><a href=" {{ path('reservations') }}">Mes réservations</a></li>
             </ul>
         </li>
         <li class="dropdown singleDrop color-4">

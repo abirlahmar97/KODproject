@@ -12,6 +12,7 @@ use UserBundle\Entity\User;
  * Comment
  *
  * @ORM\Table(name="comment")
+ * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  * @ORM\Entity(repositoryClass="ShopBundle\Repository\CommentRepository")
  */
 class Comment extends BaseComment implements SignedCommentInterface

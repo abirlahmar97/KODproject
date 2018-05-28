@@ -10,10 +10,10 @@
             {{ form_errors(form) }}
             <div class="form-group row">
                 <div class="col-sm-2 control-label">
-                    {{ form_label(form.name, "Titre") }}
+                    {{ form_label(form.titre, "Titre") }}
                 </div>
                 <div class="col-sm-10">
-                    {{ form_widget(form.name, { 'attr' : { 'class' : 'form-control' } }) }}
+                    {{ form_widget(form.titre , { 'attr' : { 'class' : 'form-control' } }) }}
                 </div>
             </div>
             <div class="form-group row">
@@ -24,8 +24,10 @@
                     {{ form_widget(form.url) }}
                 </div>
             </div>
-            <button class="btn btn-success stay">Enregistrer et quitter</button>
-            <button class="btn btn-success stay">Enregistrer et rester</button>
+            <div class="text-right">
+                <button class="btn btn-success" name="action" value="stay">Ajouter et rester</button>
+                <button class="btn btn-success" name="action" value="exit">Ajouter et quitter</button>
+            </div>
             {{ form_end(form) }}
             
         </div>

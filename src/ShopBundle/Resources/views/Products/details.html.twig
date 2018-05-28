@@ -1,183 +1,166 @@
 {% extends '::layout.html.twig' %}
-                                {% block stylesheets %}
-                                    {{ parent() }}
-                                    <link rel="stylesheet" href="{{ asset('plugins/owl-carousel/owl.carousel.css') }}" media="screen">
-                                    <link rel="stylesheet" href="{{ asset('bundles/foscomment/css/comments.css') }}" type="text/css"/>
-                                {% endblock %}
-
-                                {% block main %}
-
-                                <section class="pageTitleSection">
-                                    <div class="container">
-                                        <div class="pageTitleInfo">
-                                            <h2>Details : {{ product.name }}</h2>
-                                            <ol class="breadcrumb">
-                                                <li><a href="index-v2.html">Acceuil</a></li>
-                                                <li class="active">Boutique</li>
-                                            </ol>
-                                        </div>
-                                    </div>
-                                </section>
-
-                                <section class="mainContent full-width clearfix">
-                                    <div class="container">
-                                        <div class="row">
-
-                                            <div class="col-md-6 col-sm-7 col-xs-12">
-                                                <div class="product-gallery">
-                                                    <div class="product-gallery-content">
-                                                        <ul class="product-gallery-preview">
-                                                            <li id="preview01" class="current">
-
-                                                                <img width="100" src="{{ asset(product.img.webPath) }}">
-
-                                                            </li>
-
-                                                        </ul>
-                                                    </div>
-
-
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6 col-sm-5 col-xs-12">
-                                                <div class="product-info">
-                                                    <h1 class="product-title">{{ product.name }}</h1>
-                                                    <div class="price">
-                                                        <span>{{ product.price }} DT</span>
-                                                    </div>
-                                                    <p>{{ product.description }}</p>
-                                                    <div class="add-cart">
-                                                        {% if cart[product.id] is not defined %}
-                                                            <form action="{{ path('cart_add', { 'id' : product.id }) }}" method="get">
-
-                                                                <select name="qte" class="span1" class="form-control select2-dropdown" >
-                                                                    {% for i in 1..10 %}
-                                                                        <option value="{{ i }}">{{ i }}</option>
-                                                                    {% endfor %}
-                                                                </select>
-                                                                <div>
-                                                                    <button class="btn btn-primary">Ajouter au panier</button>
-                                                                </div>
-                                                            </form>
-                                                        {% else %}
-                                                            <div>
-                                                                <a href="{{ path('cart_show') }}" class="btn btn-primary">Le produit est déjà dans votre panier</a>
-                                                            </div>
-                                                        {% endif %}
-                                                    </div>
-
-                                                    <div class="product-meta">
-                                                        <div class="product-category">
-                                                            Category:
-                                                            {{ product.category.name }}
-
-                                                        </div>
-                                                    </div>
-
-
-                                                    <div class="share">
-                                                        <span>Share: </span>
-                                                        <ul class="list-inline">
-                                                            <li><a href="#" class="bg-color-1"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                                                            </li>
-                                                            <li><a href="#" class="bg-color-2"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                                                            </li>
-                                                            <li><a href="#" class="bg-color-3"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
-                                                            </li>
-                                                            <li><a href="#" class="bg-color-4"><i class="fa fa-pinterest-p" aria-hidden="true"></i></a>
-                                                            </li>
-                                                            <li><a href="#" class="bg-color-5"><i class="fa fa-vimeo" aria-hidden="true"></i></a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-                                </section>
-
-
-                                    <section class="product-review clearfix">
-                                        <div class="container">
-
-                                            <div class="tabCommon">
-                                                <ul class="nav nav-tabs">
-                                                    <li class=""><a data-toggle="tab" href="#menu1" aria-expanded="false">Details</a></li>
-                                                    <li class="active"><a data-toggle="tab" href="#menu2" aria-expanded="true">Review(2)</a></li>
-                                                </ul>
-
-                                                <div class="tab-content">
-                                                    <div id="menu1" class="tab-pane fade">
-                                                        <div class="media">
-                                                            <h3>Product Description</h3>
-                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspici
-                                                                atis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam</p>
-                                                            <ul class="list-unstyled para-list">
-                                                                <li><i class="fa fa-check" aria-hidden="true"></i>Vestibulum iaculis quam.</li>
-                                                                <li><i class="fa fa-check" aria-hidden="true"></i>Quam ac libero volutpat placerat.</li>
-                                                                <li><i class="fa fa-check" aria-hidden="true"></i>Iaculis quam ac libero.</li>
-                                                            </ul>
-                                                            <ul class="list-unstyled para-list">
-                                                                <li><i class="fa fa-check" aria-hidden="true"></i>Vestibulum iaculis quam.</li>
-                                                                <li><i class="fa fa-check" aria-hidden="true"></i>Quam ac libero volutpat placerat.</li>
-                                                                <li><i class="fa fa-check" aria-hidden="true"></i>Iaculis quam ac libero.</li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                    <div id="menu2" class="tab-pane fade active in">
-                                                        <ul class="media-list commentsList">
-                                                            <li class="media">
-
-
-                      <i class="fa fa-star" aria-hidden="true"></i>
-                      <i class="fa fa-star" aria-hidden="true"></i>
-                      <i class="fa fa-star" aria-hidden="true"></i>
-                      <i class="fa fa-star" aria-hidden="true"></i>
-                      <i class="fa fa-star-half-full" aria-hidden="true"></i>
-                    </span>
-                                                                    <div class="blogComments" >
-                                                                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
-                                                                        <div id="fos_comment_thread" data-thread="{{ thread.id }}" >
-
-                                                                            {% include 'ShopBundle:Comment:comments.html.twig' with {
-                                                                            'comments': comments,
-                                                                            'thread': thread
-                                                                            } %}
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </li>
-
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </section>
-
-
-
-
-            <section class="mainContent full-width clearfix productSection">
-                <div class="container">
-                    <div class="sectionTitle text-center">
-
-                            <span class="shape shape-left bg-color-4"></span>
-                        <h2>
-                            <span>Related Products</span>
-                            <span class="shape shape-right bg-color-4"></span>
-                        </h2>
-                    </div>
-                    {{ render(controller('ShopBundle:Products:related', {'category':product.category.id})) }}
-                </div>
-            </section>
-
-
-        <script src="{{ asset('bundles/foscomment/js/comments.js') }}"></script>
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/foscomment/css/comments.css') }}"
+          type="text/css"/>
+    <style>
+        .homeContactContent .form-group textarea.form-control {
+            height: 70px;
+            line-height: 30px;
+        }
+    </style>
 {% endblock %}
 
+{% block main %}
+
+    <section class="pageTitleSection">
+        <div class="container">
+            <div class="pageTitleInfo">
+                <h2>Details : {{ product.name }}</h2>
+                <ol class="breadcrumb">
+                    <li><a href="{{ path('user_homepage') }}">Acceuil</a></li>
+                    <li class="active">Boutique</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+
+    <section class="mainContent full-width clearfix">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-6 col-sm-7 col-xs-12">
+                    <div class="product-gallery">
+                        <div class="product-gallery-content">
+                            <ul class="product-gallery-preview">
+                                <li id="preview01" class="current">
+                                    <img width="100"
+                                         src="{{ asset(product.img.webPath) }}">
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-sm-5 col-xs-12">
+                    <div class="product-info">
+                        <h1 class="product-title">{{ product.name }}</h1>
+                        <div class="price">
+                            <span>{{ product.price }} DT</span>
+                        </div>
+                        <p>{{ product.description }}</p>
+                        <div class="add-cart">
+                            {% if cart[product.id] is not defined %}
+                                <form action="{{ path('cart_add', { 'id' : product.id }) }}"
+                                      method="get">
+                                    <div class="row">
+                                        <label class="col-md-4 control-label"
+                                               style="padding-top: 15px;">Choisir une
+                                            quantité</label>
+                                        <div class="select-qty dropGeneral roundOne colorBg bg-color-2">
+                                            <select name="qte" class="select-drop">
+                                                {% for i in 1..product.quantity %}
+                                                    <option value="{{ i }}">{{ i }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary">Ajouter au panier
+                                    </button>
+                                </form>
+                            {% else %}
+                                <div>
+                                    <a href="{{ path('cart_show') }}"
+                                       class="btn btn-primary">Le produit est déjà dans
+                                        votre panier</a>
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="product-meta">
+                            <div class="product-category">
+                                Category:
+                                {{ product.category.name }}
+
+                            </div>
+                        </div>
+
+
+                        <div class="share">
+                            <span>Share: </span>
+                            <ul class="list-inline">
+                                <li><a href="#" class="bg-color-1"><i
+                                                class="fa fa-facebook"
+                                                aria-hidden="true"></i></a>
+                                </li>
+                                <li><a href="#" class="bg-color-2"><i
+                                                class="fa fa-twitter"
+                                                aria-hidden="true"></i></a>
+                                </li>
+                                <li><a href="#" class="bg-color-3"><i
+                                                class="fa fa-google-plus"
+                                                aria-hidden="true"></i></a>
+                                </li>
+                                <li><a href="#" class="bg-color-4"><i
+                                                class="fa fa-pinterest-p"
+                                                aria-hidden="true"></i></a>
+                                </li>
+                                <li><a href="#" class="bg-color-5"><i
+                                                class="fa fa-vimeo"
+                                                aria-hidden="true"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="product-review clearfix">
+        <div class="container">
+
+            <div class="tabCommon">
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a data-toggle="tab" href="#menu1" aria-expanded="true">Commentaires</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    <div id="menu1" class="tab-pane fade active in">
+                        <ul class="media-list commentsList">
+                            <li id="fos_comment_thread" data-thread="{{ thread.id }}">
+                                {#{% include 'ShopBundle:Comment:comments.html.twig' with {#}
+                                {#'comments': comments,#}
+                                {#'thread': thread#}
+                                {#} %}#}
+                            </li>
+                        </ul>
+                        {% include '@FOSComment/Thread/async.html.twig' with {'id': product.id} %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="mainContent full-width clearfix productSection">
+        <div class="container">
+            <div class="sectionTitle text-center">
+                <span class="shape shape-left bg-color-4"></span>
+                <h2>
+                    <span>Related Products</span>
+                    <span class="shape shape-right bg-color-4"></span>
+                </h2>
+            </div>
+            {{ render(controller('ShopBundle:Products:related', {'category':product.category.id})) }}
+        </div>
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/foscomment/js/comments.js') }}"></script>
+{% endblock %}

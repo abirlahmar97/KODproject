@@ -67,7 +67,7 @@ class Game
      *
      * @ORM\Column(name="device", type="array")
      */
-    private $devices;
+    private $device;
 
     /**
      * Get id
@@ -227,13 +227,13 @@ class Game
     /**
      * Set devices
      *
-     * @param array $devices
+     * @param array $device
      *
      * @return Game
      */
-    public function setDevices($devices)
+    public function setDevice($device)
     {
-        $this->devices = $devices;
+        $this->device = $device;
 
         return $this;
     }
@@ -243,8 +243,8 @@ class Game
      *
      * @return array
      */
-    public function getDevices()
+    public function getDevice()
     {
-        return $this->devices;
+        return $this->device;
     }
 }

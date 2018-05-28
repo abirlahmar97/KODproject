@@ -1,10 +1,10 @@
 
 api_article_read:
     path:     /aide/article/read
-    defaults: { _controller: ParentingBundle:Article:frontReadApi }
-api_more:
+    defaults: { _controller: ParentingBundle:Article:listApi }
+api_article_more:
     path:     /aide/article/more/{id}
-    defaults: { _controller: ParentingBundle:Article:moreApi }
+    defaults: { _controller: ParentingBundle:Article:viewApi }
 api_babysitter:
     path:     /Babysitter/read
     defaults: { _controller: ParentingBundle:Babysitter:api_front_read }

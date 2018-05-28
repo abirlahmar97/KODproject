@@ -1,0 +1,105 @@
+{% extends "back-layout.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('plugins/datatables/css/jquery.dataTables.css') }}">
+    <link href="{{ asset('plugins/datatables/extensions/Buttons/css/buttons.dataTables.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block main %}
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb breadcrumb-2">
+        <li><a href="{{ path('admin_homepage') }}"><i class="fa fa-home"></i>Home</a></li>
+        <li class="active"><strong>Jeux</strong></li>
+    </ol>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading clearfix">
+                    <h4 class="panel-title">Liste des jeux</h4>
+                    <ul class="panel-tool-options">
+                        <li><a href="{{ path('quizes_add') }}"><i class="fa fa-quiz-plus"></i> Ajouter</a></li>
+                    </ul>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover dataTables" >
+                            <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Nom</th>
+                                <th>Categorie</th>
+                                <th>Difficulté</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for quiz in quizes %}
+                                <tr class="gradeX">
+                                    <td>{{ quiz.id }}</td>
+                                    <td>{{ quiz.name }}</td>
+                                    <td>{{ quiz.category.name }}</td>
+                                    <td>{{ quiz.difficulty }}</td>
+                                    <td>
+                                        <a class="btn btn-default" href="{{ path('quizes_edit', { 'id' : quiz.id }) }}"><i class="fa fa-edit"></i></a>
+                                        <a class="btn btn-danger" href="{{ path('quizes_delete', { 'id' : quiz.id }) }}"><i class="fa fa-remove"></i></a>
+                                        <a class="btn btn-blue" href="{{ path('questions_list', { 'id' : quiz.id }) }}"><i class="fa fa-list"></i></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                {#<form action="{{ path('quizs_blk_delete') }}" id="del_form" method="post">#}
+                {#<input type="hidden" class="quizs" name="quizs">#}
+                {#</form>#}
+                {#<form action="{{ path('quizs_blk_disable') }}" id="dis_form" method="post">#}
+                {#<input type="hidden" class="quizs" name="quizs">#}
+                {#</form>#}
+                {#<form action="{{ path('quizs_blk_enable') }}" id="en_form" method="post">#}
+                {#<input type="hidden" class="quizs" name="quizs">#}
+                {#</form>#}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('plugins/datatables/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables/extensions/Buttons/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables/extensions/Buttons/js/buttons.html5.js') }}"></script>
+    <script src="{{ asset('plugins/datatables/extensions/Buttons/js/buttons.colVis.js') }}"></script>
+    <script>
+        $(function () {
+            $('table').DataTable({
+                language : {
+                    url : "{{ asset('plugins/datatables/extensions/french.json') }}"
+                },
+                dom: '<"html5buttons" B>lTfgitp',
+                buttons: [
+                    {
+                        extend: 'copyHtml5',
+                        exportOptions: {
+                            columns: [ 0, ':visible' ]
+                        }
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, 4 ]
+                        }
+                    },
+                    'colvis'
+                ]
+            });
+        })
+    </script>
+{% endblock %}

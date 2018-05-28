@@ -10,4 +10,25 @@ namespace EventsBundle\Repository;
  */
 class ReservationRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findForUser($id){
+        $qb = $this->createQueryBuilder('r')
+            ->leftJoin('r.user', 'u')
+            ->leftJoin('r.event', 'e')
+            ->where('u.id = :id')
+            ->select('DISTINCT e.id')
+            ->setParameter("id", $id);
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findEvent($eid, $uid)
+    {
+        $qb = $this->createQueryBuilder("r")
+            ->leftJoin('r.event', 'e')
+            ->leftJoin('r.user', 'u')
+            ->where('u.id = :uid')
+            ->andWhere('e.id = :eid')
+            ->setParameter('eid' , $eid)
+            ->setParameter('uid' , $uid);
+        return $qb->getQuery()->getSingleResult();
+    }
 }

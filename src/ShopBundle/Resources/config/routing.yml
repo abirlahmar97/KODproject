@@ -3,7 +3,7 @@ shop_homepage:
     defaults: { _controller: ShopBundle:Default:index }
 
 api_order_confirm:
-    path:      /api/bank/{id}
+    path:      /bank/{id}
     defaults: { _controller: ShopBundle:Orders:confirmation }
 
 search_product:
@@ -32,5 +32,11 @@ provider_routes:
 admin_routes:
     resource:   '@ShopBundle/Resources/config/admin.yml'
     prefix:     /admin
+
+fos_comment_api:
+    type: rest
+    resource: "@FOSCommentBundle/Resources/config/routing.yml"
+    defaults: { _format: html }
+
 
 

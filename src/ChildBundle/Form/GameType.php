@@ -27,7 +27,7 @@ class GameType extends AbstractType
                 ],
                 'multiple' => false
             ])
-            ->add('devices', ChoiceType::class, [
+            ->add('device', ChoiceType::class, [
                 'choices' => [
                     'Smartphone' => '1',
                     'Tablette' => '2',

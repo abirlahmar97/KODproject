@@ -12,16 +12,21 @@ events_list:
     path:     /parent/events/list
     defaults: { _controller: EventsBundle:Events:list }
 
-
 update_event:
     path:     /admin/events/update/{id}
     defaults: { _controller: EventsBundle:Events:updateEvent }
 
+reservations:
+    path:   /parent/reservations
+    defaults: { _controller: EventsBundle:Reservations:reservations}
 
-reservation:
-    path:   /parent/reservation
-    defaults: { _controller: EventsBundle:Events:Reserv}
+new_reservation:
+    path:   /parent/reservations/new
+    defaults: { _controller: EventsBundle:Reservations:Reserve}
 
+cancel_reservation:
+    path:   /parent/reservations/cancel/{id}
+    defaults: { _controller: EventsBundle:Reservations:Cancel}
 
 event_details:
     path:    /events/details/{id}

@@ -1,6 +1,7 @@
 <?php
 
 namespace ParentingBundle\Repository;
+use Doctrine\ORM\Query\ResultSetMappingBuilder;
 
 /**
  * SchoolRepository
@@ -10,11 +11,17 @@ namespace ParentingBundle\Repository;
  */
 class SchoolRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function findMarque($schoolname)
+    public function findClosest($lat, $lng)
     {
-        $q=$this->createQueryBuilder('m')
-            ->where('m.schoolname LIKE :schoolname')
-            ->setParameter(':schoolname',"%$schoolname%");
-        return $q->getQuery()->getResult();
+        $rsm = new ResultSetMappingBuilder($this->_em,ResultSetMappingBuilder::COLUMN_RENAMING_INCREMENT);
+        $rsm->addRootEntityFromClassMetadata('ParentingBundle\Entity\School','s');
+        $sql = " SELECT " . $rsm->generateSelectClause() . " FROM school s
+			WHERE ( 6371 * acos( cos( radians(:lat) ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(:lng) ) + sin( radians(:lat) ) * sin( radians( lat ) ) ) ) < 4";
+
+        $query = $this->_em->createNativeQuery($sql, $rsm);
+        $query->setParameter(':lat', $lat);
+        $query->setParameter(':lng', $lng);
+
+        return $query->getResult();
     }
 }

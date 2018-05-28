@@ -9,13 +9,16 @@ use Symfony\Component\HttpFoundation\Response;
 class CartoonController extends Controller
 {
     public function listEpisodesAction($id, Request $request){
+        $cartoon = $this->getDoctrine()->getRepository('ChildBundle:Cartoon')->find($id);
         $episodes = $this->getDoctrine()->getRepository("MediaBundle:Video")->findCartoon($id);
         if($request->isXmlHttpRequest())
             return $this->render("ChildBundle:Cartoon:details.html.twig", [
-                'episodes' => $episodes
+                'episodes' => $episodes,
+                'cartoon' => $cartoon
             ]);
         return $this->render("ChildBundle:Admin/Episodes:list.html.twig", [
-            'episodes' => $episodes
+            'episodes' => $episodes,
+            'cartoon' => $cartoon
         ]);
     }
 

@@ -10,10 +10,6 @@ events:
     resource: "@EventsBundle/Resources/config/routing.yml"
     prefix:   /
 
-api_events:
-    resource: "@EventsBundle/Resources/config/api-routes.yml"
-    prefix:   /api
-
 api_articles:
     resource: "@ParentingBundle/Resources/config/api-routes-mariem.yml"
     prefix:   /api
@@ -41,6 +37,10 @@ shop:
     resource: "@ShopBundle/Resources/config/routing.yml"
     prefix:   /
 
+api_shop:
+    resource: "@ShopBundle/Resources/config/api-routes.yml"
+    prefix:   /api
+
 media:
     resource: "@MediaBundle/Resources/config/routing.yml"
     prefix:   /
@@ -65,8 +65,7 @@ fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
 
 kms_froala_editor:
-  resource: "@KMSFroalaEditorBundle/Resources/config/routing.yml"
-  prefix:   /froalaeditor
-
+    resource: "@KMSFroalaEditorBundle/Resources/config/routing.yml"
+    prefix:   /froalaeditor
 api_login_check:
     path: /api/login_check

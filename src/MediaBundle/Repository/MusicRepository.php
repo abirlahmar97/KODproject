@@ -10,4 +10,11 @@ namespace MediaBundle\Repository;
  */
 class MusicRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    public function findAllowed($bans){
+        $qb= $this->createQueryBuilder('m');
+        if (count($bans) != 0)
+            $qb->where($qb->expr()  ->notIn('m.id', $bans));
+        return $qb->getQuery()->getResult();
+    }
 }

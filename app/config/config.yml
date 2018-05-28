@@ -114,12 +114,12 @@ stof_doctrine_extensions:
 knp_paginator:
     page_range: 3
     default_options:
-        page_name: forum
+        page_name: page
         sort_field_name: sort
         sort_direction_name: direction
         distinct: true
     template:
-        pagination: KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig
+        pagination: pagination.html.twig
         sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig
 
 

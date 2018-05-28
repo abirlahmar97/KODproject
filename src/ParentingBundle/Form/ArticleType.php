@@ -31,7 +31,7 @@ class ArticleType extends AbstractType
                 'class' => 'ShopBundle\Entity\Category',
                 'query_builder' => function (CategoryRepository $cr) {
                     return $cr->createQueryBuilder('c')
-                       ->where("c.type='Articles'");
+                       ->where("c.type='Article'");
                 },
                 'choice_label' => 'name',
 

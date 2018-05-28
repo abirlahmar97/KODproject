@@ -1,27 +1,26 @@
-{% extends "UserBundle:Admin:layout.html.twig" %}
-{% block title %}Ajout ecole{% endblock %}
+{% extends "back-layout.html.twig" %}
 
     {% block main %}
         <div class="row">
             <div >
                 <div class="panel panel-default">
                     <div class="panel-heading clearfix">
-                        <h4 class="panel-title">Ajouter ecole</h4>
+                        <h4 class="panel-title">{{ title }} une école</h4>
                     </div>
                     <div class="panel-body">
                         {{ form_start(form) }}
                         {{ form_errors(form) }}
                         <div class="form-group row">
                             <div class="col-sm-2 control-label">
-                                {{ form_label(form.schoolname, 'nom ecole') }}
+                                {{ form_label(form.name, "Nom de l'école") }}
                             </div>
                             <div class="col-sm-10">
-                                {{ form_widget(form.schoolname, { 'attr' : { 'class' : 'form-control' } }) }}
+                                {{ form_widget(form.name, { 'attr' : { 'class' : 'form-control' } }) }}
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-sm-2 control-label">
-                                {{ form_label(form.address, 'address') }}
+                                {{ form_label(form.address, 'Addresse') }}
                             </div>
                             <div class="col-sm-10">
                                 {{ form_widget(form.address, { 'attr' : { 'class' : 'form-control' } }) }}
@@ -29,7 +28,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-sm-2 control-label">
-                                {{ form_label(form.mail, 'nom ecole') }}
+                                {{ form_label(form.mail, 'Email') }}
                             </div>
                             <div class="col-sm-10">
                                 {{ form_widget(form.mail, { 'attr' : { 'class' : 'form-control' } }) }}
@@ -37,32 +36,32 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-sm-2 control-label">
-                                {{ form_label(form.schoolphone, 'school phone') }}
+                                {{ form_label(form.phone, 'Telephone') }}
                             </div>
                             <div class="col-sm-10">
-                                {{ form_widget(form.schoolphone, { 'attr' : { 'class' : 'form-control' } }) }}
+                                {{ form_widget(form.phone, { 'attr' : { 'class' : 'form-control' } }) }}
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-sm-2 control-label">
-                                {{ form_label(form.Xschool, 'Xschool') }}
+                                {{ form_label(form.lat, 'Latitude') }}
                             </div>
                             <div class="col-sm-10">
-                                {{ form_widget(form.Xschool, { 'attr' : { 'class' : 'form-control' } }) }}
+                                {{ form_widget(form.lat, { 'attr' : { 'class' : 'form-control' } }) }}
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <div class="col-sm-2 control-label">
-                                {{ form_label(form.Yschool, 'Yschool') }}
+                                {{ form_label(form.lng, 'Longitude') }}
                             </div>
                             <div class="col-sm-10">
-                                {{ form_widget(form.Yschool, { 'attr' : { 'class' : 'form-control' } }) }}
+                                {{ form_widget(form.lng, { 'attr' : { 'class' : 'form-control' } }) }}
                             </div>
                         </div>
-
-
-                        <button class="btn btn-dribbble" >Ajouter</button>
+                        <div class="row text-right">
+                            <button class="btn btn-success" >{{ title }}</button>
+                        </div>
                 {{ form_rest(form) }}
                 {{ form_end(form) }}
             </div>

@@ -26,6 +26,16 @@
     </a>
 </li>
 <li>
+    <a href="{{ path('cartoon_list') }}">
+        <i class="fa fa-gamepad"></i><span class="title">Dessins animés</span>
+    </a>
+</li>
+<li>
+    <a href="{{ path('songs_list') }}">
+        <i class="fa fa-music"></i><span class="title">Musique</span>
+    </a>
+</li>
+<li>
     <a href="{{ path('read') }}">
         <i class="fa fa-book"></i><span class="title">Articles</span>
 
@@ -73,23 +83,23 @@
     </a>
 </li>
 
-<li>
-    <a href="{{ path('discutea_forum_admin_dashboard') }}">
-        <i class="fa fa-comments-o"></i><span class="title">Forum</span>
-    </a>
-</li>
+{#<li>#}
+    {#<a href="{{ path('discutea_forum_admin_dashboard') }}">#}
+        {#<i class="fa fa-comments-o"></i><span class="title">Forum</span>#}
+    {#</a>#}
+{#</li>#}
 
 <li>
     <a><i class="fa fa-graduation-cap"></i><span class="title">Enseignants</span></a>
     <ul class="nav collapse">
-        <li><a href="{{ path('read_teachers1') }}"><span class="title">Liste des enseignants</span></a></li>
+        <li><a href="{{ path('list_teachers') }}"><span class="title">Liste des enseignants</span></a></li>
         <li><a href="{{ path('teacher_add') }}"><span class="title">Ajouter un enseignant</span></a></li>
     </ul>
 </li>
 <li>
     <a><i class="fa fa-university"></i><span class="title">Ecoles</span></a>
     <ul class="nav collapse">
-        <li><a href="{{ path('look_school') }}"><span class="title">Liste des écoles</span></a></li>
+        <li><a href="{{ path('read_school') }}"><span class="title">Liste des écoles</span></a></li>
         <li><a href="{{ path('school_add') }}"><span class="title">Ajouter une ecole</span></a></li>
     </ul>
 </li>
@@ -103,5 +113,11 @@
     <ul class="nav collapse">
         <li><a href="{{ path('events_list') }}"><span class="title">Liste des évenements</span></a></li>
         <li><a href="{{ path('add_event') }}"><span class="title">Ajouter un évenement</span></a></li>
+    </ul>
+</li>
+<li class="has-sub"><a><i class="fa fa-question"></i><span class="title">Quiz</span></a>
+    <ul class="nav collapse">
+        <li><a href="{{ path('quizes_list') }}"><span class="title">Liste des quizes</span></a></li>
+        <li><a href="{{ path('quizes_add') }}"><span class="title">Ajouter un quiz</span></a></li>
     </ul>
 </li>

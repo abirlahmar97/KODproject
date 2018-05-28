@@ -1,55 +1,25 @@
-{% block main %}
-    {%  for schoolname in schoolnames %}
-<section class="mainContent full-width clearfix conactSection">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-4 col-xs-12">
-
-                <div class="media addressContent">
-              <span class="media-left bg-color-1" href="#">
-                <i class="fa fa-map-marker" aria-hidden="true"></i>
-              </span>
-                    <div class="media-body">
-                        <h3 class="media-heading">Adresse:</h3>
-                        <p>{{ schoolname.address }}</p>
-
-                    </div>
-                </div>
+<div>
+    {% for school in schools %}
+        <div class="media courseList couresListPage school">
+            <a class="media-left border-color-1 text-center" href="" style="width: 20%;">
+                <img class="media-object" style="padding: 20px 10px" src="{{ asset('img/school-default.png') }}"
+                     alt="Image">
+            </a>
+            <div class="media-body">
+                <h3 class="media-heading"><a style="overflow: visible; margin-bottom: 5px" href=""
+                                             class="color-1">{{ school.name }}</a></h3>
+                <ul class="list" style="padding-bottom: 10px">
+                    <li><i class="fa fa-location-arrow" aria-hidden="true"></i> {{ school.address }}</li>
+                    <li><i class="fa fa-phone" aria-hidden="true"></i> {{ school.phone }}</li>
+                    <li><i class="fa fa-envelope" aria-hidden="true"></i> {{ school.mail }}</li>
+                </ul>
+                <ul class="list-inline btn-yellow btnPart">
+                </ul>
+                <ul style="display: none">
+                    <li class="school-lat">{{ school.lat }}</li>
+                    <li class="school-lng">{{ school.lng }}</li>
+                </ul>
             </div>
-
-            <div class="col-sm-4 col-xs-12">
-                <div class="media addressContent">
-              <span class="media-left bg-color-2" href="#">
-                <i class="fa fa-phone" aria-hidden="true"></i>
-              </span>
-                    <div class="media-body">
-                        <h3 class="media-heading">numero de télephone </h3>
-                        <p>{{ schoolname.schoolphone}}</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-sm-4 col-xs-12">
-                <div class="media addressContent">
-              <span class="media-left bg-color-3" href="#">
-                <i class="fa fa-envelope-o" aria-hidden="true"></i>
-              </span>
-                    <div class="media-body">
-                        <h3 class="media-heading">Email:</h3>
-                        <p><a href="kidzschool@test.com">bienvenue a l'ecole  {{ schoolname.schoolname }}</a>
-                            <br>notre email:
-                            <a href="mailto:hello1@example.com">{{ schoolname.mail }}</a>
-                        </p>
-
-                    </div>
-
-                </div>
-            </div>
-
         </div>
-
-    </div>
-
-</section>
-                {% endfor %}
-{% endblock %}
+    {% endfor %}
+</div>

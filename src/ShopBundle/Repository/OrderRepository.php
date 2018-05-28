@@ -22,6 +22,18 @@ class OrderRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->getQuery()->getResult();
     }
+    public function findByUserId($user)
+    {
+        $qb = $this->createQueryBuilder('o')
+            ->select('o')
+            ->where('o.user = :user')
+            ->andWhere('o.confirmed = 1')
+            ->andWhere('o.reference != 0')
+            ->orderBy('o.id')
+            ->setParameter('user', $user);
+
+        return $qb->getQuery()->getResult();
+    }
 
 //    public function getMax()
 //    {   $statement= $this->getEntityManager()

@@ -8,7 +8,7 @@ kid_activity:
 
 kids_add:
     path:     /parent/kids/add
-    defaults: { _controller: ChildBundle:Parent:addKid }
+    defaults: { _controller: ChildBundle:Parent:createSpace }
 
 kids_list:
     path:     /parent/kids
@@ -18,6 +18,22 @@ games_list:
     path:     /admin/games/list
     defaults: { _controller: ChildBundle:Admin:listGames }
 
+songs_list:
+    path:     /admin/songs/list
+    defaults: { _controller: ChildBundle:Admin:listSongs }
+
+songs_add:
+    path:     /admin/songs/add
+    defaults: { _controller: ChildBundle:Admin:addSong }
+
+songs_edit:
+    path:     /admin/songs/edit/{id}
+    defaults: { _controller: ChildBundle:Admin:editSong }
+
+songs_delete:
+    path:     /admin/songs/delete/{id}
+    defaults: { _controller: ChildBundle:Admin:deleteSong }
+
 games_add:
     path:     /admin/games/add
     defaults: { _controller: ChildBundle:Admin:addGames }
@@ -25,6 +41,10 @@ games_add:
 games_edit:
     path:     /admin/games/edit/{id}
     defaults: { _controller: ChildBundle:Admin:editGames }
+
+games_delete:
+    path:     /admin/games/delete/{id}
+    defaults: { _controller: ChildBundle:Admin:deleteGame }
 
 games_add_blk:
     path:     /games/bulk
@@ -61,13 +81,25 @@ episodes_list:
     path:     /episodes/cartoon/{id}
     defaults: { _controller: ChildBundle:Cartoon:listEpisodes }
 
+admin_episodes_list:
+    path:     /admin/episodes/cartoon/{id}
+    defaults: { _controller: ChildBundle:Cartoon:listEpisodes }
+
 episodes_watch:
-    path:     /episodes/{id}
-    defaults: { _controller: ChildBundle:Cartoon:episodeWatch, id : 1 }
+    path:     /episodes
+    defaults: { _controller: ChildBundle:Cartoon:episodeWatch }
 
 quizes_add:
     path:     /admin/quiz/add
     defaults: { _controller: ChildBundle:Quizes:addQuiz }
+
+quizes_edit:
+    path:     /admin/quiz/edit/{id}
+    defaults: { _controller: ChildBundle:Quizes:editQuiz}
+
+quizes_delete:
+    path:     /admin/quiz/delete/{id}
+    defaults: { _controller: ChildBundle:Quizes:deleteQuiz }
 
 quizes_list:
     path:     /admin/quiz/list
@@ -78,8 +110,12 @@ questions_add:
     defaults: { _controller: ChildBundle:Quizes:addQuestions }
 
 questions_list:
-    path:     /questions/quiz/{id}
+    path:     /admin/questions/quiz/{id}
     defaults: { _controller: ChildBundle:Quizes:listQuestions }
+#
+#admin_questions_list:
+#    path:     /admin/questions/quiz/{id}
+#    defaults: { _controller: ChildBundle:Quizes:listQuestionsAdmin }
 
 answer_quiz:
     path:   /parent/quiz/answer/{id}
@@ -90,8 +126,12 @@ show_quiz:
     defaults: { _controller: ChildBundle:Quizes:showQuiz }
 
 block_game:
-    path:   /parent/block?child:{cid},game:{gid}
-    defaults: { _controller: ChildBundle:Game:blockGame }
+    path:   /parent/block?child={cid}&game={gid}
+    defaults: { _controller: ChildBundle:Parent:blockGame }
+
+block_song:
+    path:   /parent/block?child={cid}&song={mid}
+    defaults: { _controller: ChildBundle:Parent:blockSong }
 
 #games_del:
 #    path:     /games/del/{id}

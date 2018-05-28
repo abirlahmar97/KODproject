@@ -1,0 +1,28 @@
+api_product_bycategory:
+    path:     /products/category/{category}
+    defaults: { _controller: ShopBundle:Products:listProductsapi }
+
+api_panier:
+    path:     /panierApi
+    defaults: { _controller: ShopBundle:Cart:Panierapi }
+
+api_create_order:
+    path:   /orders/create
+    defaults: { _controller: ShopBundle:Orders:createOrderApi }
+    methods : POST
+
+api_categories:
+    path:   /categories
+    defaults: { _controller: ShopBundle:Products:listCategoriesApi }
+
+api_oders:
+    path:   /confirm_orders
+    defaults: { _controller: ShopBundle:Orders:confirmationapi}
+
+api_comment:
+    path:   /comments/{id}
+    defaults: { _controller: ShopBundle:Products:listCommentapi}
+
+api_calcul:
+    path:   /commentsnbre/{id}
+    defaults: { _controller: ShopBundle:Products:countCommentairesApi}

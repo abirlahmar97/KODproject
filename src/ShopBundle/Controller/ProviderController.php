@@ -22,7 +22,6 @@ class ProviderController extends Controller
         foreach ($data as $item){
             $piedata[] = [date_format($item['date'], 'F d, Y') , intval($item['products'])];
         }
-        dump($piedata);
 //        $v = 0;
 //        foreach ($produit1 as $product) {
 //                $v = $v + 1;
@@ -76,7 +75,6 @@ class ProviderController extends Controller
         $pieChart->getOptions()->getTitleTextStyle()->setFontSize(20);
 
 
-        $d = array( 'pieChart' => $pieChart);
         return $this->render('@Shop/Provider/Home/index.html.twig', array('pieChart' => $pieChart));
 
     }
@@ -88,6 +86,7 @@ class ProviderController extends Controller
         $form->handleRequest($request);
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $product->setUser($this->getUser());
             $em->persist($product);
             $em->flush();
             return $this->redirectToRoute("list_products");
@@ -118,7 +117,7 @@ class ProviderController extends Controller
     {
 
         $em = $this->getDoctrine()->getManager();
-        $products = $em->getRepository("ShopBundle:Product")->findAll();
+        $products = $em->getRepository("ShopBundle:Product")->findforProvider($this->getUser()->getId());
         return $this->render('ShopBundle:Provider/Products:list.html.twig', array(
             "products" => $products
         ));

@@ -10,6 +10,14 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TeacherController extends Controller
 {
+
+    public function teacherDetailsAction($id){
+        $teacher = $this->getDoctrine()->getRepository("ParentingBundle:Teacher")->find($id);
+        return $this->render("ParentingBundle:Teachers:aboutteacher.html.twig", [
+            'teacher' => $teacher
+        ]);
+    }
+
     public function readteachersAction()
     {
         $em= $this->getDoctrine()->getManager();
@@ -20,15 +28,15 @@ class TeacherController extends Controller
     }
 
 
-    public function readteachers1Action()
+    public function listTeachersAction()
     {
         $em= $this->getDoctrine()->getManager();
         $teachers=$em->getRepository("ParentingBundle:Teacher")->findAll();
-        return $this->render('@Parenting/teachers/deleteteacher.twig', array(
+        return $this->render('@Parenting/Teachers/list.html.twig', array(
             "teachers"=>$teachers
         ));
     }
-    public function createAction(\Symfony\Component\HttpFoundation\Request $request)
+    public function createAction(Request $request)
     {
 
         $teachers = new Teacher();
@@ -38,10 +46,11 @@ class TeacherController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($teachers);
             $em->flush();
-            return $this->redirectToRoute("teacher_add");
+            return $this->redirectToRoute("list_teachers");
         }
-        return $this->render('@Parenting/teachers/addteacher.html.twig', array(
-            "form" => $form->createView()
+        return $this->render('@Parenting/teachers/form.html.twig', array(
+            "form" => $form->createView(),
+            'title' => 'Ajouter'
         ));
     }
     public function deleteAction($id)
@@ -50,7 +59,7 @@ class TeacherController extends Controller
         $teaccher= $em->getRepository(Teacher::class)->find($id);
         $em->remove($teaccher);
         $em->flush();
-        return $this->redirectToRoute("read_teachers1");
+        return $this->redirectToRoute("list_teachers");
     }
 
     public function updateteacherAction ($id,Request $request)
@@ -62,10 +71,11 @@ class TeacherController extends Controller
         if($form->isValid())
         {
             $em->flush();
-            return $this->redirectToRoute("update_teacher");
+            return $this->redirectToRoute("list_teachers");
         }
-        return $this->render('ParentingBundle:teachers:updateteacher.html.twig', array(
-            "form"=>$form->createView()
+        return $this->render('ParentingBundle:teachers:form.html.twig', array(
+            "form"=>$form->createView(),
+            'title' => 'Modifier'
         ));
     }
 
@@ -81,6 +91,6 @@ class TeacherController extends Controller
         $em = $this->getDoctrine()->getManager();
         $teachers= $em->getRepository("ParentingBundle:Teacher")->find($id);
         $data= $this->get("jms_serializer")->serialize($teachers,'json');
-        return new \Symfony\Component\HttpFoundation\Response($data);
+        return new Response($data);
     }
     }

@@ -18,13 +18,17 @@ class TeacherType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-
-         ->add('name')
-        ->add('lastname')
-            ->add('subject', EntityType::class, array('class' => 'parentingBundle\Entity\Subject','choice_label' => 'name', 'multiple' => false))
+            ->add('name')
+            ->add('subject', EntityType::class, array(
+                'class' => 'ParentingBundle\Entity\Subject',
+                'choice_label' => 'name', 'multiple' => false
+            ))
             ->add('price')
+            ->add('degree')
+            ->add('experience')
             ->add('linefb')
             ->add('phone')
+            ->add('price')
             ->add('photo', PhotoType::class);
 
 

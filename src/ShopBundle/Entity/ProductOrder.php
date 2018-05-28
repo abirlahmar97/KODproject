@@ -3,12 +3,16 @@
 namespace ShopBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use ShopBundle\Entity\Order;
+use ShopBundle\Entity\Product;
+use UserBundle\Entity\User;
 
 /**
- * UserOrder
+ * ProductOrder
  *
  * @ORM\Table(name="product_order")
  * @ORM\Entity(repositoryClass="ShopBundle\Repository\ProductOrderRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class ProductOrder
 {
@@ -157,11 +161,11 @@ class ProductOrder
     /**
      * Set order.
      *
-     * @param \ShopBundle\Entity\Order|null $order
+     * @param Order|null $order
      *
-     * @return UserOrder
+     * @return ProductOrder
      */
-    public function setOrder(\ShopBundle\Entity\Order $order = null)
+    public function setOrder(Order $order = null)
     {
         $this->order = $order;
 
@@ -171,7 +175,7 @@ class ProductOrder
     /**
      * Get order.
      *
-     * @return \ShopBundle\Entity\Order|null
+     * @return Order|null
      */
     public function getOrder()
     {
@@ -181,11 +185,11 @@ class ProductOrder
     /**
      * Set product.
      *
-     * @param \ShopBundle\Entity\Product|null $product
+     * @param Product|null $product
      *
-     * @return UserOrder
+     * @return ProductOrder
      */
-    public function setProduct(\ShopBundle\Entity\Product $product = null)
+    public function setProduct(Product $product = null)
     {
         $this->product = $product;
 
@@ -195,7 +199,7 @@ class ProductOrder
     /**
      * Get product.
      *
-     * @return \ShopBundle\Entity\Product|null
+     * @return Product|null
      */
     public function getProduct()
     {
@@ -205,11 +209,11 @@ class ProductOrder
     /**
      * Set user.
      *
-     * @param \UserBundle\Entity\User|null $user
+     * @param User|null $user
      *
-     * @return UserOrder
+     * @return ProductOrder
      */
-    public function setUser(\UserBundle\Entity\User $user = null)
+    public function setUser(User $user = null)
     {
         $this->user = $user;
 
@@ -219,7 +223,7 @@ class ProductOrder
     /**
      * Get user.
      *
-     * @return \UserBundle\Entity\User|null
+     * @return User|null
      */
     public function getUser()
     {
@@ -229,11 +233,11 @@ class ProductOrder
     /**
      * Set provider.
      *
-     * @param \UserBundle\Entity\User|null $provider
+     * @param User|null $provider
      *
-     * @return UserOrder
+     * @return ProductOrder
      */
-    public function setProvider(\UserBundle\Entity\User $provider = null)
+    public function setProvider(User $provider = null)
     {
         $this->provider = $provider;
 
@@ -243,10 +247,17 @@ class ProductOrder
     /**
      * Get provider.
      *
-     * @return \UserBundle\Entity\User|null
+     * @return User|null
      */
     public function getProvider()
     {
         return $this->provider;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function decreaseQuantity(){
+        $this->product->setQuantity($this->product->getQuantity() - $this->quantity);
     }
 }

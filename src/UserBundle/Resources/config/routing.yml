@@ -7,27 +7,27 @@ edit_profile:
     defaults: { _controller: UserBundle:Home:editProfile }
 
 create_complaint:
-    path:     /Parent/Complaint/create
+    path:     /parent/complaint/create
     defaults: { _controller: UserBundle:Complaint:create }
 
 read_complaint:
-    path:     /Admin/Complaint/read
+    path:     /admin/Complaint/read
     defaults: { _controller: UserBundle:Complaint:read }
 
 update_complaint:
-    path:     /Admin/Complaint/update{id}
+    path:     /admin/Complaint/update{id}
     defaults: { _controller: UserBundle:Complaint:update }
 
 delete_complaint:
-    path:     /Admin/Complaint/delete{id}
+    path:     /admin/Complaint/delete{id}
     defaults: { _controller: UserBundle:Complaint:delete }
 
-front_read_complaint:
-    path:     /Parent/Complaint/read
+list_complaints:
+    path:     /parent/complaints
     defaults: { _controller: UserBundle:Complaint:front_read }
 
 create_category:
-    path:     /Parent/Complaint/Category/Add
+    path:     /parent/Complaint/Category/Add
     defaults: { _controller: UserBundle:Complaint:add_category }
 
 bills:
@@ -37,5 +37,14 @@ bills:
 api_user_get:
     path: /api/user/get
     defaults : { _controller: UserBundle:Users:getUser }
+
+api_subscribe:
+    path: /registerapi
+    defaults: { _controller:  UserBundle:Users:subscribeApi }
+    methods: POST
+
+add_users:
+    path: /users/add
+    defaults : { _controller: UserBundle:Admin:addUsers }
 
 

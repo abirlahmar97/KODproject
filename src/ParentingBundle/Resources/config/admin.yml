@@ -52,3 +52,39 @@ read:
 create:
     path:     /article/create
     defaults: { _controller: ParentingBundle:Article:create }
+
+read_school:
+        path: /schools
+        defaults: { _controller: ParentingBundle:School:listSchool }
+
+delete_school:
+    path:     /schools/delete{id}
+    defaults: { _controller: ParentingBundle:School:delete }
+
+school_add:
+    path:     /schools/add
+    defaults: { _controller: ParentingBundle:School:createSchool }
+
+school_update:
+    path:     /schools/update/{id}
+    defaults: { _controller: ParentingBundle:School:updateSchool }
+
+list_teachers:
+        path: /teachers
+        defaults: { _controller: ParentingBundle:Teacher:listTeachers }
+
+update_teacher:
+    path:     /teacher/update{id}
+    defaults: { _controller: ParentingBundle:Teacher:updateteacher }
+
+teacher_add:
+    path:     /teacher/add
+    defaults: { _controller: ParentingBundle:Teacher:create }
+
+delete_teacher:
+    path:     /teacher/delete{id}
+    defaults: { _controller: ParentingBundle:Teacher:delete }
+
+subject_add:
+    path:     /subject/add
+    defaults: { _controller: ParentingBundle:Subject:create }

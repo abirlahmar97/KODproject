@@ -23,9 +23,9 @@ class School
     /**
      * @var string
      *
-     * @ORM\Column(name="schoolname", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255)
      */
-    private $schoolname;
+    private $name;
 
     /**
      * @var string
@@ -35,17 +35,18 @@ class School
     private $address;
 
     /**
-     * @var int
+     * @var float
      *
-     * @ORM\Column(name="Xschool", type="float")
+     * @ORM\Column(name="lat", type="float")
      */
-    private $Xschool;
+    private $lat;
+
     /**
-     * @var int
+     * @var float
      *
-     * @ORM\Column(name="Yschool", type="float")
+     * @ORM\Column(name="lng", type="float")
      */
-    private $Yschool;
+    private $lng;
 
 
 
@@ -54,12 +55,12 @@ class School
      *
      * @ORM\Column(name="schoolphone", type="integer")
      */
-    private $schoolphone;
+    private $phone;
 
     /**
-     * @var int
+     * @var float
      *
-     * @ORM\Column(name="schoolmail", type="string")
+     * @ORM\Column(name="mail", type="string")
      */
     private $mail;
 
@@ -67,34 +68,37 @@ class School
     /**
      * Get id
      *
-     * @return int
+     * @return float
      */
     public function getId()
     {
         return $this->id;
     }
+
     /**
-     * Set schoolname
+     * Set name
      *
-     * @param string $schoolname
+     * @param string $name
      *
      * @return School
      */
-    public function setSchoolname($schoolname)
+    public function setName($name)
     {
-        $this->schoolname = $schoolname;
+        $this->name = $name;
 
         return $this;
     }
+
     /**
-     * Get schoolname
+     * Get name
      *
      * @return string
      */
-    public function getSchoolname()
+    public function getName()
     {
-        return $this->schoolname;
+        return $this->name;
     }
+
     /**
      * Set address
      *
@@ -102,6 +106,7 @@ class School
      *
      * @return School
      */
+
     public function setAddress($address)
     {
         $this->address = $address;
@@ -114,82 +119,83 @@ class School
      *
      * @return string
      */
+
     public function getAddress()
     {
         return $this->address;
     }
 
     /**
-     * Set schoolphone
+     * Set phone
      *
-     * @param integer $schoolphone
+     * @param integer $phone
      *
      * @return School
      */
-    public function setSchoolphone($schoolphone)
+    public function setPhone($phone)
     {
-        $this->schoolphone = $schoolphone;
+        $this->phone = $phone;
 
         return $this;
     }
 
     /**
-     * Get schoolphone
+     * Get phone
      *
      * @return int
      */
-    public function getSchoolphone()
+    public function getPhone()
     {
-        return $this->schoolphone;
+        return $this->phone;
     }
 
 
     /**
-     * Set xschool
+     * Set latitude
      *
-     * @param integer $xschool
+     * @param float $lat
      *
      * @return School
      */
-    public function setXschool($xschool)
+    public function setLat($lat)
     {
-        $this->Xschool = $xschool;
+        $this->lat = $lat;
 
         return $this;
     }
 
     /**
-     * Get xschool
+     * Get latitude
      *
-     * @return integer
+     * @return float
      */
-    public function getXschool()
+    public function getLat()
     {
-        return $this->Xschool;
+        return $this->lat;
     }
 
     /**
-     * Set yschool
+     * Set longitude
      *
-     * @param integer $yschool
+     * @param float $lng
      *
      * @return School
      */
-    public function setYschool($yschool)
+    public function setLng($lng)
     {
-        $this->Yschool = $yschool;
+        $this->lng = $lng;
 
         return $this;
     }
 
     /**
-     * Get yschool
+     * Get longitude
      *
-     * @return integer
+     * @return float
      */
-    public function getYschool()
+    public function getLng()
     {
-        return $this->Yschool;
+        return $this->lng;
     }
 
     /**
@@ -215,4 +221,5 @@ class School
     {
         return $this->mail;
     }
+
 }

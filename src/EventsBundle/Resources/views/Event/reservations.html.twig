@@ -1,0 +1,126 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}Tous les évènements{% endblock %}
+
+{% block main %}
+    <section class="pageTitleSection">
+        <div class="container">
+            <div class="pageTitleInfo">
+                <h2>Mes réservations</h2>
+                <ol class="breadcrumb">
+                    <li><a href="{{ path('user_homepage') }}">Acceuil</a></li>
+                    <li class="active">Evenements</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+
+    <section class="mainContent full-width clearfix coursesSection">
+
+        <div class="container">
+            {% for row in reservations | batch(2) %}
+            <div class="row">
+                {% for reservation in row %}
+                    {% set event = reservation.event %}
+                    {% set color = random(5)+1 %}
+                    <div class="col-sm-6 col-xs-12 block">
+                        <div class="media eventContent bg-color-{{ color }}">
+                            <a class="media-left" style="max-height: 270px">
+                                <img src="{{ asset(event.photo.WebPath) }}" alt="" class="media-object">
+                                <span class="sticker-round"> {{ event.startDate.format("M") }} <br>{{ event.startDate.format("d") }} </span>
+                            </a>
+                            <div class="media-body">
+                                <div class="row">
+                                    <div class="col-md-10 media-heading">
+                                        <h3 style="margin-bottom: 0"><a>{{ event.title }} </a></h3>
+                                        <h3><small style="color : white">{{ event.type }}</small></h3>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        {% if app.user.id == event.user.id %}
+                                        <a href="{{ path('delete_event', { 'id' : event.id }) }}" class="btn btn-xs btn-primary pull-right"><i class="fa fa-remove"></i></a>
+                                    {% endif %}
+                                    </div>
+
+                                </div>
+                                <ul class="list-unstyled" style="padding-bottom: 10px">
+                                    <li><i class="fa fa-map-marker"></i>{{ event.location }} </li>
+                                    <li>
+                                        <i class="fa fa-clock-o" aria-hidden="true"></i>{{ event.startDate.format("h:m") }}
+                                        <i style="padding-left: 20px" class="fa fa-dollar"></i>Prix : {{ event.price }} DT/P
+                                    </li>
+                                    {% if event.leftPlaces == 0 %}
+                                        <li>Il n'y a plus de places disponibles.</li>
+                                    {% else %}
+                                        <li><i class="fa fa-ticket"></i>Places disponibles : {{ event.leftPlaces }}</li>
+                                    {% endif %}
+                                </ul>
+                                <ul class="list-inline btn-yellow text-center">
+                                    <li><a  href="{{ path('event_details', {'id' : event.id }) }}" class="btn btn-primary">Details</a></li>
+                                    <li>
+                                        <a class="cancel-btn btn btn-primary" href="#cancel-modal" data-toggle="modal"
+                                                data-event="{{ event.id }}"
+                                                data-title="{{ event.title }}">Annuler</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                {% endfor %}
+            </div>
+            {% endfor %}
+
+
+
+            <div  class="pagerArea text-center">
+                {{ knp_pagination_render(reservations) }}
+            </div>
+        </div>
+
+
+    </section>
+
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="cancel-modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Annuler la réservation</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Etes vous sure de vouloir annuler votre réservation pour
+                        <span id="event-title"></span> ?
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-info" data-dismiss="modal">Fermer</button>
+                    <a id="cancel-path" href="{{ path('cancel_reservation', {'id' : 1}) }}" type="button" class="btn btn-outline-primary">Oui, annuler</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(function () {
+            var eventid;
+            var event_title;
+            var cancel_path = "{{ path('cancel_reservation', {'id' : 1}) }}";
+            cancel_path = cancel_path.substring(0, cancel_path.length-1);
+
+
+            $('.cancel-btn').click(function () {
+                eventid = $(this).attr('data-event');
+                event_title = $(this).attr('data-title');
+                $('#event-title').text(event_title);
+                $('#cancel-path').attr('href', cancel_path + eventid);
+            });
+        })
+    </script>
+{% endblock %}

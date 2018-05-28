@@ -26,7 +26,6 @@ class Teacher
     private $id;
 
 
-
     /**
      * @var float
      *
@@ -41,11 +40,24 @@ class Teacher
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="degree", type="string", length=255)
+     */
+    private $degree;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="account", type="string", length=255)
+     * @ORM\Column(name="experience", type="integer")
+     */
+    private $experience;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="account", type="string", length=255, nullable=true)
      */
     private $linefb;
 
@@ -55,13 +67,6 @@ class Teacher
      * @ORM\Column(name="phone", type="integer")
      */
     private $phone;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="lastname", type="string", length=255)
-     */
-    private $lastname;
 
     /**
      * @ORM\OneToOne(targetEntity="MediaBundle\Entity\Photo", cascade={"persist"})
@@ -78,9 +83,6 @@ class Teacher
     {
         return $this->id;
     }
-
-
-
 
 
     /**
@@ -290,5 +292,77 @@ class Teacher
     public function getSubject()
     {
         return $this->Subject;
+    }
+
+    /**
+     * Set degree.
+     *
+     * @param string $degree
+     *
+     * @return Teacher
+     */
+    public function setDegree($degree)
+    {
+        $this->degree = $degree;
+
+        return $this;
+    }
+
+    /**
+     * Get degree.
+     *
+     * @return string
+     */
+    public function getDegree()
+    {
+        return $this->degree;
+    }
+
+    /**
+     * Set experience.
+     *
+     * @param string $experience
+     *
+     * @return Teacher
+     */
+    public function setExperience($experience)
+    {
+        $this->experience = $experience;
+
+        return $this;
+    }
+
+    /**
+     * Get experience.
+     *
+     * @return string
+     */
+    public function getExperience()
+    {
+        return $this->experience;
+    }
+
+    /**
+     * Set hobbies.
+     *
+     * @param string $hobbies
+     *
+     * @return Teacher
+     */
+    public function setHobbies($hobbies)
+    {
+        $this->hobbies = $hobbies;
+
+        return $this;
+    }
+
+    /**
+     * Get hobbies.
+     *
+     * @return string
+     */
+    public function getHobbies()
+    {
+        return $this->hobbies;
     }
 }

@@ -1,35 +1,35 @@
 {% extends 'layout.html.twig' %}
 {% block main %}
-
     <section class="mainContent full-width clearfix coursesSection">
-
-    <div class="container">
-    <div class="row">
-        <center>
-    <section style="position: relative;left:-50%" class="mainContent clearfix">
-        <div class="col-sm-4 col-sm-push-8 col-xs-12">
-            <div class="pricingTable">
-                <div class="priceUper">
-                    <div class="priceTitle alt bg-color-3 checkingTitle"><h3>{{ event.title}} : {{ event.type }}</h3></div>
-                    <div style="width: 359px; height: 270px; background-image: url('{{ asset(event.photo.WebPath) }}'); background-size: cover">
-                </div>
-                <div class="priceLower">
-                    <ul class="list-unstyled priceOffer">
-                        <li></li>
-                        <li><i class="fa fa-calendar-o" aria-hidden="true"></i>{{ event.startDate | date("D M Y") }}</li>
-                        <li><i class="fa fa-calendar-o" aria-hidden="true"></i>{{ event.endDate | date("D M Y")}}</li>
-                        <li><i class="fa fa-address-card-o" aria-hidden="true"></i>{{ event.location }}</li>
-                    </ul>
-                    <div class="priceBtn">
-                        <h5>Prix : <span>{{ event.price }} DT/P</span></h5>
+        <div class="container">
+            <div class="row">
+                <center>
+                    <div class="col-sm-4 col-xs-12">
+                        <div class="pricingTable">
+                            <div class="priceUper">
+                                <div class="priceTitle alt bg-color-3 checkingTitle"><h3>{{ event.title }}
+                                        : {{ event.type }}</h3></div>
+                                <div style="width: 359px; height: 270px; background-image: url('{{ asset(event.photo.WebPath) }}'); background-size: cover">
+                                </div>
+                                <div class="priceLower">
+                                    <ul class="list-unstyled priceOffer">
+                                        <li></li>
+                                        <li><i class="fa fa-calendar-o"
+                                               aria-hidden="true"></i>{{ event.startDate | date("D M Y") }}</li>
+                                        <li><i class="fa fa-calendar-o"
+                                               aria-hidden="true"></i>{{ event.endDate | date("D M Y") }}</li>
+                                        <li><i class="fa fa-address-card-o"
+                                               aria-hidden="true"></i>{{ event.location }}</li>
+                                    </ul>
+                                    <div class="priceBtn">
+                                        <h5>Prix : <span>{{ event.price }} DT/P</span></h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </center>
             </div>
         </div>
     </section>
-</center>
-    </div>
-    </div>
-    </section>
-</center>
 {% endblock %}

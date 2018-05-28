@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="reservation")
  * @ORM\Entity(repositoryClass="EventsBundle\Repository\ReservationRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Reservation
 {
@@ -146,5 +147,12 @@ class Reservation
     public function getParticipants()
     {
         return $this->participants;
+    }
+
+    /**
+     * @ORM\PreRemove()
+     */
+    public function increaseEventPlaces(){
+        $this->event->setLeftPlaces($this->event->getLeftPlaces() + $this->participants);
     }
 }

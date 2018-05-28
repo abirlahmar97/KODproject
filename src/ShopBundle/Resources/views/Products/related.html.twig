@@ -7,7 +7,7 @@
                     <a href="single-product.html">
                         <img src="{{ asset(product.img.webPath) }}" alt="image" class="img-responsive">
                     </a>
-                    <a data-toggle="modal" href=".quick-view" class="btn-block"><i class="fa fa-eye" aria-hidden="true"></i>Details</a>
+                    <a data-toggle="modal" href="{{ path('product_details', { 'id' : product.id }) }}" class="btn-block"><i class="fa fa-eye" aria-hidden="true"></i>Details</a>
                 </div>
                 <div class="box-info">
                     <h4>{{ product.name }}</h4>

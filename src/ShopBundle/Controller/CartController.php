@@ -9,9 +9,12 @@ use ShopBundle\Form\UserAddressType;
 use ShopBundle\Form\UsersAdressesType;
 use ShopBundle\ShopBundle;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 use UserBundle\Entity\UserInfos;
 use UserBundle\Form\UserInfosType;
 use Symfony\Component\HttpFoundation\Response;
@@ -186,6 +189,24 @@ class CartController extends Controller
 
         return $this->redirect ($this->generateUrl ('shipping'));
     }
+    public function PanierapiAction()
+    {
+        $panier= $this->getDoctrine()->getRepository("ShopBundle:ProductOrder")->findAll();
 
+        $data=$this->get("jms_serializer")->serialize($panier,'json');
+        return new Response($data);
+    }
+//    public function PanierapiAction()
+//    {
+//        $em= $this->getDoctrine()->getManager();
+//        $lignes=$em->getRepository("ShopBundle:ProductOrder")->findAll();
+//        $normaliser=new ObjectNormalizer();
+//        //etape 1: initialiser le serializer
+//        $serializer=new Serializer(array($normaliser));
+//        //etape 2 : transformation liste des objets
+//        $data=$serializer->normalize($lignes);
+//        //etape 3 : encodage format JSON
+//        return new JsonResponse($data);
+//    }
 }
 

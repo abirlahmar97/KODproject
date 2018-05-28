@@ -10,5 +10,18 @@ namespace MediaBundle\Repository;
  */
 class VideoRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findCartoon($id){
+        $qb = $this->createQueryBuilder('v')
+            ->leftJoin('v.cartoon', 'c')
+            ->where('c.id = :id')
+            ->setParameter('id', $id);
+        return $qb->getQuery()->getResult();
+    }
 
+    public function findCourses(){
+        $qb = $this->createQueryBuilder('v')
+            ->leftJoin('v.subject', 'c')
+            ->where('c.id != 0');
+        return $qb->getQuery()->getResult();
+    }
 }

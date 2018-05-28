@@ -23,7 +23,7 @@ class ComplaintController extends Controller
             $complaint->setState('non_traitee');
             $em->persist($complaint);
             $em->flush();
-            return $this->redirectToRoute("front_read_complaint");
+            return $this->redirectToRoute("list_complaints");
         }
         return $this->render('@User/Complaint/create.html.twig', array(
             "form" => $form->createView(), 'user' => $this->getUser()

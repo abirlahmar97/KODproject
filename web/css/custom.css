@@ -3,6 +3,11 @@ html, body {
     height: 100%;
 }
 
+.select-qty.dropGeneral .sbHolder, .select-qty.dropGeneral .sbSelector{
+    width: 100px !important;
+    display:  inline;
+}
+
 .sl-content{
     overflow: auto;
 }
@@ -269,9 +274,16 @@ html, body {
 
 .cross{
     position: absolute;
-    right : 50px;
-    top : 30px;
+    right : -75px;
+    top : -75px;
+    width: 150px;
+    height: 150px;
+    padding-top: 80px;
+    padding-left: 30px;
+    background-color: #337ab7;
+    color:  white;
     z-index: 300;
+    border-radius: 100%;
 }
 
 #slider-1, #slider-2, #slider-3, #slider-4 {

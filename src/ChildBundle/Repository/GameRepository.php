@@ -22,4 +22,11 @@ class GameRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function findAllowed($bans){
+        $qb= $this->createQueryBuilder('g');
+        if (count($bans) != 0)
+            $qb->where($qb->expr()->notIn('g.id', $bans));
+        return $qb->getQuery()->getResult();
+    }
+
 }

@@ -16,11 +16,22 @@ class ChildGameRepository extends \Doctrine\ORM\EntityRepository
         $qb = $this->createQueryBuilder('cg')
             ->leftJoin("cg.child", 'c')
             ->where('c.id = :id')
+            ->orderBy('cg.date', 'DESC')
             ->setParameter('id', $id);
         return $qb->getQuery()->getResult();
     }
 
     public function playedToday($child){
+        $em = $this->getEntityManager();
+        $conn = $em->getConnection();
+        $query = $conn->prepare("SELECT SUM(Time_TO_SEC(cg.duration)) as played_time " .
+            "FROM child_game cg WHERE child_id = :id ");
+        $query->bindValue('id', $child );
+        $query->execute();
+        return $query->fetchAll();
+    }
+
+    public function playTime($child){
         $em = $this->getEntityManager();
         $conn = $em->getConnection();
         $query = $conn->prepare("SELECT SUM(Time_TO_SEC(cg.duration)) as played_time " .

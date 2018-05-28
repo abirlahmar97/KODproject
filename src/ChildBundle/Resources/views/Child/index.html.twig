@@ -19,6 +19,11 @@
             line-height: 150px;
             font-weight: 600;
          }
+
+         #wrapper {
+            position: fixed;
+         }
+
         {% if child.gender == 0 %}
         #wrapper .main, #wrapper .whiteSection{
             background: url("{{ asset('img/patterns/003.png') }}") repeat fixed center;
@@ -31,6 +36,18 @@
 
         .modal, .modal-backdrop {
             position: absolute !important;
+        }
+
+        .sl-slide-vertical .sl-slide-inner{
+            background-repeat: no-repeat;
+            background-size: cover  ;
+        }
+
+        .cartoon-container{
+            height: 100%;
+            background-color: white;
+            padding: 50px;
+            border-radius: 10px;
         }
     </style>
 {% endblock %}
@@ -74,27 +91,22 @@
                 <img src="{{ asset('img/games.png') }}">
             </a>
             <a class="menu-item btn-slider" data-slider="2">
-                <img src="{{ asset('img/books.png') }}">
+                <img src="{{ asset('img/cartoon.png') }}">
             </a>
             <a class="menu-item btn-slider" data-slider="3">
                 <img src="{{ asset('img/music.png') }}">
             </a>
             <a class="menu-item btn-slider" data-slider="4">
-                <img src="{{ asset('img/art.png') }}">
+                <img src="{{ asset('img/quiz.png') }}">
             </a>
-
-
         </nav>
         <div class="activities demo-1">
-            <a class="cross"><span class="fa fa-close fa-4x text-primary"></span></a>
-            <div id="slider-1" class="sl-slider-wrapper" >
+            <a class="cross"><span class="fa fa-close fa-3x"></span></a>
+            <div id="slider-1" class="sl-slider-wrapper">
                 <div class="sl-slider">
                     <div class="sl-slide bg-1" data-orientation="vertical" data-slice1-rotation="0"
                          data-slice2-rotation="0" data-slice1-scale="2" data-slice2-scale="2">
                         <div class="sl-slide-inner" style="background-image: url('{{ asset('img/games.jpg') }}')">
-                            <div class="deco" style="font-size: 30pt; padding: 40px 50px">
-                                <i class="fa fa-gamepad fa-4x"></i>
-                            </div>
                             <div class="sectionTitle">
                                 <h2>Le monde des jeux</h2>
                             </div>
@@ -110,7 +122,7 @@
                              data-slice2-rotation="-25" data-slice1-scale="2" data-slice2-scale="2" >
                             <div class="games-sidebar">
                             </div>
-                            <div class="main " style="width: 100%; padding-left: 320px;">
+                            <div class="main" style="width: 100%; padding-left: 320px;">
                                 <div class="sectionTitle">
                                     <h2 style="position: relative;color: black">Liste des jeux</h2>
                                 </div>
@@ -177,13 +189,12 @@
                 <div class="sl-slider">
                     <div class="sl-slide" data-orientation="vertical" data-slice1-rotation="0"
                          data-slice2-rotation="0" data-slice1-scale="2" data-slice2-scale="2">
-                        <div class="sl-slide-inner" style="background-image: url('{{ asset('img/music.jpg') }}')">
-                            <div class="deco"></div>
+                        <div class="sl-slide-inner" style="background-image: url('{{ asset('img/music_space.png') }}')">
                             <div class="schoolInfo">
                                 <h2>Le monde de la musique</h2>
                             </div>
                             <blockquote>
-                                <h4>Ce monde ²est plein d'energie</h4>
+                                <h4>Ce monde est plein d'energie</h4>
                                 <h4>Vous y trouvez une centaine de jeux de toutes les catégories</h4>
                                 <button class="btn btn-info not-rounded" id="enter-music">Entrez ce monde</button>
                             </blockquote>
@@ -195,6 +206,7 @@
                         <ul style="display: none;">
                             {% for song in songs %}
                                 <li class="song">
+                                    <span class="song-id">{{ song.id }}</span>
                                     <span class="title">{{ song.title }}</span>
                                     <span class="singer">{{ song.singer }}</span>
                                     {% if song.photo != null %}
@@ -251,15 +263,16 @@
             </div><!-- /sl-slider -->
             <div id="slider-4" class="sl-slider-wrapper">
                 <div class="sl-slider">
-                    <div class="sl-slide bg-5" data-orientation="vertical" data-slice1-rotation="0"
+                    <div class="sl-slide " data-orientation="vertical" data-slice1-rotation="0"
                          data-slice2-rotation="0" data-slice1-scale="2" data-slice2-scale="2">
-                        <div class="sl-slide-inner">
-                            <div class="deco" data-icon="H"></div>
-                            <h2>Testez votre intelligence</h2>
+                        <div class="sl-slide-inner" style="background-image: url({{ asset('img/quiz-space.jpg') }})">
+                            <div class="schoolInfo">
+                                <h2>Testez votre intelligence</h2>
+                            </div>
                             <blockquote>
                                 <h4>Dans ce monde vous allez apprendre beacoup de choses</h4>
                                 <h4>Passez des Quizs en math, histoire , anglais ...</h4>
-                                <button class="btn btn-outline-info not-rounded" id="enter-paint">Entrez ce monde</button>
+                                <button class="btn btn-info not-rounded" id="enter-quiz">Entrez ce monde</button>
                             </blockquote>
                         </div>
                     </div>
@@ -267,7 +280,7 @@
                     <div class="sl-slide" data-orientation="vertical" data-slice1-rotation="-25"
                          data-slice2-rotation="-25" data-slice1-scale="2" data-slice2-scale="2">
                         <div class="whiteSection" id="quizes" style="padding: 100px 50px;">
-                            {{ render(controller('ChildBundle:Quizes:listQuizes')) }}
+                            {{ render(controller('ChildBundle:Quizes:listQuizesByCat')) }}
                         </div>
                     </div>
                     <div class="sl-slide" data-orientation="vertical" data-slice1-rotation="-25"
@@ -279,54 +292,58 @@
             </div><!-- /sl-slider -->
             <div id="slider-2" class="sl-slider-wrapper">
                 <div class="sl-slider">
-                <div class="sl-slide bg-2" data-orientation="vertical" data-slice1-rotation="0"
+                <div class="sl-slide" data-orientation="vertical" data-slice1-rotation="0"
                      data-slice2-rotation="0" data-slice1-scale="2" data-slice2-scale="2">
-                    <div class="sl-slide-inner">
-                        <div class="deco" style="font-size: 100pt; padding: 60px; color: white">
-                            <i class="glyphicon glyphicon-book"></i>
-                        </div>
+                    <div class="sl-slide-inner" style="background-image: url({{ asset('img/cartoon_space.jpg') }})">
                         <div class="schoolInfo">
                             <h2>Le monde de dessins animés</h2>
                         </div>
                         <blockquote>
                             <h4>Ce monde est plein de joix et de divertissement</h4>
                             <h4>Vous y trouvez une centaine de jeux de toutes les catégories </h4>
-                            <button class="btn btn-info not-rounded" id="enter-science">Entrez ce monde</button>
+                            <button class="btn btn-info not-rounded" id="enter-cartoon">Entrez ce monde</button>
                         </blockquote>
                     </div>
                 </div>
                 <div class="sl-slide bg-2" data-orientation="vertical" data-slice1-rotation="-25"
                      data-slice2-rotation="-25" data-slice1-scale="2" data-slice2-scale="2">
 
-                    <div class="whiteSection" id="whiteSection" style="padding: 100px 50px; height: 100%;">
-                        {% for row in cartoons | batch(4) %}
-                            <div class="row cartoons-rows">
-                                {% for cartoon in row %}
-                                    <div class="cartoons col-md-3">
-                                        {% set color = random(5) + 1 %}
-                                        <div class="box bg-color-{{ color }}" style="overflow: hidden;">
-                                            <div class="box-img border-color-{{ color }} text-center" style="padding: 0;">
-                                                {% if cartoon.photo != null %}
-                                                    <img class="img-responsive" alt="image" style="max-height: none"
-                                                         src="{{ asset(cartoon.photo.webPath) }}">
-                                                {% else %}
-                                                    <img class="img-responsive" alt="image" style="max-height: none"
-                                                         src="{{ asset('img/default_game.png') }}">
-                                                {% endif %}
-                                                <a class="btn-block bg-color-2" href=".quick-view" data-toggle="modal"><i class="fa fa-eye" aria-hidden="true"></i>Ouvrir</a>
-                                            </div>
-                                            <div class="cartoon-id" style="display: none;">
-                                                {{ cartoon.id }}
-                                            </div>
-                                            <div class="box-info">
-                                                <h5>{{ cartoon.name }}</h5>
-                                                <h5>{{ cartoon.episodesCnt }} episodes</h5>
+                    <div class="whiteSection" id="whiteSection" style="padding: 50px; height: 100%;">
+                        <div class="tab-content cartoon-container">
+                            <div class="sectionTitle">
+                                <h2 style="position: relative;color: black">Vos dessins animes preférés</h2>
+                            </div>
+                            <div style="padding-top: 100px">
+                            {% for row in cartoons | batch(4) %}
+                                <div class="row cartoons-rows">
+                                    {% for cartoon in row %}
+                                        <div class="cartoons col-md-3">
+                                            {% set color = random(5) + 1 %}
+                                            <div class="box bg-color-{{ color }}" style="overflow: hidden;">
+                                                <div class="box-img border-color-{{ color }} text-center" style="padding: 0;">
+                                                    {% if cartoon.photo != null %}
+                                                        <img class="img-responsive" alt="image" style="max-height: none"
+                                                             src="{{ asset(cartoon.photo.webPath) }}">
+                                                    {% else %}
+                                                        <img class="img-responsive" alt="image" style="max-height: none"
+                                                             src="{{ asset('img/default_game.png') }}">
+                                                    {% endif %}
+                                                    <a class="btn-block bg-color-2" href=".quick-view" data-toggle="modal"><i class="fa fa-eye" aria-hidden="true"></i>Ouvrir</a>
+                                                </div>
+                                                <div class="cartoon-id" style="display: none;">
+                                                    {{ cartoon.id }}
+                                                </div>
+                                                <div class="box-info">
+                                                    <h5>{{ cartoon.name }}</h5>
+                                                    <h5>{{ cartoon.episodesCnt }} episodes</h5>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                {% endfor %}
+                                    {% endfor %}
+                                </div>
+                            {% endfor %}
                             </div>
-                        {% endfor %}
+                        </div>
                     </div>
                 </div>
                 <div class="sl-slide" data-orientation="vertical" data-slice1-rotation="-25"
@@ -387,25 +404,119 @@
     <script>
         window.sr = new ScrollReveal({ reset : true });
         var slitslider1, slitslider2, slitslider3, slitslider4;
+        var seconds = 0, t ;
+        var current_game = -1;
+        var current_planet = -1, playing = false, current_song = -1, current_episode = -1, current_quiz = -1;
+        var songs = [];
+
         // Customizing a reveal set
-        function add() {
+        function increaseGameTimer() {
             if(current_game != -1){
                 seconds++;
-                timer();
+                timer(1);
+            }
+        }
+        function increaseQuizTimer() {
+            if(current_quiz != -1){
+                seconds++;
+                timer(3);
+            }
+        }
+        function increaseMusicTimer() {
+            if(current_song != -1 && playing){
+                seconds++;
+                console.log(seconds);
+                timer(2);
+            }
+        }
+        function increaseCartoonTimer() {
+            if(current_episode != -1){
+                seconds++;
+                timer(4);
             }
         }
 
-        function timer() {
-            t = setTimeout(add, 1000);
+        function timer(planet) {
+            switch (planet) {
+                case 1 :
+                    t = setTimeout(increaseGameTimer, 1000);
+                    break;
+                case 2 :
+                    t = setTimeout(increaseMusicTimer, 1000);
+                    break;
+                case 3 :
+                    t = setTimeout(increaseQuizTimer, 1000);
+                    break;
+                case 4 :
+                    t = setTimeout(increaseCartoonTimer, 1000);
+                    break;
+            }
         }
     </script>
 
     <!-- Music script -->
     <script>
+        function saveMusic() {
+            if(current_song != -1){
+                var id = songs[current_song].id;
+                $.post({
+                    url : "{{ path('save_activity', { 'activity' : 'Music' }) }}?cid={{ child.id }}&aid=" + id,
+                    data : {
+                        duration : seconds
+                    }
+                }).done(function () {
+                    seconds = 0; t = null;
+                    current_song = -1;
+                });
+            }
+        }
+
+        function saveGame(){
+            if(current_game != -1){
+                $.post({
+                    url : "{{ path('save_activity', { 'activity' : 'Game' }) }}?cid={{ child.id }}&aid=" + current_game,
+                    data : {
+                        duration : seconds
+                    }
+                }).done(function () {
+                    seconds = 0; t = null;
+                    current_game = -1;
+                });
+            }
+        }
+
+        function saveEpisode(){
+            if(current_episode != -1){
+                $.post({
+                    url : "{{ path('save_activity', { 'activity' : 'Video' }) }}?cid={{ child.id }}&aid=" + current_episode,
+                    data : {
+                        duration : seconds
+                    }
+                }).done(function () {
+                    seconds = 0; t = null;
+                    current_episode = -1;
+                });
+            }
+        }
+
+        function saveEpisode(){
+            if(current_quiz!= -1){
+                $.post({
+                    url : "{{ path('save_activity', { 'activity' : 'Quiz' }) }}?cid={{ child.id }}&aid=" + current_quiz,
+                    data : {
+                        duration : seconds
+                    }
+                }).done(function () {
+                    seconds = 0; t = null;
+                    current_quiz= -1;
+                });
+            }
+        }
+
         $(function () {
-            var songs = [];
             $.each($('.song'), function (i, val) {
                 songs[i] = {
+                    id : $(val).children('.song-id').text(),
                     title : $(val).children('.title').text(),
                     file : $(val).children('.title').text().replace(/\s+/g, '')
                 };
@@ -415,15 +526,30 @@
 
             playBtn.addEventListener('click', function() {
                 player.play();
+                playing = true;
+                if(current_song == -1)
+                    current_song = 0;
+                timer(2);
             });
             pauseBtn.addEventListener('click', function() {
                 player.pause();
+                playing = false;
             });
             prevBtn.addEventListener('click', function() {
                 player.skip('prev');
+                playing = true;
+                if(current_song > 0)
+                    current_song--;
+                saveMusic();
+                timer(2);
             });
             nextBtn.addEventListener('click', function() {
                 player.skip('next');
+                playing = true;
+                if(current_song < songs.length)
+                    current_song++;
+                saveMusic();
+                timer(2);
             });
             waveform.addEventListener('click', function(event) {
                 player.seek(event.clientX / window.innerWidth);
@@ -512,13 +638,11 @@
 
     <!-- SLIDER script -->
     <script type="text/javascript">
-        var seconds = 0, t ;
-        var current_game = -1;
         $(function () {
 
             var Page = (function () {
 
-                var $navArrows = $('#nav-arrows'),
+                var navArrows = $('#nav-arrows'),
                     $nav = $('#nav-dots > span'),
                     slitslider1 = $('#slider-1').slitslider({
                         onBeforeChange: function (slide, pos) {
@@ -553,16 +677,24 @@
                             sr.reveal('.games', {
                                 duration : 2000
                             }, 100);
+                            current_planet = 1;
                         });
-                        $('#enter-science').click(function () {
-                            slitslider2.jump(2);
-                        });
+
                         $('#enter-music').click(function () {
                             slitslider3.jump(2);
+                            current_planet = 2;
                         });
-                        $('#enter-paint').click(function () {
+
+                        $('#enter-quiz').click(function () {
                             slitslider4.jump(2);
+                            current_planet = 3;
                         });
+
+                        $('#enter-cartoon').click(function () {
+                            slitslider2.jump(2);
+                            current_planet = 4;
+                        });
+
                         $('.games').click(function (e) {
                             e.preventDefault();
                             var link = $(this).find('.link').text();
@@ -571,7 +703,7 @@
                             $('#game-wrapper iframe').attr('height', $('.activities').height()*0.8);
                             slitslider1.next();
                             current_game = $(this).find('.game-id').text();
-                            timer();
+                            timer(1);
                             $.get(
                                 "{{ path('related_games') }}",{
                                     "category" : $(this).find('.game-cat').text().trim()
@@ -600,27 +732,20 @@
                             slitslider3.jump(1);
                             slitslider4.jump(1);
                             $('iframe').attr('src', "");
-                            if(current_game != -1){
-                                console.log(current_game);
-                                $.post({
-                                    url : "{{ path('save_activity', { 'activity' : 'Game' }) }}?cid={{ child.id }}&aid=" + current_game,
-                                    data : {
-                                        game : current_game,
-                                        child : localStorage.getItem('child'),
-                                        duration : seconds
-                                    }
-                                }).done(function () {
-                                    seconds = 0; t = null;
-                                    current_game = -1;
-                                });
-                            }
+                            saveGame();
+                            saveMusic();
                         });
 
                         $('.cross').click(function () {
+                            $('.activities').trigger("sidebar:close");
+                            $('.buttons a').removeClass('active');
                             slitslider1.jump(1);
                             slitslider2.jump(1);
                             slitslider3.jump(1);
                             slitslider4.jump(1);
+                            saveMusic();
+                            saveGame();
+                            saveEpisode();
                         });
 
                         $(".quiz-btn").click(function () {
@@ -630,6 +755,8 @@
                                     'id' : $(this).attr('data-id')
                                 }
                             }).done(function (response) {
+                                current_quiz = $(this).attr('data-id');
+                                timer(3);
                                 $('#quiz').empty();
                                 $("#quiz").append(response);
                                 $('.quiz-slider').formslider();
@@ -644,7 +771,9 @@
                                         };
                                     });
                                 });
+
                                 $('#finish-quiz').click(function(){
+                                    saveQuiz();
                                     $.post({
                                         url : "{{ path('answer_quiz', { 'id' : child.id }) }}",
                                         data : {
@@ -671,6 +800,7 @@
 
             $(document).on('click', '.play-episode' , function () {
                 var id = $(this).attr('data-id');
+                current_episode = id;
                 $('#video-wrapper').modal({
                     keyboard : false
                 });
@@ -679,14 +809,23 @@
                     data : { 'id' : id }
                 }).done(function(response) {
                     var data = JSON.parse(response);
-                    $('#video-wrapper .panel-title').text(data.name);
+                    $('#video-wrapper .modal-title').text(data.titre);
                     $('#video-wrapper iframe').attr('src', data.url);
                     $('#video-wrapper iframe').attr('width', $('.modal-dialog').width()*0.9);
                     $('#video-wrapper iframe').attr('height', $('.modal-dialog').width()*0.6);
                     $('#video-wrapper').modal({ keyboard : false });
                     $('.modal-backdrop').appendTo('#cartoon-wrapper');
                     $('body').removeClass();
+                    timer(4);
                 });
+            });
+
+            $(document).on('click', '#close-episode', function() {
+                saveEpisode();
+            });
+
+            $(document).on('hidden.bs.modal','#video-wrapper', function () {
+                saveEpisode();
             });
 
             $('.btn-slider').click(function () {
@@ -694,12 +833,6 @@
                 $('#slider-' + $(this).attr('data-slider')).slideDown();
             });
 
-            // $('button').click(function (e) {
-            //     e.preventDefault();
-            //     $('#reponses').val(JSON.stringify(reponses));
-            //     // console.log(reponses);
-            //     // $('form').submit();
-            // });
             $.get({
                 url : "{{ path('recent_games', { 'id' : child.id }) }}"
             }).done(function (response) {
@@ -708,10 +841,6 @@
 
             $('.activities').sidebar({side: "right"});
 
-            $('.cross').click(function () {
-                $('.activities').trigger("sidebar:close");
-                $('.buttons a').removeClass('active');
-            });
 
             $('.buttons a').click(function () {
                 $('#menu-open').prop('checked', false);

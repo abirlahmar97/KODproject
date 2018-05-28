@@ -10,35 +10,29 @@ namespace ParentingBundle\Repository;
  */
 class ArticleRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function findAide()
-    {
-        $q=$this->createQueryBuilder('m')
-            ->orderBy('m.title')
-            ->where("m.type='Aides et services'");
-        return $q->getQuery()->getResult();
-    }
 
     public function findCategory($category)
     {
         $q=$this->createQueryBuilder('a')
             ->leftJoin('a.category', 'c')
-            ->where("c.type = 'Articles'")
-            ->andWhere('c.name = :category')
+            ->where("c.type = 'Article'")
+            ->andWhere('c.id = :category')
             ->setParameter('category',$category);
         return $q->getQuery()->getResult();
     }
 
     public function findPlusVu()
     {
-        $query=$this->getEntityManager()
-            ->createQuery("select m from ParentingBundle:Article m 
-            WHERE m.views=(select MAX(m1.views) from ParentingBundle:Article m1)");
-        return $query->getResult();
+        $qb=$this->createQueryBuilder('a')
+            ->orderBy('a.views')
+            ->setMaxResults(3);
+        return $qb->getQuery()->getResult();
     }
+
     public function findTitle($title)
     {
-        $q=$this->createQueryBuilder('m')
-            ->where('m.title LIKE :title')
+        $q=$this->createQueryBuilder('a')
+            ->where('a.title LIKE :title')
             ->setParameter(':title',"%$title%");
         return $q->getQuery()->getResult();
     }

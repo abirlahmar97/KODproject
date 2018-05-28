@@ -3,6 +3,7 @@
 namespace MediaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use ShopBundle\Entity\Category;
 
 /**
  * Video
@@ -12,6 +13,13 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Video
 {
+
+    public function __construct()
+    {
+        $this->views = 0;
+        $this->date = new \DateTime();
+    }
+
     /**
      * @ORM\ManyToOne(targetEntity="ParentingBundle\Entity\Subject")
      */
@@ -51,16 +59,9 @@ class Video
     /**
      * @var string
      *
-     * @ORM\Column(name="urlyout", type="string",length=255)
+     * @ORM\Column(name="urlyout", type="string",length=255, nullable=true)
      */
     private $urlyout;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="type", type="integer")
-     */
-    private $type;
 
     /**
      * @var \DateTime
@@ -85,30 +86,6 @@ class Video
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set type
-     *
-     * @param integer $type
-     *
-     * @return Video
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return int
-     */
-    public function getType()
-    {
-        return $this->type;
     }
 
 
@@ -143,9 +120,9 @@ class Video
      *
      * @return Video
      */
-    public function setUrlyout($Urlyout)
+    public function setUrlyout($urlyout)
     {
-        $this->Urlyout = $Urlyout;
+        $this->urlyout = $urlyout;
 
         return $this;
     }
@@ -157,7 +134,7 @@ class Video
      */
     public function getUrlyout()
     {
-        return $this->Urlyout;
+        return $this->urlyout;
     }
     /**
      * Set url
@@ -228,7 +205,7 @@ class Video
      *
      * @return Video
      */
-    public function settitre($titre)
+    public function setTitre($titre)
     {
         $this->titre = $titre;
 
@@ -240,7 +217,7 @@ class Video
      *
      * @return string
      */
-    public function gettitre()
+    public function getTitre()
     {
         return $this->titre;
     }

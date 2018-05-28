@@ -1,0 +1,70 @@
+{% if search != "" %}
+<div class="resultInfo">
+    <h3> {{ articles | length }} Résultats trouvés pour “{{ search }}”</h3>
+</div>
+{% endif %}
+{% for article in articles %}
+            {% set color = random(5) + 1  %}
+            <div class="media courseList couresListPage">
+                <a class="media-left border-color-1"
+                   href="{{ path('view_article', { 'id' : article.id }) }}">
+                    {% if article.image != null %}
+                        <img style="width: 270px" class="media-object" src="{{ asset(article.image.webPath) }}"
+                             alt="Image">
+                    {% endif %}
+                </a>
+                <div class="media-body">
+                    <h3 class="media-heading">
+                        <a href="{{ path('view_article', { 'id' : article.id }) }}"
+                           class="color-{{ color }}">{{ article.title }}</a>
+                    </h3>
+                    <ul class="list-inline">
+                        <li><i class="fa fa-calendar-o"
+                               aria-hidden="true"></i>{{ article.date | date('d F, Y') }}</li>
+                        <li><i class="fa fa-clock-o"
+                               aria-hidden="true"></i>{{ article.category.name }}</li>
+                    </ul>
+                    <p>{{ article.subject }}</p>
+                    <ul class="list-inline btn-yellow btnPart">
+                        <li>
+                            <a href="{{ path('view_article', { 'id' : article.id }) }}"
+                               class="btn btn-link">
+                                <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                                Continuer la lecture
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            {#<div class="col-md-3 col-sm-6 col-xs-12 block">#}
+            {#<div class="thumbnail thumbnailContent">#}
+            {#<a href="{{ path('view_article',{'id':article.id}) }}">#}
+            {#{% if article.image != null %}#}
+            {#<img style="height: 175px" src="{{ asset(article.image.webPath) }}"#}
+            {#alt="image"#}
+            {#class="media-object">#}
+            {#{% endif %}#}
+            {#</a>#}
+            {#<div class="caption border-color-1">#}
+            {#<h3><a href="{{ path('view_article',{'id':article.id}) }}"#}
+            {#class="color-1">{{ article.title }}</a></h3>#}
+            {#<ul class="list-unstyled">#}
+            {#<li><i class="fa fa-calendar-o"#}
+            {#aria-hidden="true"></i>{{ article.subject }}#}
+            {#</li>#}
+            {#<li><i class="fa fa-clock-o"#}
+            {#aria-hidden="true"></i>{{ article.auteur }}</li>#}
+            {#</ul>#}
+            {#<p></p>#}
+            {#<ul class="list-inline btn-yellow">#}
+            {#<li><a href="cart-page.html" class="btn btn-primary "><i class="fa fa-shopping-basket " aria-hidden="true"></i>Add to Cart</a></li>#}
+            {#<li><a href="{{ path('view_article',{'id':article.id}) }}"#}
+            {#class="btn btn-link"><i#}
+            {#class="fa fa-angle-double-right"#}
+            {#aria-hidden="true"></i>#}
+            {#Continuer</a></li>#}
+            {#</ul>#}
+            {#</div>#}
+            {#</div>#}
+            {#</div>#}
+        {% endfor %}

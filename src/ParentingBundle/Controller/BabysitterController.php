@@ -65,7 +65,7 @@ class BabysitterController extends Controller
         return $this->redirecttoRoute("read_babysitter");
     }
 
-    public function front_readAction()
+    public function listAction()
     {
         $em = $this->getDoctrine()->getManager();
         $babysitters = $em->getRepository("ParentingBundle:Babysitter")->findAll();
@@ -84,7 +84,6 @@ class BabysitterController extends Controller
                 'user' => $this->getUser()
             ));
         }
-
         return $this->redirectToRoute('fos_message_inbox');
     }
 

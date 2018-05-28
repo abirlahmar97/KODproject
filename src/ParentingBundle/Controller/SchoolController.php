@@ -13,7 +13,7 @@ use Symfony\Component\Serializer\Serializer;
 
 class SchoolController extends Controller
 {
-    public function createSchoolAction(\Symfony\Component\HttpFoundation\Request $request)
+    public function createSchoolAction(Request $request)
     {
         $School = new School();
         $form = $this->createForm(SchoolType::class, $School);
@@ -24,23 +24,41 @@ class SchoolController extends Controller
             $em->flush();
             return $this->redirectToRoute("school_add");
         }
-        return $this->render('ParentingBundle:school:addschool.html.twig', array(
-            "form" => $form->createView()
+        return $this->render('ParentingBundle:school:form.html.twig', array(
+            "form" => $form->createView(),
+            'title' => 'Ajouter'
+        ));
+    }
+
+    public function updateSchoolAction($id,Request $request)
+    {
+        $school = $this->getDoctrine()->getRepository("ParentingBundle:School")->find($id);
+        $form = $this->createForm(SchoolType::class, $school);
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($school);
+            $em->flush();
+            return $this->redirectToRoute("read_school");
+        }
+        return $this->render('ParentingBundle:school:form.html.twig', array(
+            "form" => $form->createView(),
+            'title' => 'Modifier'
         ));
     }
     public function deleteAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $modele= $em->getRepository(School::class)->find($id);
-        $em->remove($modele);
+        $school= $em->getRepository(School::class)->find($id);
+        $em->remove($school);
         $em->flush();
-        return $this->redirectToRoute("school_add");
+        return $this->redirectToRoute("read_school");
     }
-    public function readschool1Action()
+    public function listSchoolAction()
     {
         $em= $this->getDoctrine()->getManager();
         $schools=$em->getRepository("ParentingBundle:School")->findAll();
-        return $this->render('ParentingBundle:school:deleteschool.html.twig', array(
+        return $this->render('ParentingBundle:school:listschool.html.twig', array(
             "schools"=>$schools
         ));
     }
@@ -51,16 +69,21 @@ class SchoolController extends Controller
 
         $school=$em->getRepository('ParentingBundle:School')->findAll();
 
-        return $this->render('@Parenting/school/index.html.twig',array('name'=>$name,'school'=>$school));
+        return $this->render('@Parenting/school/index.html.twig', array(
+            'name'=>$name,
+            'school'=>$school
+        ));
     }
 
     public function RechercheAction(Request $request)
     {
-        $search =$request->query->get('schoolname');
-        $en = $this->getDoctrine()->getManager();
-        $schoolname=$en->getRepository("ParentingBundle:School")->findMarque($search);
+        $lat =$request->query->get('lat');
+        $lng =$request->query->get('lng');
+        $em = $this->getDoctrine()->getManager();
+        $schools= $em->getRepository("ParentingBundle:School")->findClosest($lat, $lng);
+        dump($schools);
         return $this->render("ParentingBundle:school:search.html.twig",array(
-            'schoolnames' => $schoolname
+            'schools' => $schools
         ));
     }
     public function mapapiAction()

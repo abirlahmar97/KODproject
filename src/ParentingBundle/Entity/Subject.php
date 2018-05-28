@@ -13,8 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Subject
 {
 
-
-
     /**
      * @var int
      *

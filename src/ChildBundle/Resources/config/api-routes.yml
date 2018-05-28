@@ -11,11 +11,27 @@
 api_kids_list:
     path:     /parent/kids
     defaults: { _controller: ChildBundle:Parent:listKidsApi }
+    methods : GET
+
+api_kid_activity:
+    path:     /parent/kids/activity/{id}
+    defaults: { _controller: ChildBundle:Child:activityApi }
+
+api_block_game:
+    path:   /parent/block
+    defaults: { _controller: ChildBundle:Game:blockGameApi }
+    methods : GET
 
 api_games_list:
     path:     /games
     defaults: { _controller: ChildBundle:Game:listGamesAPI }
     methods : GET
+
+api_create_space:
+    path:     /parent/newspace
+    defaults: { _controller: ChildBundle:Parent:createSpaceApid }
+    methods : POST
+
 #kids_add:
 #    path:     /parent/kids/add
 #    defaults: { _controller: ChildBundle:Parent:addKid }

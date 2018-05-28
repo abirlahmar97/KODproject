@@ -5,11 +5,12 @@ namespace MediaBundle\Controller;
 use MediaBundle\Entity\Video;
 use MediaBundle\Form\VideoType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class VideoController extends Controller
 {
-    public function createvideoAction(\Symfony\Component\HttpFoundation\Request $request)
+    public function createvideoAction(Request $request)
     {
 
         $videos = new Video();
@@ -28,9 +29,11 @@ class VideoController extends Controller
     public function readvidAction()
     {
         $em= $this->getDoctrine()->getManager();
-        $videos=$em->getRepository("MediaBundle:Video")->findAll();
+        $videos=$em->getRepository("MediaBundle:Video")->findCourses();
+        $subjects = $em->getRepository("ParentingBundle:Subject")->findAll();
         return $this->render('@Media/video/readvideo.html.twig', array(
-            "videos"=>$videos
+            "videos" => $videos,
+            "subjects" => $subjects
         ));
     }
 

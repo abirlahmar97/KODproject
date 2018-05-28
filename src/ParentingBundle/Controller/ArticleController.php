@@ -42,12 +42,14 @@ class ArticleController extends Controller
         ));
     }
 
-    public function showbyCategoryAction($category)
+    public function showbyCategoryAction($id)
     {
         $em= $this->getDoctrine()->getManager();
-        $articles=$em->getRepository("ParentingBundle:Article")->findCategory($category);
+        $category = $em->getRepository("ShopBundle:Category")->find($id);
+        $articles=$em->getRepository("ParentingBundle:Article")->findCategory($id);
         return $this->render('@Parenting/Article/readCa.html.twig', array(
-            "articles" => $articles
+            "articles" => $articles,
+            'category' => $category
         ));
     }
 
@@ -79,26 +81,28 @@ class ArticleController extends Controller
         return $this->redirecttoRoute("read");
     }
 
-    public function frontReadAction()
+    public function listAction()
     {
         $em= $this->getDoctrine()->getManager();
         $articles=$em->getRepository("ParentingBundle:Article")->findAll();
+        $categories = $em->getRepository("ShopBundle:Category")->findBy(['type' => 'Article']);
         return $this->render('@Parenting/Article/front_read.html.twig', array(
-            "articles" => $articles
+            "articles" => $articles,
+            'categories' => $categories
         ));
     }
 
-    public function frontReadApiAction()
+    public function listApiAction()
     {
         $em= $this->getDoctrine()->getManager();
         $articles=$em->getRepository("ParentingBundle:Article")->findAll();
         $data= $this->get("jms_serializer")->serialize($articles,'json');
-        return new \Symfony\Component\HttpFoundation\Response($data);
+        return new Response($data);
 
     }
 
 
-    public function moreApiAction($id)
+    public function viewApiAction($id)
     {
         $em= $this->getDoctrine()->getManager();
         $article=$em->getRepository("ParentingBundle:Article")->find($id);
@@ -115,6 +119,26 @@ class ArticleController extends Controller
 
         return new \Symfony\Component\HttpFoundation\Response($data);
 
+
+    }
+
+    public function viewAction($id)
+    {
+        $em= $this->getDoctrine()->getManager();
+        $article=$em->getRepository("ParentingBundle:Article")->find($id);
+        //incrémenter le nombre de vues
+        $article->setViews($article->getViews()+1);
+        $em->persist($article);
+        $em->flush();
+        //Chercher l'article le plus vu
+        $max=$em->getRepository('ParentingBundle:Article')->findPlusVu();
+        //Afficher les catégories d'articles disponibles
+        $categories=$em->getRepository("ShopBundle:Category")->findBy(['type' => 'Article']);
+        return $this->render('ParentingBundle:Article:view.html.twig', [
+            'article' => $article,
+            'max' => $max,
+            'categories' => $categories
+        ]);
 
     }
 
@@ -149,10 +173,8 @@ class ArticleController extends Controller
         $search=$request->get('article');
         $em = $this->getDoctrine()->getManager();
         $article=$em->getRepository("ParentingBundle:Article")->findTitle($search);
-        $nombre= sizeof($article);
-        return $this->render("@Parenting/Article/front_read.html.twig",array(
+        return $this->render("@Parenting/Article/search.html.twig",array(
             'articles' => $article ,
-            'nombre' => $nombre ,
             'search' => $search
         ));
     }
@@ -160,14 +182,13 @@ class ArticleController extends Controller
     public function indexAction()
     {
         $em= $this->getDoctrine()->getManager();
-        $articles=$em->getRepository("ParentingBundle:Article")->findAide();
+        $articles=$em->getRepository("ParentingBundle:Article")->findBy(['type' => 'Aides et services']);
         $barStat=array(array("nom","views"));
 
         foreach ($articles as $article)
         {
             array_push($barStat,array(
-                $article>getTitle(),
-                $produit->getValeur()
+                $article->getTitle(),
             ));
         }
 

@@ -51,49 +51,7 @@ class EventsController extends Controller
         }
         $data = $this->get("jms_serializer")->serialize($event, "json");
         return new Response($data);
-        ;
     }
-
-    public function ReservAction(Request $request)
-    {
-        $id = $request->get('event');
-        $places = $request->get('places');
-        $em = $this->getDoctrine()->getManager();
-        $event = $em->getRepository(Event::class)->find($id);
-        $event->setPlaces($event->getPlaces() + $places);
-        $event->setLeftPlaces($event->getLeftPlaces() - $places);
-        $resv = new Reservation();
-        $resv->setEvent($event);
-        $resv->setParticipants($places);
-        $user = $this->getUser();
-        $resv->setUser($user);
-        $em->persist($resv);
-        $em->persist($event);
-        $em->flush();
-        return $this->redirectToRoute('events_list');
-    }
-
-    public function ReservActionApi(Request $request)
-    {
-        $eid= $request->get("id");
-        $places = $request->get("places");
-
-        $em = $this->getDoctrine()->getManager();
-
-        $event = $em->getRepository("EventsBundle:Event")->find($eid);
-        $event->setPlaces($event->getPlaces() + $places);
-        $event->setLeftPlaces($event->getLeftPlaces() - $places);
-        $resv = new Reservation();
-        dump($places);
-        $resv->setEvent($event);
-        $resv->setParticipants($places);
-        $resv->setUser($this->getUser());
-        $em->persist($resv);
-        $em->persist($event);
-        $em->flush();
-        return new Response();
-    }
-
 
     public function deleteEventAction($id)
     {
@@ -114,7 +72,6 @@ class EventsController extends Controller
         return new Response($data);
 
     }
-
 
     public function updateEventAction(Request $request, $id)
     {
@@ -142,23 +99,26 @@ class EventsController extends Controller
             $em->persist($event);
             $em->flush();
             return $this->redirectToRoute('events_list');
-
         }
         $data = $this->get("jms_serializer")->serialize($event, "json");
         return new Response($data);
         ;
     }
+
     public function listAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $event = $em->getRepository(Event::class)->findAll();
+        $events = $em->getRepository(Event::class)->findAll();
+        $reservations = $em->getRepository("EventsBundle:Reservation")->findForUser($this->getUser()->getId());
+        $reservations = array_column($reservations, 'id');
         $paginator = $this->get('knp_paginator');
-        $events = $paginator->paginate(
-            $event,
+        $page = $paginator->paginate(
+            $events,
             $request->query->getInt('page', 1), 4);
         return $this->render('@Events/Event/list.html.twig', array(
-            'events' => $events,
-            'pagination' => $paginator
+            'events' => $page,
+            'pagination' => $paginator,
+            'reservations' => $reservations
         ));
     }
 
